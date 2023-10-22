@@ -14,14 +14,14 @@ class StarView: UIView {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
+        imageView.tintColor = MovieRamaConstants().CYAN_COLOR
         return imageView
     }()
     
     init(star: StarEnum) {
         super.init(frame: .zero)
         
-        let image = UIImage(systemName: star.rawValue)
-        image?.withTintColor(MovieRamaConstants().APP_COLOR, renderingMode: .alwaysTemplate)
+        let image = UIImage(systemName: star.rawValue)?.withRenderingMode(.alwaysTemplate)
         
         starImageView.image = image
         self.addSubview(starImageView)

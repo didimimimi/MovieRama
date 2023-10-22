@@ -48,11 +48,11 @@ class MovieTableViewCell: UITableViewCell {
     private func setUpCell() {
         self.selectionStyle = .none
         
-        self.titleLabel.font = UIFont.systemFont(ofSize: 18, weight: .medium)
-        self.titleLabel.textColor = MovieRamaConstants().APP_COLOR.withAlphaComponent(0.8)
+        self.titleLabel.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+        self.titleLabel.textColor = MovieRamaConstants().CYAN_COLOR.withAlphaComponent(0.8)
         
         self.dateLabel.font = UIFont.systemFont(ofSize: 12, weight: .light)
-        self.dateLabel.textColor = MovieRamaConstants().APP_COLOR.withAlphaComponent(0.5)
+        self.dateLabel.textColor = MovieRamaConstants().CYAN_COLOR.withAlphaComponent(0.85)
         
         self.favoriteImageView.image = UIImage(systemName: "heart")
         self.favoriteImageView.tintColor = .red.withAlphaComponent(0.8)
@@ -101,12 +101,12 @@ class MovieTableViewCell: UITableViewCell {
     @IBAction func favoriteButtonTapped(_ sender: Any) {
         self.isFavorited.toggle()
         
-//        guard let movieFavoriteInfo = self.movie.favoriteInfo else {
-//            return
-//        }
-//        
-//        movieFavoriteInfo.favorite = isFavorited
-//        movieFavoriteInfo.saveFavoriteInfoToDevice()
+        guard let movieFavoriteInfo = self.movie.favoriteInfo else {
+            return
+        }
+        
+        movieFavoriteInfo.favorite = isFavorited
+        movieFavoriteInfo.saveFavoriteInfoToDevice()
         
         self.updateFavoriteIcon()
         self.delegate?.favoriteTapped(movie: self.movie)

@@ -40,7 +40,7 @@ class MovieListViewController: UIViewController {
         movie1.title = "Movie 1 title"
         movie1.rating = 4
         movie1.date = "Jul 1 2022"
-        movie1.favoriteInfo = FavoriteInfo(id: movie1.id!, isFavorite: true)
+        movie1.loadFavoriteInfoFromDevice()
         movie1.image = "https://a.ltrbxd.com/resized/sm/upload/xs/d9/wj/nt/scarface-1200-1200-675-675-crop-000000.jpg?v=3e9a08f31f"
 
         let movie2 = Movie()
@@ -48,7 +48,7 @@ class MovieListViewController: UIViewController {
         movie2.title = "Movie 2 title"
         movie2.rating = 2
         movie2.date = "Jul 7 2022"
-        movie2.favoriteInfo = FavoriteInfo(id: movie1.id!, isFavorite: false)
+        movie2.loadFavoriteInfoFromDevice()
         movie2.image = "https://cdn.vox-cdn.com/thumbor/q1VhYtuVNtHtWRCb2icgjPzX3Sw=/0x0:1920x1005/fit-in/1200x630/cdn.vox-cdn.com/uploads/chorus_asset/file/15969338/surprise_marvel_releases_a_new_full_trailer_and_poster_for_avengers_endgame_social.jpg"
         
         self.movies.append(movie1)
