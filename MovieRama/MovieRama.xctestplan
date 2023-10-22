@@ -1,0 +1,37 @@
+{
+  "configurations" : [
+    {
+      "id" : "EBF7876F-362E-48A0-9DC1-50F5FE4124A9",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:MovieRama.xcodeproj",
+      "identifier" : "3441C5102AE562890025DDE0",
+      "name" : "MovieRama"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:MovieRama.xcodeproj",
+        "identifier" : "3441C5262AE5628C0025DDE0",
+        "name" : "MovieRamaTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:MovieRama.xcodeproj",
+        "identifier" : "3441C5302AE5628C0025DDE0",
+        "name" : "MovieRamaUITests"
+      }
+    }
+  ],
+  "version" : 1
+}
