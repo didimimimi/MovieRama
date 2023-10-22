@@ -16,6 +16,14 @@
 		3441C5382AE5628C0025DDE0 /* MovieRamaUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3441C5372AE5628C0025DDE0 /* MovieRamaUITestsLaunchTests.swift */; };
 		3441C5482AE563620025DDE0 /* MovieListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3441C5462AE563620025DDE0 /* MovieListViewController.swift */; };
 		3441C5492AE563620025DDE0 /* MovieListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3441C5472AE563620025DDE0 /* MovieListViewController.xib */; };
+		3441C54D2AE58DAE0025DDE0 /* MovieTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3441C54B2AE58DAE0025DDE0 /* MovieTableViewCell.swift */; };
+		3441C54E2AE58DAE0025DDE0 /* MovieTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3441C54C2AE58DAE0025DDE0 /* MovieTableViewCell.xib */; };
+		3441C5512AE590CD0025DDE0 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3441C5502AE590CD0025DDE0 /* RatingView.swift */; };
+		3441C5532AE590DA0025DDE0 /* RatingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3441C5522AE590DA0025DDE0 /* RatingView.xib */; };
+		3441C5562AE593D60025DDE0 /* MovieRamaEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3441C5552AE593D60025DDE0 /* MovieRamaEnums.swift */; };
+		3441C5582AE594520025DDE0 /* MovieRamaConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3441C5572AE594520025DDE0 /* MovieRamaConstants.swift */; };
+		3441C55A2AE5A97D0025DDE0 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3441C5592AE5A97D0025DDE0 /* Movie.swift */; };
+		3441C55C2AE5BB5A0025DDE0 /* MovieRamaHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3441C55B2AE5BB5A0025DDE0 /* MovieRamaHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +58,14 @@
 		3441C5462AE563620025DDE0 /* MovieListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListViewController.swift; sourceTree = "<group>"; };
 		3441C5472AE563620025DDE0 /* MovieListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MovieListViewController.xib; sourceTree = "<group>"; };
 		3441C54A2AE563C50025DDE0 /* MovieRama.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = MovieRama.xctestplan; sourceTree = "<group>"; };
+		3441C54B2AE58DAE0025DDE0 /* MovieTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieTableViewCell.swift; sourceTree = "<group>"; };
+		3441C54C2AE58DAE0025DDE0 /* MovieTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MovieTableViewCell.xib; sourceTree = "<group>"; };
+		3441C5502AE590CD0025DDE0 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
+		3441C5522AE590DA0025DDE0 /* RatingView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RatingView.xib; sourceTree = "<group>"; };
+		3441C5552AE593D60025DDE0 /* MovieRamaEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieRamaEnums.swift; sourceTree = "<group>"; };
+		3441C5572AE594520025DDE0 /* MovieRamaConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieRamaConstants.swift; sourceTree = "<group>"; };
+		3441C5592AE5A97D0025DDE0 /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
+		3441C55B2AE5BB5A0025DDE0 /* MovieRamaHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieRamaHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +119,8 @@
 			children = (
 				3441C5452AE5633B0025DDE0 /* ViewControllers */,
 				3441C5442AE563300025DDE0 /* TableViewCells */,
+				3441C54F2AE590A60025DDE0 /* CustomViews */,
+				3441C5542AE593A50025DDE0 /* MovieRamaModels */,
 				3441C5142AE562890025DDE0 /* AppDelegate.swift */,
 				3441C5162AE562890025DDE0 /* SceneDelegate.swift */,
 				3441C51D2AE5628B0025DDE0 /* Assets.xcassets */,
@@ -132,6 +150,8 @@
 		3441C5442AE563300025DDE0 /* TableViewCells */ = {
 			isa = PBXGroup;
 			children = (
+				3441C54B2AE58DAE0025DDE0 /* MovieTableViewCell.swift */,
+				3441C54C2AE58DAE0025DDE0 /* MovieTableViewCell.xib */,
 			);
 			path = TableViewCells;
 			sourceTree = "<group>";
@@ -143,6 +163,26 @@
 				3441C5472AE563620025DDE0 /* MovieListViewController.xib */,
 			);
 			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		3441C54F2AE590A60025DDE0 /* CustomViews */ = {
+			isa = PBXGroup;
+			children = (
+				3441C5502AE590CD0025DDE0 /* RatingView.swift */,
+				3441C5522AE590DA0025DDE0 /* RatingView.xib */,
+			);
+			path = CustomViews;
+			sourceTree = "<group>";
+		};
+		3441C5542AE593A50025DDE0 /* MovieRamaModels */ = {
+			isa = PBXGroup;
+			children = (
+				3441C5552AE593D60025DDE0 /* MovieRamaEnums.swift */,
+				3441C5572AE594520025DDE0 /* MovieRamaConstants.swift */,
+				3441C5592AE5A97D0025DDE0 /* Movie.swift */,
+				3441C55B2AE5BB5A0025DDE0 /* MovieRamaHelper.swift */,
+			);
+			path = MovieRamaModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -250,7 +290,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				3441C5492AE563620025DDE0 /* MovieListViewController.xib in Resources */,
+				3441C5532AE590DA0025DDE0 /* RatingView.xib in Resources */,
 				3441C5212AE5628B0025DDE0 /* LaunchScreen.storyboard in Resources */,
+				3441C54E2AE58DAE0025DDE0 /* MovieTableViewCell.xib in Resources */,
 				3441C51E2AE5628B0025DDE0 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -276,8 +318,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3441C5562AE593D60025DDE0 /* MovieRamaEnums.swift in Sources */,
 				3441C5482AE563620025DDE0 /* MovieListViewController.swift in Sources */,
 				3441C5152AE562890025DDE0 /* AppDelegate.swift in Sources */,
+				3441C5582AE594520025DDE0 /* MovieRamaConstants.swift in Sources */,
+				3441C55C2AE5BB5A0025DDE0 /* MovieRamaHelper.swift in Sources */,
+				3441C54D2AE58DAE0025DDE0 /* MovieTableViewCell.swift in Sources */,
+				3441C5512AE590CD0025DDE0 /* RatingView.swift in Sources */,
+				3441C55A2AE5A97D0025DDE0 /* Movie.swift in Sources */,
 				3441C5172AE562890025DDE0 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
