@@ -9,6 +9,7 @@ import UIKit
 
 protocol MovieTableViewCellDelegate: AnyObject {
     func movieTapped(movie: Movie)
+    func favoriteTapped(movie: Movie)
 }
 
 class MovieTableViewCell: UITableViewCell {
@@ -30,6 +31,18 @@ class MovieTableViewCell: UITableViewCell {
         super.awakeFromNib()
         
         self.setUpCell()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        self.layer.masksToBounds = false
+        self.layer.cornerRadius = 4
+
+        self.layer.shadowColor = UIColor.black.cgColor
+        self.layer.shadowOpacity = 0.5
+        self.layer.shadowOffset = CGSize(width: 0, height: 2)
+        self.layer.shadowRadius = 4
     }
     
     private func setUpCell() {
@@ -88,13 +101,14 @@ class MovieTableViewCell: UITableViewCell {
     @IBAction func favoriteButtonTapped(_ sender: Any) {
         self.isFavorited.toggle()
         
-        guard let movieFavoriteInfo = self.movie.favoriteInfo else {
-            return
-        }
-        
-        movieFavoriteInfo.favorite = isFavorited
-        movieFavoriteInfo.saveFavoriteInfoToDevice()
+//        guard let movieFavoriteInfo = self.movie.favoriteInfo else {
+//            return
+//        }
+//        
+//        movieFavoriteInfo.favorite = isFavorited
+//        movieFavoriteInfo.saveFavoriteInfoToDevice()
         
         self.updateFavoriteIcon()
+        self.delegate?.favoriteTapped(movie: self.movie)
     }
 }

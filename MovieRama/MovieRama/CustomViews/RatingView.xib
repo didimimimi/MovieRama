@@ -22,7 +22,7 @@
                 <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4tI-Bq-bhX" userLabel="Container View">
                     <rect key="frame" x="0.0" y="59" width="393" height="57"/>
                     <subviews>
-                        <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="dUO-7P-650">
+                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="dUO-7P-650">
                             <rect key="frame" x="0.0" y="0.0" width="393" height="57"/>
                         </stackView>
                     </subviews>

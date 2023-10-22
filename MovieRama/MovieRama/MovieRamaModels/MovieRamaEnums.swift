@@ -21,4 +21,18 @@ enum MovieRating: Int {
         }
         self.init(rawValue: Int(value))
     }
+    
+    func getInStars() -> [StarEnum] {
+        let emptyStarsAmount = MovieRamaConstants().MAX_STAR_RATING - self.rawValue
+        
+        let filledStars = Array(repeating: StarEnum.filled, count: self.rawValue)
+        let emptyStars = Array(repeating: StarEnum.empty, count: emptyStarsAmount)
+        
+        return filledStars + emptyStars
+    }
+}
+
+enum StarEnum: String {
+    case filled = "star.fill"
+    case empty = "star"
 }

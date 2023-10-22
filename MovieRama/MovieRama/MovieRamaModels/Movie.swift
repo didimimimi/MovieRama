@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Movie {
+class Movie: Equatable {
     var id: String?
     var title: String?
     var rating: Double?
@@ -34,6 +34,10 @@ class Movie {
             }
         }
     }
+    
+    static func == (lhs: Movie, rhs: Movie) -> Bool {
+        return lhs.id == rhs.id
+    }
 }
 
 class Review {
@@ -43,7 +47,21 @@ class Review {
 
 class FavoriteInfo: Codable {
     var movieId: String?
-    var favorite: Bool?
+    var favorite: Bool? {
+        didSet {
+            self.saveFavoriteInfoToDevice()
+        }
+    }
+    
+    init(id: String, isFavorite: Bool) {
+        self.movieId = id
+        self.favorite = isFavorite
+    }
+    
+    init() {
+        movieId = "---"
+        favorite = false
+    }
     
     func saveFavoriteInfoToDevice() {
         let encoder = JSONEncoder()

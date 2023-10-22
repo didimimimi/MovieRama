@@ -21,17 +21,12 @@ class RatingView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setUpView()
+        self.setUpNib()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        setUpView()
-    }
-    
-    private func setUpView() {
         self.setUpNib()
-        self.setUpStarImages()
     }
     
     private func setUpNib() {
@@ -47,28 +42,11 @@ class RatingView: UIView {
         addSubview(view)
     }
     
-    private func setUpStarImages() {
-        self.filledStarImage = UIImage(systemName: "star.fill")
-        self.emptyStarImage = UIImage(systemName: "star")
-        
-        self.filledStarImage?.withTintColor(MovieRamaConstants().APP_COLOR, renderingMode: .alwaysOriginal)
-        self.emptyStarImage?.withTintColor(MovieRamaConstants().APP_COLOR, renderingMode: .alwaysOriginal)
-    }
-    
     func setRating(stars: MovieRating) {
-        let filledStars = stars.rawValue
-        let blankStars = MovieRamaConstants().MAX_STAR_RATING - filledStars
+        let starImages = stars.getInStars()
         
-        if filledStars != 0 {
-            for _ in 1...filledStars {
-                self.ratingStackView.addArrangedSubview(UIImageView(image: self.filledStarImage))
-            }
-        }
-        
-        if blankStars != 0 {
-            for _ in 1...blankStars {
-                self.ratingStackView.addArrangedSubview(UIImageView(image: self.emptyStarImage))
-            }
-        }
+        starImages.forEach({ starImage in
+            self.ratingStackView.addArrangedSubview(StarView(star: starImage))
+        })
     }
 }
