@@ -8,6 +8,25 @@
 import Foundation
 import UIKit
 
+class MovieRamaHelper {
+    func saveFavoriteInfoToDevice(ofMovie movie: Movie) {
+        guard let id = movie.id else {
+            return
+        }
+        let favorite = movie.favorite ?? false
+
+        UserDefaults.standard.set(favorite, forKey: id)
+    }
+    
+    func loadFavoriteInfoFromDevice(forMovie movie: inout Movie) {
+        guard let id = movie.id else {
+            return
+        }
+
+        movie.favorite = UserDefaults.standard.bool(forKey: id)
+    }
+}
+
 extension UIImageView {
     func load(url: URL) {
         DispatchQueue.global().async {

@@ -35,4 +35,14 @@ enum MovieRating: Int {
 enum StarEnum: String {
     case filled = "star.fill"
     case empty = "star"
+    
+}
+
+enum HeartEnum: String {
+    case filled = "heart.fill"
+    case empty = "heart"
+    
+    init(isFavorite: Bool) {
+        self = isFavorite ? .filled : .empty
+    }
 }

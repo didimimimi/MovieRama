@@ -14,6 +14,7 @@ protocol MovieTableViewCellDelegate: AnyObject {
 
 class MovieTableViewCell: UITableViewCell {
     
+    @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var movieImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var ratingView: RatingView!
@@ -36,13 +37,19 @@ class MovieTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        self.layer.masksToBounds = false
-        self.layer.cornerRadius = 4
-
-        self.layer.shadowColor = UIColor.black.cgColor
-        self.layer.shadowOpacity = 0.5
-        self.layer.shadowOffset = CGSize(width: 0, height: 2)
-        self.layer.shadowRadius = 4
+        DispatchQueue.main.async {
+            self.containerView.layer.masksToBounds = false
+            self.containerView.layer.cornerRadius = 4
+            
+            self.containerView.layer.shadowColor = UIColor.black.cgColor
+            self.containerView.layer.shadowOpacity = 0.5
+            self.containerView.layer.shadowOffset = CGSize(width: 0, height: 2)
+            self.containerView.layer.shadowRadius = 4
+    
+            self.movieImageView.layer.masksToBounds = true
+            self.movieImageView.layer.cornerRadius = 4
+            self.movieImageView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        }
     }
     
     private func setUpCell() {
@@ -56,6 +63,7 @@ class MovieTableViewCell: UITableViewCell {
         
         self.favoriteImageView.image = UIImage(systemName: "heart")
         self.favoriteImageView.tintColor = .red.withAlphaComponent(0.8)
+        
     }
     
     func configure(withMovie movie: Movie, delegate: MovieTableViewCellDelegate) {
@@ -75,9 +83,7 @@ class MovieTableViewCell: UITableViewCell {
     }
     
     private func setUpFavorite() {
-        self.movie.loadFavoriteInfoFromDevice()
-        
-        if let movieIsFavorite = self.movie.favoriteInfo?.favorite {
+        if let movieIsFavorite = self.movie.favorite {
             self.isFavorited = movieIsFavorite
         } else {
             self.isFavorited = false
@@ -87,26 +93,18 @@ class MovieTableViewCell: UITableViewCell {
     }
     
     private func updateFavoriteIcon() {
-        if self.isFavorited {
-            self.favoriteImageView.image = UIImage(systemName: "heart.fill")
-        } else {
-            self.favoriteImageView.image = UIImage(systemName: "heart")
-        }
+        self.favoriteImageView.image = UIImage(systemName: HeartEnum(isFavorite: self.isFavorited).rawValue)
     }
     
-    @IBAction func mainButtonTapped(_ sender: Any) {
+    @IBAction func mainButtonTapped(_ sender: UIButton) {
         self.delegate?.movieTapped(movie: self.movie)
     }
     
-    @IBAction func favoriteButtonTapped(_ sender: Any) {
+    @IBAction func favoriteButtonTapped(_ sender: UIButton) {
         self.isFavorited.toggle()
         
-        guard let movieFavoriteInfo = self.movie.favoriteInfo else {
-            return
-        }
-        
-        movieFavoriteInfo.favorite = isFavorited
-        movieFavoriteInfo.saveFavoriteInfoToDevice()
+        movie.favorite = self.isFavorited
+        MovieRamaHelper().saveFavoriteInfoToDevice(ofMovie: movie)
         
         self.updateFavoriteIcon()
         self.delegate?.favoriteTapped(movie: self.movie)

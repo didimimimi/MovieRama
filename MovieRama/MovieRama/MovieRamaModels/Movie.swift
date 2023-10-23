@@ -13,7 +13,7 @@ class Movie: Equatable {
     var rating: Double?
     var date: String?
     var image: String?
-    var favoriteInfo: FavoriteInfo?
+    var favorite: Bool?
     var genres: [String] = []
     var description: String?
     var director: String?
@@ -22,18 +22,6 @@ class Movie: Equatable {
     var reviews: [Review] = []
     
     init() {}
-    
-    func loadFavoriteInfoFromDevice() {
-        let defaults = UserDefaults.standard
-
-        if let movieId = self.id,
-           let savedFavoriteInfo = defaults.object(forKey: MovieRamaConstants().FAVORITE_MOVIE_KEY + movieId) as? Data {
-            let decoder = JSONDecoder()
-            if let loadedFavoriteInfo = try? decoder.decode(FavoriteInfo.self, from: savedFavoriteInfo) {
-                self.favoriteInfo = loadedFavoriteInfo
-            }
-        }
-    }
     
     static func == (lhs: Movie, rhs: Movie) -> Bool {
         return lhs.id == rhs.id
@@ -44,32 +32,3 @@ class Review {
     var authorName: String?
     var comment: String?
 }
-
-class FavoriteInfo: Codable {
-    var movieId: String?
-    var favorite: Bool? {
-        didSet {
-            self.saveFavoriteInfoToDevice()
-        }
-    }
-    
-    init(id: String, isFavorite: Bool) {
-        self.movieId = id
-        self.favorite = isFavorite
-    }
-    
-    init() {
-        movieId = "---"
-        favorite = false
-    }
-    
-    func saveFavoriteInfoToDevice() {
-        let encoder = JSONEncoder()
-        if let encoded = try? encoder.encode(self), let movieId = self.movieId {
-            let defaults = UserDefaults.standard
-            defaults.set(encoded, forKey: MovieRamaConstants().FAVORITE_MOVIE_KEY + movieId)
-        }
-    }
-}
-
-
