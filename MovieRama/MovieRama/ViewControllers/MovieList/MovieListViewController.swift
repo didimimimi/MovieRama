@@ -8,17 +8,22 @@
 import UIKit
 
 class MovieListViewController: UIViewController {
-
+    
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     
-    private var movies = [Movie]()
+    private var currentMovies = [Movie]()
+    private var viewModel = MovieListViewModel()
     
+    private let loadingIndicator = UIActivityIndicatorView(style: .large)
+
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.setupTableView()
-        self.setUpMockMovies()
+        self.setupSearchUI()
+        self.setUpViewModel()
+        self.setUpLoadingIndicator()
     }
     
     private func setupTableView() {
@@ -26,7 +31,7 @@ class MovieListViewController: UIViewController {
         self.tableView.dataSource = self
         
         self.tableView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
-                
+        
         self.tableView.register(
             UINib.init(
                 nibName: MovieTableViewCell.cellId,
@@ -36,40 +41,29 @@ class MovieListViewController: UIViewController {
         )
     }
     
-    private func setUpMockMovies() {
-        var movie1 = Movie()
-        movie1.id = "movie_1"
-        movie1.title = "Movie 1 title"
-        movie1.rating = 4
-        movie1.date = "Jul 1 2022"
-        MovieRamaHelper().loadFavoriteInfoFromDevice(forMovie: &movie1)
-        movie1.image = "https://a.ltrbxd.com/resized/sm/upload/xs/d9/wj/nt/scarface-1200-1200-675-675-crop-000000.jpg?v=3e9a08f31f"
-
-        var movie2 = Movie()
-        movie2.id = "movie_2"
-        movie2.title = "Movie 2 title"
-        movie2.rating = 2
-        movie2.date = "Jul 7 2022"
-        MovieRamaHelper().loadFavoriteInfoFromDevice(forMovie: &movie2)
-        movie2.image = "https://cdn.vox-cdn.com/thumbor/q1VhYtuVNtHtWRCb2icgjPzX3Sw=/0x0:1920x1005/fit-in/1200x630/cdn.vox-cdn.com/uploads/chorus_asset/file/15969338/surprise_marvel_releases_a_new_full_trailer_and_poster_for_avengers_endgame_social.jpg"
-        
-        var movie3 = Movie()
-        movie3.id = "movie_3"
-        movie3.title = "Movie 3 title"
-        movie3.rating = 5
-        movie3.date = "Dec 27 2000"
-        MovieRamaHelper().loadFavoriteInfoFromDevice(forMovie: &movie3)
-        movie3.image = "https://occ-0-2794-2219.1.nflxso.net/dnm/api/v6/6AYY37jfdO6hpXcMjf9Yu5cnmO0/AAAABWY9s8-7p1oide16Hv52wGnwTG3oEiIvX-6t5jX5oyvPlaFVGPjjuy_nCtmHZsNMaUTqJbxsjBma3hAQ1d81Nz6nCD0yW9g0QOnt.jpg?r=d11"
-        
-        self.movies.append(movie1)
-        self.movies.append(movie2)
-        self.movies.append(movie3)
+    private func setUpViewModel() {
+        self.viewModel = MovieListViewModel(delegate: self)
+    }
+    
+    private func setupSearchUI() {
+        searchBar.placeholder = "Search MovieRama"
+        searchBar.barTintColor = UIColor.clear
+        searchBar.backgroundColor = UIColor.clear
+        searchBar.isTranslucent = true
+        searchBar.frame.size.height = 40
+        searchBar.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
+        searchBar.delegate = self
+    }
+    
+    private func setUpLoadingIndicator() {
+        loadingIndicator.center = self.tableView.center
+        self.view.addSubview(loadingIndicator)
     }
 }
 
 extension MovieListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        self.movies.count
+        self.currentMovies.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -77,21 +71,58 @@ extension MovieListViewController: UITableViewDelegate, UITableViewDataSource {
             return UITableViewCell()
         }
         
-        let movie = self.movies[indexPath.row]
+        let movie = self.currentMovies[indexPath.row]
         cell.configure(withMovie: movie, delegate: self)
         
         return cell
     }
-    
-    
 }
 
 extension MovieListViewController: MovieTableViewCellDelegate {
     func movieTapped(movie: Movie) {
-        print("Movie tapped")
+        self.viewModel.movieTapped(movie: movie)
     }
     
-    func favoriteTapped(movie: Movie) {
-        print("Favorite tapped")
+    func favoriteTapped(movie: Movie, favorite: Bool) {
+        self.viewModel.favoriteTapped(movie: movie, favorite: favorite)
+    }
+}
+
+extension MovieListViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        self.viewModel.searchMovie(text: searchText)
+    }
+}
+
+extension MovieListViewController: MovieListViewModelDelegate {
+    func update(state: MovieListStates) {
+        switch state {
+        case .moveToDetailsScreen(let movie):
+            self.handleMoveToDetailsScreen(ofMovie: movie)
+        case .loadingState(let show):
+            self.handleLoadingState(show: show)
+        case .createList(let movies):
+            self.handleCreateListState(movies: movies)
+        case .appendToList(let movies, let indexPaths):
+            self.handleAppendToListState(movies: movies, indexPaths: indexPaths)
+        }
+    }
+    
+    private func handleMoveToDetailsScreen(ofMovie movie: Movie) {
+        print("open details of movie \"\(movie.title ?? "")\"")
+    }
+    
+    private func handleLoadingState(show: Bool) {
+        show ? self.loadingIndicator.startAnimating() : self.loadingIndicator.stopAnimating()
+    }
+    
+    private func handleCreateListState(movies: [Movie]) {
+        self.currentMovies = movies
+        self.tableView.reloadData()
+    }
+    
+    private func handleAppendToListState(movies: [Movie], indexPaths: [IndexPath]) {
+        self.currentMovies.append(contentsOf: movies)
+        self.tableView.reloadRows(at: indexPaths, with: .automatic)
     }
 }

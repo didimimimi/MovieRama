@@ -9,7 +9,7 @@ import UIKit
 
 protocol MovieTableViewCellDelegate: AnyObject {
     func movieTapped(movie: Movie)
-    func favoriteTapped(movie: Movie)
+    func favoriteTapped(movie: Movie, favorite: Bool)
 }
 
 class MovieTableViewCell: UITableViewCell {
@@ -102,11 +102,8 @@ class MovieTableViewCell: UITableViewCell {
     
     @IBAction func favoriteButtonTapped(_ sender: UIButton) {
         self.isFavorited.toggle()
-        
-        movie.favorite = self.isFavorited
-        MovieRamaHelper().saveFavoriteInfoToDevice(ofMovie: movie)
-        
         self.updateFavoriteIcon()
-        self.delegate?.favoriteTapped(movie: self.movie)
+        
+        self.delegate?.favoriteTapped(movie: self.movie, favorite: self.isFavorited)
     }
 }

@@ -46,3 +46,8 @@ enum HeartEnum: String {
         self = isFavorite ? .filled : .empty
     }
 }
+
+enum MainScreenListMode {
+    case showAllMovies
+    case showSearchResults
+}

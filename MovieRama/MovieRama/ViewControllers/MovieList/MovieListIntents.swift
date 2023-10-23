@@ -10,5 +10,6 @@ import Foundation
 protocol MovieListIntents: AnyObject {
     func searchMovie(text: String)
     func movieTapped(movie: Movie)
-    func favoriteTapped(movie: Movie)
+    func favoriteTapped(movie: Movie, favorite: Bool)
+    func getMoreMovies()
 }
