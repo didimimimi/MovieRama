@@ -43,6 +43,8 @@ class RatingView: UIView {
     }
     
     func setRating(stars: MovieRating) {
+        self.ratingStackView.removeAllArrangedSubviews()
+        
         let starImages = stars.getInStars()
         
         starImages.forEach({ starImage in
