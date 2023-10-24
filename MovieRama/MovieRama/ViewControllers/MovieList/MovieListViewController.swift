@@ -72,6 +72,13 @@ extension MovieListViewController: UITableViewDelegate, UITableViewDataSource {
         }
         
         let movie = self.currentMovies[indexPath.row]
+        
+        if movie.image == nil {
+            MovieRamaHelper().loadImageFrom(urlString: movie.imageUrl) { responseImage in
+                movie.image = responseImage
+                self.tableView.reloadRows(at: [indexPath], with: .none)
+            }
+        }
         cell.configure(withMovie: movie, delegate: self)
         
         return cell

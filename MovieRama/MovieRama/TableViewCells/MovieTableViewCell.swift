@@ -75,7 +75,7 @@ class MovieTableViewCell: UITableViewCell {
     
     private func update() {
         self.titleLabel.text = self.movie.title
-        self.movieImageView.load(stringUrl: self.movie.image)
+        self.movieImageView.image = self.movie.image
         self.dateLabel.text = self.movie.date
         self.ratingView.setRating(stars: MovieRating(value: self.movie.rating) ?? .zero)
         

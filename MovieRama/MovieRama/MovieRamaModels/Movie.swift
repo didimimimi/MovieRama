@@ -6,13 +6,13 @@
 //
 
 import Foundation
+import UIKit
 
 class Movie: Equatable {
     var id: String?
     var title: String?
     var rating: Double?
     var date: String?
-    var image: String?
     var favorite: Bool?
     var genres: [String] = []
     var description: String?
@@ -20,6 +20,9 @@ class Movie: Equatable {
     var cast: String?
     var similarMovies: [Movie] = []
     var reviews: [Review] = []
+    
+    var imageUrl: String?
+    var image: UIImage?
     
     init() {}
     
