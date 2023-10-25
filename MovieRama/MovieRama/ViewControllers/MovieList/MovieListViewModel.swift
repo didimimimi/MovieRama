@@ -36,7 +36,7 @@ class MovieListViewModel: MovieListIntents {
         // TODO: API Call for movies and setting them to movies, self.movies = response
         
         // TODO: remove mock data
-        self.movies = MovieRamaHelper().setUpMockMovies()
+        self.movies = MovieRamaSingleton.sharedInstance.moviesFromSplashScreen
         
         self.delegate?.update(state: .loadingState(show: false))
         

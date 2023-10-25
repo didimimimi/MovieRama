@@ -80,7 +80,7 @@ class MovieRamaHelper {
         }
     }
 
-    func loadImagesFor(movies: [Movie], completion: @escaping () -> Void) {
+    func loadImagesFor(movies: inout [Movie], completion: @escaping () -> Void) {
         movies.forEach({ movie in
             MovieRamaHelper().loadImageFrom(urlString: movie.imageUrl) { responseImage in
                 movie.image = responseImage

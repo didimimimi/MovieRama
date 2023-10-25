@@ -37,9 +37,18 @@ class SplashScreenViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.getMovies()
         addSubviewsToView()
         addConstraintsToSubviews()
         animateSplashScreen()
+    }
+    
+    private func getMovies() {
+        MovieRamaSingleton.sharedInstance.moviesFromSplashScreen =  MovieRamaHelper().setUpMockMovies()
+        
+        MovieRamaHelper().loadImagesFor(movies: &MovieRamaSingleton.sharedInstance.moviesFromSplashScreen) {
+            print("Images loaded")
+        }
     }
     
     private func addSubviewsToView() {
@@ -70,7 +79,9 @@ class SplashScreenViewController: UIViewController {
             UIView.animate(withDuration: 0, delay: 1, animations: {
                 self.backgroundView.backgroundColor = .white
             }) { _ in
-                self.presentMainScreen()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    self.presentMainScreen()                    
+                }
             }
         }
     }

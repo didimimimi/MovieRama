@@ -31,6 +31,7 @@
 		3441C5612AE5C5E10025DDE0 /* MovieListStates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3441C5602AE5C5E10025DDE0 /* MovieListStates.swift */; };
 		3441C5632AE5C5EC0025DDE0 /* MovieListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3441C5622AE5C5EC0025DDE0 /* MovieListViewModel.swift */; };
 		3441C5652AE5CF910025DDE0 /* StarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3441C5642AE5CF910025DDE0 /* StarView.swift */; };
+		34659DF92AE98A99002E92B3 /* MovieRamaSingleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34659DF82AE98A99002E92B3 /* MovieRamaSingleton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +81,7 @@
 		3441C5602AE5C5E10025DDE0 /* MovieListStates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListStates.swift; sourceTree = "<group>"; };
 		3441C5622AE5C5EC0025DDE0 /* MovieListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListViewModel.swift; sourceTree = "<group>"; };
 		3441C5642AE5CF910025DDE0 /* StarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarView.swift; sourceTree = "<group>"; };
+		34659DF82AE98A99002E92B3 /* MovieRamaSingleton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieRamaSingleton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +114,7 @@
 			children = (
 				3441C55B2AE5BB5A0025DDE0 /* MovieRamaHelper.swift */,
 				3429C6E62AE6D7BC00EF71C9 /* MovieRamaExtensions.swift */,
+				34659DF82AE98A99002E92B3 /* MovieRamaSingleton.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -371,6 +374,7 @@
 				3441C5582AE594520025DDE0 /* MovieRamaConstants.swift in Sources */,
 				3441C5612AE5C5E10025DDE0 /* MovieListStates.swift in Sources */,
 				3441C55C2AE5BB5A0025DDE0 /* MovieRamaHelper.swift in Sources */,
+				34659DF92AE98A99002E92B3 /* MovieRamaSingleton.swift in Sources */,
 				3429C6E92AE6E99300EF71C9 /* MovieListPagination.swift in Sources */,
 				3441C54D2AE58DAE0025DDE0 /* MovieTableViewCell.swift in Sources */,
 				343B8ED02AE8244100DA63D4 /* SplashScreenViewController.swift in Sources */,
