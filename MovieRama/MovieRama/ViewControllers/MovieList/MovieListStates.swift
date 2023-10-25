@@ -8,8 +8,9 @@
 import Foundation
 
 enum MovieListStates {
-    case createList(movies: [Movie]) // replace movies in main list
-    case appendToList(movies: [Movie], indexPaths: [IndexPath]) // append new page of movies in main list
-    case moveToDetailsScreen(ofMovie: Movie)
+    case createListState(movies: [Movie]) // replace movies in main list
+    case appendToListState(movies: [Movie], indexPaths: [IndexPath]) // append new page of movies in main list
+    case moveToDetailsScreenState(ofMovie: Movie)
     case loadingState(show: Bool)
+    case refreshListState(indexPath: IndexPath)
 }

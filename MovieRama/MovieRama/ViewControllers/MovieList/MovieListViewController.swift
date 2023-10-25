@@ -12,11 +12,13 @@ class MovieListViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     
+    private var refreshControl = UIRefreshControl()
+    
     private var currentMovies = [Movie]()
     private var viewModel = MovieListViewModel()
     
     private let loadingIndicator = UIActivityIndicatorView(style: .large)
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -24,6 +26,7 @@ class MovieListViewController: UIViewController {
         self.setupSearchUI()
         self.setUpViewModel()
         self.setUpLoadingIndicator()
+        self.setUpRefreshControl()
     }
     
     private func setupTableView() {
@@ -58,6 +61,24 @@ class MovieListViewController: UIViewController {
     private func setUpLoadingIndicator() {
         loadingIndicator.center = self.tableView.center
         self.view.addSubview(loadingIndicator)
+    }
+    
+    private func setUpRefreshControl() {
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl.tintColor = MovieRamaConstants().CYAN_COLOR
+        self.refreshControl.addTarget(self, action: #selector(handleRefreshControl), for: UIControl.Event.valueChanged)
+        self.tableView.addSubview(self.refreshControl)
+    }
+    
+    @objc private func handleRefreshControl() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            // Update your data or perform any other necessary actions here
+            
+            // End the refresh control animation
+            self.refreshControl.endRefreshing()
+            
+            self.viewModel.refresh()
+        }
     }
 }
 
@@ -97,18 +118,20 @@ extension MovieListViewController: UISearchBarDelegate {
 extension MovieListViewController: MovieListViewModelDelegate {
     func update(state: MovieListStates) {
         switch state {
-        case .moveToDetailsScreen(let movie):
-            self.handleMoveToDetailsScreen(ofMovie: movie)
+        case .moveToDetailsScreenState(let movie):
+            self.handleMoveToDetailsScreenState(ofMovie: movie)
         case .loadingState(let show):
             self.handleLoadingState(show: show)
-        case .createList(let movies):
+        case .createListState(let movies):
             self.handleCreateListState(movies: movies)
-        case .appendToList(let movies, let indexPaths):
+        case .appendToListState(let movies, let indexPaths):
             self.handleAppendToListState(movies: movies, indexPaths: indexPaths)
+        case .refreshListState(let indexPath):
+            self.handleRefreshListState(indexPath: indexPath)
         }
     }
     
-    private func handleMoveToDetailsScreen(ofMovie movie: Movie) {
+    private func handleMoveToDetailsScreenState(ofMovie movie: Movie) {
         print("open details of movie \"\(movie.title ?? "")\"")
     }
     
@@ -123,6 +146,11 @@ extension MovieListViewController: MovieListViewModelDelegate {
     
     private func handleAppendToListState(movies: [Movie], indexPaths: [IndexPath]) {
         self.currentMovies.append(contentsOf: movies)
-        self.tableView.reloadRows(at: indexPaths, with: .automatic)
+        self.tableView.reloadRows(at: indexPaths, with: .none)
+    }
+    
+    private func handleRefreshListState(indexPath: IndexPath) {
+        print("Refreshed")
+        self.tableView.reloadRows(at: [indexPath], with: .none)
     }
 }

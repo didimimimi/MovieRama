@@ -26,20 +26,13 @@ class MovieListViewModel: MovieListIntents {
     init(delegate: MovieListViewModelDelegate) {
         self.delegate = delegate
         
-        self.getAllMovies()
+        self.getMoviesFromSplashScreen()
     }
     
     init() {}
     
-    private func getAllMovies() {
-        self.delegate?.update(state: .loadingState(show: true))
-        // TODO: API Call for movies and setting them to movies, self.movies = response
-        
-        // TODO: remove mock data
+    private func getMoviesFromSplashScreen() {
         self.movies = MovieRamaSingleton.sharedInstance.moviesFromSplashScreen
-        
-        self.delegate?.update(state: .loadingState(show: false))
-        
         self.switchModeToAllMoviesMode()
     }
     
@@ -64,7 +57,7 @@ class MovieListViewModel: MovieListIntents {
     }
     
     func movieTapped(movie: Movie) {
-        self.delegate?.update(state: .moveToDetailsScreen(ofMovie: movie))
+        self.delegate?.update(state: .moveToDetailsScreenState(ofMovie: movie))
     }
     
     func favoriteTapped(movie: Movie, favorite: Bool) {
@@ -72,25 +65,23 @@ class MovieListViewModel: MovieListIntents {
         MovieRamaHelper().saveFavoriteInfoToDevice(ofMovie: movie)
     }
     
-    func getMoreMovies() {
+    func loadMoreMovies() {
         let selectedPagination = (self.mode == .showAllMovies) ? self.pagination : self.searchMoviesPagination
         let moviesForScreen = selectedPagination?.getNextPageData()?.page ?? []
         let newIndexPaths = selectedPagination?.getNextPageData()?.indexPathsToAppend ?? []
         
-        self.delegate?.update(state: .appendToList(movies: moviesForScreen, indexPaths: newIndexPaths))
+        self.delegate?.update(state: .appendToListState(movies: moviesForScreen, indexPaths: newIndexPaths))
     }
     
     private func switchModeToAllMoviesMode() {
-        let moviesForScreen = self.switchModeAndGetNextPage(to: .showAllMovies)
-        self.delegate?.update(state: .createList(movies: moviesForScreen))
+        self.switchModeAndGetNextPage(to: .showAllMovies)
     }
     
     private func switchModeToSearchResultsMode() {
-        let moviesForScreen = self.switchModeAndGetNextPage(to: .showSearchResults)
-        self.delegate?.update(state: .createList(movies: moviesForScreen))
+        self.switchModeAndGetNextPage(to: .showSearchResults)
     }
     
-    private func switchModeAndGetNextPage(to mode: MainScreenListMode) -> MoviePage {
+    private func switchModeAndGetNextPage(to mode: MainScreenListMode) {
         self.mode = mode
         
         var selectedPagination = (self.mode == .showAllMovies) ? self.pagination : self.searchMoviesPagination
@@ -98,6 +89,23 @@ class MovieListViewModel: MovieListIntents {
         
         selectedPagination = MovieListPagination(movies: selectedMovies,
                                                  moviesPerPage: MovieRamaConstants().PAGINATION_NUMBER_OF_ITEMS_PER_PAGE)
-        return selectedPagination?.getNextPageData()?.page ?? []
+        
+        let moviesForScreen = selectedPagination?.getNextPageData()?.page ?? []
+        self.delegate?.update(state: .createListState(movies: moviesForScreen))
+    }
+    
+    func refresh() {
+        self.delegate?.update(state: .loadingState(show: true))
+        // TODO: API Call for movies and setting them to movies, self.movies = response
+        self.movies = MovieRamaHelper().setUpMockMovies()
+        
+        // TODO: remove mock data
+        self.delegate?.update(state: .loadingState(show: false))
+        
+        MovieRamaHelper().loadImagesFor(movies: &self.movies) { indexPathToRefresh in
+            self.delegate?.update(state: .refreshListState(indexPath: indexPathToRefresh))
+        }
+        
+        self.switchModeToAllMoviesMode()
     }
 }

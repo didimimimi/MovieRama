@@ -80,12 +80,15 @@ class MovieRamaHelper {
         }
     }
 
-    func loadImagesFor(movies: inout [Movie], completion: @escaping () -> Void) {
-        movies.forEach({ movie in
+    func loadImagesFor(movies: inout [Movie], completion: @escaping (IndexPath) -> Void) {
+        
+        for (index, movie) in movies.enumerated() {
             MovieRamaHelper().loadImageFrom(urlString: movie.imageUrl) { responseImage in
                 movie.image = responseImage
+                
+                let indexPath = IndexPath(row: index, section: 0)
+                completion(indexPath)
             }
-        })
-        completion()
+        }
     }
 }
