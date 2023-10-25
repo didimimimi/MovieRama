@@ -16,3 +16,20 @@ extension UIStackView {
         }
     }
 }
+
+extension UIView {
+    func setUp(forNib nibName: String, onCompletion: (() -> Void)? = nil) {
+        let nib = UINib(nibName: nibName, bundle: nil)
+        
+        guard let view = nib.instantiate(withOwner: self).first as? UIView else {
+            fatalError("Cannot load nib")
+        }
+        
+        view.frame = self.bounds
+        view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
+        addSubview(view)
+        
+        onCompletion?()
+    }
+}

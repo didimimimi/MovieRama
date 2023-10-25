@@ -9,31 +9,32 @@ import UIKit
 
 class MovieListViewController: UIViewController {
     
+    enum CellType {
+        case movieCell(movie: Movie)
+        case loadMoreCell
+    }
+    
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     
     private var refreshControl = UIRefreshControl()
     
-    private var currentMovies = [Movie]()
+    private var currentCellTypes = [CellType]()
     private var viewModel = MovieListViewModel()
-    
-    private let loadingIndicator = UIActivityIndicatorView(style: .medium)
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.setupTableView()
         self.setupSearchUI()
         self.setUpViewModel()
-        self.setUpLoadingIndicator()
         self.setUpRefreshControl()
     }
     
     private func setupTableView() {
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        
-        self.tableView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
+        tableView.contentInsetAdjustmentBehavior = .never
         
         self.tableView.register(
             UINib.init(
@@ -41,6 +42,14 @@ class MovieListViewController: UIViewController {
                 bundle: .main
             ),
             forCellReuseIdentifier: MovieTableViewCell.cellId
+        )
+        
+        self.tableView.register(
+            UINib.init(
+                nibName: LoadingTableViewCell.cellId,
+                bundle: .main
+            ),
+            forCellReuseIdentifier: LoadingTableViewCell.cellId
         )
     }
     
@@ -58,11 +67,6 @@ class MovieListViewController: UIViewController {
         searchBar.delegate = self
     }
     
-    private func setUpLoadingIndicator() {
-        loadingIndicator.center = self.tableView.center
-        self.view.addSubview(loadingIndicator)
-    }
-    
     private func setUpRefreshControl() {
         self.refreshControl = UIRefreshControl()
         self.refreshControl.tintColor = MovieRamaConstants().CYAN_COLOR
@@ -77,18 +81,31 @@ class MovieListViewController: UIViewController {
 
 extension MovieListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        self.currentMovies.count
+        self.currentCellTypes.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: MovieTableViewCell.cellId, for: indexPath) as? MovieTableViewCell else {
-            return UITableViewCell()
+        
+        let cellType = self.currentCellTypes[indexPath.row]
+        
+        switch cellType {
+        case .movieCell(movie: let movie):
+            guard let movieCell = tableView.dequeueReusableCell(withIdentifier: MovieTableViewCell.cellId, for: indexPath) as? MovieTableViewCell else {
+                return UITableViewCell()
+            }
+            
+            movieCell.configure(withMovie: movie, delegate: self)
+            
+            return movieCell
+        case .loadMoreCell:
+            guard let loadingCell = tableView.dequeueReusableCell(withIdentifier: LoadingTableViewCell.cellId, for: indexPath) as? LoadingTableViewCell else {
+                return UITableViewCell()
+            }
+            
+            loadingCell.beginLoading()
+            
+            return loadingCell
         }
-        
-        let movie = self.currentMovies[indexPath.row]
-        cell.configure(withMovie: movie, delegate: self)
-        
-        return cell
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -96,8 +113,24 @@ extension MovieListViewController: UITableViewDelegate, UITableViewDataSource {
         let contentHeight = scrollView.contentSize.height
 
         if offsetY > contentHeight - scrollView.frame.height {
+            if !self.currentCellTypes.isEmpty {
+                switch self.currentCellTypes[self.currentCellTypes.count - 1] {
+                case .movieCell(_):
+                    self.addLoadingCell()
+                case .loadMoreCell:
+                    break
+                }
+            }
             self.viewModel.loadMoreMovies()
         }
+    }
+    
+    private func addLoadingCell() {
+        self.currentCellTypes.append(.loadMoreCell)
+        
+        let indexPath = IndexPath(row: currentCellTypes.count - 1, section: 0)
+        self.tableView.insertRows(at: [indexPath], with: .none)
+        self.tableView.reloadRows(at: [indexPath], with: .none)
     }
 }
 
@@ -142,18 +175,31 @@ extension MovieListViewController: MovieListViewModelDelegate {
     }
     
     private func handleCreateListState(movies: [Movie]) {
-        self.currentMovies = movies
+        self.currentCellTypes.removeAll()
+        
+        movies.forEach({ movie in
+            self.currentCellTypes.append(.movieCell(movie: movie))
+        })
+        
         self.tableView.reloadData()
     }
     
     private func handleAppendToListState(movies: [Movie], indexPaths: [IndexPath]) {
-        self.currentMovies.append(contentsOf: movies)
-        self.tableView.insertRows(at: indexPaths, with: .none)
-        self.tableView.reloadRows(at: indexPaths, with: .none)
+        self.tableView.performBatchUpdates({
+            self.tableView.deleteRows(at: [IndexPath(row: self.currentCellTypes.count - 1, section: 0)], with: .none)
+            self.currentCellTypes.removeLast()
+            
+            movies.forEach({ movie in
+                self.currentCellTypes.append(.movieCell(movie: movie))
+            })
+            
+            self.tableView.insertRows(at: indexPaths, with: .none)
+        }) { _ in
+            self.tableView.reloadRows(at: indexPaths, with: .none)
+        }
     }
     
     private func handleRefreshListState(indexPath: IndexPath) {
-        print("Refreshed")
         self.tableView.reloadRows(at: [indexPath], with: .none)
     }
 }

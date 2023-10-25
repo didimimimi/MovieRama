@@ -21,25 +21,12 @@ class RatingView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.setUpNib()
+        self.setUp(forNib: RatingView.viewId)
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        self.setUpNib()
-    }
-    
-    private func setUpNib() {
-        let nib = UINib(nibName: RatingView.viewId, bundle: nil)
-        
-        guard let view = nib.instantiate(withOwner: self).first as? UIView else {
-            fatalError("Cannot load nib")
-        }
-        
-        view.frame = self.bounds
-        view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        
-        addSubview(view)
+        self.setUp(forNib: RatingView.viewId)
     }
     
     func setRating(stars: MovieRating) {

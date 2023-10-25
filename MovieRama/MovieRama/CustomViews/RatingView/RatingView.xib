@@ -4,7 +4,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -20,10 +19,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4tI-Bq-bhX" userLabel="Container View">
-                    <rect key="frame" x="0.0" y="59" width="393" height="57"/>
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="150"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="dUO-7P-650">
-                            <rect key="frame" x="0.0" y="0.0" width="393" height="57"/>
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="150"/>
                         </stackView>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -35,13 +34,12 @@
                     </constraints>
                 </view>
             </subviews>
-            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="4tI-Bq-bhX" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="1eK-gC-XId"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="4tI-Bq-bhX" secondAttribute="bottom" id="XtV-tu-brq"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="4tI-Bq-bhX" secondAttribute="trailing" id="a9K-O2-xp0"/>
-                <constraint firstItem="4tI-Bq-bhX" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="epn-jK-dYA"/>
+                <constraint firstItem="4tI-Bq-bhX" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="1eK-gC-XId"/>
+                <constraint firstAttribute="bottom" secondItem="4tI-Bq-bhX" secondAttribute="bottom" id="XtV-tu-brq"/>
+                <constraint firstAttribute="trailing" secondItem="4tI-Bq-bhX" secondAttribute="trailing" id="a9K-O2-xp0"/>
+                <constraint firstItem="4tI-Bq-bhX" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="epn-jK-dYA"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="132" y="-11"/>

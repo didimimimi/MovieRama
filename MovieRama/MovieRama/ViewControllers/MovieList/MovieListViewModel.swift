@@ -63,23 +63,25 @@ class MovieListViewModel: MovieListIntents {
     }
     
     func loadMoreMovies() {
-        let paginationResult: (page: MoviePage, indexPathsToAppend: [IndexPath])?
-        
-        switch self.mode {
-        case .showAllMovies:
-            paginationResult = self.pagination?.getNextPageData()
-        case.showSearchResults:
-            paginationResult = self.searchMoviesPagination?.getNextPageData()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            let paginationResult: (page: MoviePage, indexPathsToAppend: [IndexPath])?
+            
+            switch self.mode {
+            case .showAllMovies:
+                paginationResult = self.pagination?.getNextPageData()
+            case.showSearchResults:
+                paginationResult = self.searchMoviesPagination?.getNextPageData()
+            }
+            
+            guard let paginationResult = paginationResult else {
+                return
+            }
+            
+            let moviesForScreen = paginationResult.page
+            let newIndexPaths = paginationResult.indexPathsToAppend
+            
+            self.delegate?.update(state: .appendToListState(movies: moviesForScreen, indexPaths: newIndexPaths))            
         }
-        
-        guard let paginationResult = paginationResult else {
-            return
-        }
-        
-        let moviesForScreen = paginationResult.page
-        let newIndexPaths = paginationResult.indexPathsToAppend
-        
-        self.delegate?.update(state: .appendToListState(movies: moviesForScreen, indexPaths: newIndexPaths))
     }
     
     private func switchModeToAllMoviesMode() {
