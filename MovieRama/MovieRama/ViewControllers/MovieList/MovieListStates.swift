@@ -11,6 +11,6 @@ enum MovieListStates {
     case createListState(movies: [Movie]) // replace movies in main list
     case appendToListState(movies: [Movie], indexPaths: [IndexPath]) // append new page of movies in main list
     case moveToDetailsScreenState(ofMovie: Movie)
-    case loadingState(show: Bool)
+    case endRefreshState
     case refreshListState(indexPath: IndexPath)
 }

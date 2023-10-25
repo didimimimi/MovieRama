@@ -17,7 +17,7 @@ class MovieListViewController: UIViewController {
     private var currentMovies = [Movie]()
     private var viewModel = MovieListViewModel()
     
-    private let loadingIndicator = UIActivityIndicatorView(style: .large)
+    private let loadingIndicator = UIActivityIndicatorView(style: .medium)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,14 +71,7 @@ class MovieListViewController: UIViewController {
     }
     
     @objc private func handleRefreshControl() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-            // Update your data or perform any other necessary actions here
-            
-            // End the refresh control animation
-            self.refreshControl.endRefreshing()
-            
-            self.viewModel.refresh()
-        }
+        self.viewModel.refresh()
     }
 }
 
@@ -96,6 +89,15 @@ extension MovieListViewController: UITableViewDelegate, UITableViewDataSource {
         cell.configure(withMovie: movie, delegate: self)
         
         return cell
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+
+        if offsetY > contentHeight - scrollView.frame.height {
+            self.viewModel.loadMoreMovies()
+        }
     }
 }
 
@@ -120,8 +122,8 @@ extension MovieListViewController: MovieListViewModelDelegate {
         switch state {
         case .moveToDetailsScreenState(let movie):
             self.handleMoveToDetailsScreenState(ofMovie: movie)
-        case .loadingState(let show):
-            self.handleLoadingState(show: show)
+        case .endRefreshState:
+            self.handleEndRefreshState()
         case .createListState(let movies):
             self.handleCreateListState(movies: movies)
         case .appendToListState(let movies, let indexPaths):
@@ -135,8 +137,8 @@ extension MovieListViewController: MovieListViewModelDelegate {
         print("open details of movie \"\(movie.title ?? "")\"")
     }
     
-    private func handleLoadingState(show: Bool) {
-        show ? self.loadingIndicator.startAnimating() : self.loadingIndicator.stopAnimating()
+    private func handleEndRefreshState() {
+        self.refreshControl.endRefreshing()
     }
     
     private func handleCreateListState(movies: [Movie]) {
@@ -146,6 +148,7 @@ extension MovieListViewController: MovieListViewModelDelegate {
     
     private func handleAppendToListState(movies: [Movie], indexPaths: [IndexPath]) {
         self.currentMovies.append(contentsOf: movies)
+        self.tableView.insertRows(at: indexPaths, with: .none)
         self.tableView.reloadRows(at: indexPaths, with: .none)
     }
     

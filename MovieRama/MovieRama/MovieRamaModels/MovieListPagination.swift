@@ -35,7 +35,7 @@ class MovieListPagination {
     }
     
     func getNextPageData() -> (page: MoviePage, indexPathsToAppend: [IndexPath])? {
-        if self.currentPage > self.pages.count || pages.isEmpty {
+        if self.currentPage >= self.pages.count || pages.isEmpty {
             return nil
         } else {
             let page = self.pages[self.currentPage]
@@ -48,6 +48,7 @@ class MovieListPagination {
             self.moviesCurrentlyShown = newAmountOfMoviesCurrentlyShown
             self.currentPage += 1
             
+            print("One more page added. Currently \(newAmountOfMoviesCurrentlyShown) movies visible.")
             return (page, indexPaths)
         }
     }

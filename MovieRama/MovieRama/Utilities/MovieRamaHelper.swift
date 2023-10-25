@@ -56,6 +56,12 @@ class MovieRamaHelper {
         movies.append(movie1)
         movies.append(movie2)
         movies.append(movie3)
+        movies.append(movie3)
+        movies.append(movie3)
+        movies.append(movie3)
+        movies.append(movie3)
+        movies.append(movie3)
+        movies.append(movie3)
 
         return movies
     }
