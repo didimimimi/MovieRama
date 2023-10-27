@@ -117,11 +117,11 @@ extension MovieListViewController: UITableViewDelegate, UITableViewDataSource {
                 switch self.currentCellTypes[self.currentCellTypes.count - 1] {
                 case .movieCell(_):
                     self.addLoadingCell()
+                    self.viewModel.loadMoreMovies()
                 case .loadMoreCell:
                     break
                 }
             }
-            self.viewModel.loadMoreMovies()
         }
     }
     
