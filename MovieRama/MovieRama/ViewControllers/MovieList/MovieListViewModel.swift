@@ -20,8 +20,10 @@ class MovieListViewModel: MovieListIntents {
     private var searchMoviesPagination: MovieListPagination?
     
     private weak var delegate: MovieListViewModelDelegate?
-    
+
     private var mode = MainScreenListMode.showAllMovies
+    private var isLoadingMoreMovies = false
+    private var hasAlradyRemovedLoadingCell = false
     
     init(delegate: MovieListViewModelDelegate) {
         self.delegate = delegate
@@ -62,16 +64,36 @@ class MovieListViewModel: MovieListIntents {
         MovieRamaHelper().saveFavoriteInfoToDevice(ofMovie: movie)
     }
     
-    func loadMoreMovies() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-            let paginationResult: (page: MoviePage, indexPathsToAppend: [IndexPath])?
-            
-            switch self.mode {
-            case .showAllMovies:
-                paginationResult = self.pagination?.getNextPageData()
-            case.showSearchResults:
-                paginationResult = self.searchMoviesPagination?.getNextPageData()
+    func scrolledToBottom() {
+        var canLoadMorePages: Bool
+        
+        switch self.mode {
+        case .showAllMovies:
+            canLoadMorePages = (self.pagination?.canLoadMorePages() == true)
+        case .showSearchResults:
+            canLoadMorePages = (self.searchMoviesPagination?.canLoadMorePages() == true)
+        }
+        
+        if canLoadMorePages {
+            if !self.isLoadingMoreMovies {
+                self.delegate?.update(state: .addLoadingCellState)
+                self.loadMoreMovies()
             }
+        } else {
+            if !self.hasAlradyRemovedLoadingCell {
+                self.hasAlradyRemovedLoadingCell = true
+                self.delegate?.update(state: .removeLoadingCellState)
+            }
+        }
+    }
+    
+    private func loadMoreMovies() {
+        self.isLoadingMoreMovies = true
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            self.isLoadingMoreMovies = false
+            
+            let paginationResult = self.getPaginationNextPage()
             
             guard let paginationResult = paginationResult else {
                 return
@@ -84,6 +106,19 @@ class MovieListViewModel: MovieListIntents {
         }
     }
     
+    private func getPaginationNextPage() -> PaginationResult? {
+        let paginationResult: PaginationResult?
+
+        switch self.mode {
+        case .showAllMovies:
+            paginationResult = self.pagination?.getNextPageData()
+        case.showSearchResults:
+            paginationResult = self.searchMoviesPagination?.getNextPageData()
+        }
+        
+        return paginationResult
+    }
+    
     private func switchModeToAllMoviesMode() {
         self.switchModeAndGetNextPage(to: .showAllMovies)
     }
@@ -94,8 +129,15 @@ class MovieListViewModel: MovieListIntents {
     
     private func switchModeAndGetNextPage(to mode: MainScreenListMode) {
         self.mode = mode
-        let selectedPagination: MovieListPagination?
+        let selectedPagination = self.makePagination()
         
+        let moviesForScreen = selectedPagination?.getNextPageData()?.page ?? []
+        self.delegate?.update(state: .createListState(movies: moviesForScreen))
+    }
+    
+    private func makePagination() -> MovieListPagination? {
+        let selectedPagination: MovieListPagination?
+
         switch self.mode {
         case .showAllMovies:
             self.pagination = MovieListPagination(movies: self.movies,
@@ -107,8 +149,7 @@ class MovieListViewModel: MovieListIntents {
             selectedPagination = self.searchMoviesPagination
         }
         
-        let moviesForScreen = selectedPagination?.getNextPageData()?.page ?? []
-        self.delegate?.update(state: .createListState(movies: moviesForScreen))
+        return selectedPagination
     }
     
     func refresh() {

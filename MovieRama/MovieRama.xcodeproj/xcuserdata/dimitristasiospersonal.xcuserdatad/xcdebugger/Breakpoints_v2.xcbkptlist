@@ -14,8 +14,8 @@
             filePath = "MovieRama/ViewControllers/MovieList/MovieListViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "76"
-            endingLineNumber = "76"
+            startingLineNumber = "98"
+            endingLineNumber = "98"
             landmarkName = "loadMoreMovies()"
             landmarkType = "7">
          </BreakpointContent>
@@ -46,8 +46,8 @@
             filePath = "MovieRama/ViewControllers/MovieList/MovieListViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "145"
-            endingLineNumber = "145"
+            startingLineNumber = "154"
+            endingLineNumber = "154"
             landmarkName = "MovieListViewController"
             landmarkType = "21">
          </BreakpointContent>
@@ -78,8 +78,8 @@
             filePath = "MovieRama/ViewControllers/MovieList/MovieListViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "79"
-            endingLineNumber = "79"
+            startingLineNumber = "101"
+            endingLineNumber = "101"
             landmarkName = "loadMoreMovies()"
             landmarkType = "7">
          </BreakpointContent>
@@ -94,8 +94,8 @@
             filePath = "MovieRama/ViewControllers/MovieList/MovieListViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "82"
-            endingLineNumber = "82"
+            startingLineNumber = "104"
+            endingLineNumber = "104"
             landmarkName = "loadMoreMovies()"
             landmarkType = "7">
          </BreakpointContent>
@@ -110,8 +110,8 @@
             filePath = "MovieRama/ViewControllers/MovieList/MovieListViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "150"
-            endingLineNumber = "150"
+            startingLineNumber = "159"
+            endingLineNumber = "159"
             landmarkName = "searchBar(_:textDidChange:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -158,42 +158,10 @@
             filePath = "MovieRama/ViewControllers/MovieList/MovieListViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "192"
-            endingLineNumber = "192"
+            startingLineNumber = "210"
+            endingLineNumber = "210"
             landmarkName = "handleAppendToListState(movies:indexPaths:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "F25596C2-AAE4-4A96-8DFC-AFA16C0014E6 - 93f1169d2480d6cd"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 () -&gt; () in MovieRama.MovieListViewController.handleAppendToListState(movies: Swift.Array&lt;MovieRama.Movie&gt;, indexPaths: Swift.Array&lt;Foundation.IndexPath&gt;) -&gt; ()"
-                  moduleName = "MovieRama"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/dimitristasiospersonal/Documents/GitHub/MovieRama/MovieRama/MovieRama/ViewControllers/MovieList/MovieListViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "192"
-                  endingLineNumber = "192"
-                  offsetFromSymbolStart = "669">
-               </Location>
-               <Location
-                  uuid = "F25596C2-AAE4-4A96-8DFC-AFA16C0014E6 - 99fe3a3ad9522535"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (MovieRama.Movie) -&gt; () in closure #1 () -&gt; () in MovieRama.MovieListViewController.handleAppendToListState(movies: Swift.Array&lt;MovieRama.Movie&gt;, indexPaths: Swift.Array&lt;Foundation.IndexPath&gt;) -&gt; ()"
-                  moduleName = "MovieRama"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/dimitristasiospersonal/Documents/GitHub/MovieRama/MovieRama/MovieRama/ViewControllers/MovieList/MovieListViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "192"
-                  endingLineNumber = "192"
-                  offsetFromSymbolStart = "48">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -8,6 +8,7 @@
 import Foundation
 
 typealias MoviePage = [Movie]
+typealias PaginationResult = (page: MoviePage, indexPathsToAppend: [IndexPath])
 
 class MovieListPagination {
     private var currentPage = 0
@@ -34,8 +35,8 @@ class MovieListPagination {
         }
     }
     
-    func getNextPageData() -> (page: MoviePage, indexPathsToAppend: [IndexPath])? {
-        if self.currentPage >= self.pages.count || pages.isEmpty {
+    func getNextPageData() -> PaginationResult? {
+        if self.cannotLoadMorePages() {
             return nil
         } else {
             let page = self.pages[self.currentPage]
@@ -51,5 +52,21 @@ class MovieListPagination {
             print("One more page added. Currently \(newAmountOfMoviesCurrentlyShown) movies visible.")
             return (page, indexPaths)
         }
+    }
+    
+    func cannotLoadMorePages() -> Bool {
+        hasNoPages() || hasReachedPageLimit()
+    }
+    
+    func canLoadMorePages() -> Bool {
+        !cannotLoadMorePages()
+    }
+    
+    private func hasReachedPageLimit() -> Bool {
+        self.currentPage >= self.pages.count
+    }
+    
+    private func hasNoPages() -> Bool {
+        pages.isEmpty
     }
 }

@@ -10,7 +10,11 @@ import Foundation
 enum MovieListStates {
     case createListState(movies: [Movie]) // replace movies in main list
     case appendToListState(movies: [Movie], indexPaths: [IndexPath]) // append new page of movies in main list
-    case moveToDetailsScreenState(ofMovie: Movie)
-    case endRefreshState
-    case refreshListState(indexPath: IndexPath)
+    case noMoreMoviesState // reached the bottom and all movies have been loaded
+    case moveToDetailsScreenState(ofMovie: Movie) // movie pressed
+    case endRefreshState // end refresh control animation
+    case refreshListState(indexPath: IndexPath) // refresh rows in order to update the images
+    case emptyListState // no lists to load
+    case addLoadingCellState // adds loading cell at the bottom
+    case removeLoadingCellState // removes loading cell at the bottom
 }

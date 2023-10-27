@@ -113,24 +113,33 @@ extension MovieListViewController: UITableViewDelegate, UITableViewDataSource {
         let contentHeight = scrollView.contentSize.height
 
         if offsetY > contentHeight - scrollView.frame.height {
-            if !self.currentCellTypes.isEmpty {
-                switch self.currentCellTypes[self.currentCellTypes.count - 1] {
-                case .movieCell(_):
-                    self.addLoadingCell()
-                    self.viewModel.loadMoreMovies()
-                case .loadMoreCell:
-                    break
-                }
-            }
+            self.viewModel.scrolledToBottom()
         }
     }
     
     private func addLoadingCell() {
-        self.currentCellTypes.append(.loadMoreCell)
-        
-        let indexPath = IndexPath(row: currentCellTypes.count - 1, section: 0)
-        self.tableView.insertRows(at: [indexPath], with: .none)
-        self.tableView.reloadRows(at: [indexPath], with: .none)
+        if !loadingCellExists() {
+            self.currentCellTypes.append(.loadMoreCell)
+            
+            let indexPath = IndexPath(row: currentCellTypes.count - 1, section: 0)
+            self.tableView.insertRows(at: [indexPath], with: .none)
+            self.tableView.reloadRows(at: [indexPath], with: .none)
+        }
+    }
+    
+    private func removeLoadingCell() {
+        if loadingCellExists() {
+            self.tableView.deleteRows(at: [IndexPath(row: self.currentCellTypes.count - 1, section: 0)], with: .none)
+            self.currentCellTypes.removeLast()
+        }
+    }
+    
+    private func loadingCellExists() -> Bool {
+        if !self.currentCellTypes.isEmpty, case .loadMoreCell = self.currentCellTypes[self.currentCellTypes.count - 1] {
+            return true
+        } else {
+            return false
+        }
     }
 }
 
@@ -152,6 +161,8 @@ extension MovieListViewController: UISearchBarDelegate {
 
 extension MovieListViewController: MovieListViewModelDelegate {
     func update(state: MovieListStates) {
+        print(state)
+        
         switch state {
         case .moveToDetailsScreenState(let movie):
             self.handleMoveToDetailsScreenState(ofMovie: movie)
@@ -163,6 +174,14 @@ extension MovieListViewController: MovieListViewModelDelegate {
             self.handleAppendToListState(movies: movies, indexPaths: indexPaths)
         case .refreshListState(let indexPath):
             self.handleRefreshListState(indexPath: indexPath)
+        case .noMoreMoviesState:
+            self.handleNoMoreMoviesState()
+        case .emptyListState:
+            self.handleEmptyListState()
+        case .addLoadingCellState:
+            self.handleAddLoadingCellState()
+        case .removeLoadingCellState:
+            self.handleRemoveLoadingCellState()
         }
     }
     
@@ -186,8 +205,7 @@ extension MovieListViewController: MovieListViewModelDelegate {
     
     private func handleAppendToListState(movies: [Movie], indexPaths: [IndexPath]) {
         self.tableView.performBatchUpdates({
-            self.tableView.deleteRows(at: [IndexPath(row: self.currentCellTypes.count - 1, section: 0)], with: .none)
-            self.currentCellTypes.removeLast()
+            self.removeLoadingCell()
             
             movies.forEach({ movie in
                 self.currentCellTypes.append(.movieCell(movie: movie))
@@ -201,5 +219,21 @@ extension MovieListViewController: MovieListViewModelDelegate {
     
     private func handleRefreshListState(indexPath: IndexPath) {
         self.tableView.reloadRows(at: [indexPath], with: .none)
+    }
+    
+    private func handleNoMoreMoviesState() {
+        self.removeLoadingCell()
+    }
+    
+    private func handleEmptyListState() {
+        // TODO: show empty view
+    }
+    
+    private func handleAddLoadingCellState() {
+        self.addLoadingCell()
+    }
+    
+    private func handleRemoveLoadingCellState() {
+        self.removeLoadingCell()
     }
 }

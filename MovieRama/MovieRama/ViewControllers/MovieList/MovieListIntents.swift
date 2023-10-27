@@ -11,6 +11,6 @@ protocol MovieListIntents: AnyObject {
     func searchMovie(text: String)
     func movieTapped(movie: Movie)
     func favoriteTapped(movie: Movie, favorite: Bool)
-    func loadMoreMovies()
+    func scrolledToBottom()
     func refresh()
 }
