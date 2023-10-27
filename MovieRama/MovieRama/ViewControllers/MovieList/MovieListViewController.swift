@@ -17,6 +17,9 @@ class MovieListViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet weak var emptyView: UIView!
+    @IBOutlet weak var emptyLabel: UILabel!
+    
     private var refreshControl = UIRefreshControl()
     
     private var currentCellTypes = [CellType]()
@@ -29,6 +32,7 @@ class MovieListViewController: UIViewController {
         self.setupSearchUI()
         self.setUpViewModel()
         self.setUpRefreshControl()
+        self.setUpEmptyLabel()
     }
     
     private func setupTableView() {
@@ -76,6 +80,11 @@ class MovieListViewController: UIViewController {
     
     @objc private func handleRefreshControl() {
         self.viewModel.refresh()
+    }
+    
+    private func setUpEmptyLabel() {
+        self.emptyLabel.font = UIFont.systemFont(ofSize: 24)
+        self.emptyLabel.textColor = MovieRamaConstants().CYAN_COLOR
     }
 }
 
@@ -176,8 +185,8 @@ extension MovieListViewController: MovieListViewModelDelegate {
             self.handleRefreshListState(indexPath: indexPath)
         case .noMoreMoviesState:
             self.handleNoMoreMoviesState()
-        case .emptyListState:
-            self.handleEmptyListState()
+        case .emptyListState(let hide):
+            self.handleEmptyListState(hide: hide)
         case .addLoadingCellState:
             self.handleAddLoadingCellState()
         case .removeLoadingCellState:
@@ -225,8 +234,8 @@ extension MovieListViewController: MovieListViewModelDelegate {
         self.removeLoadingCell()
     }
     
-    private func handleEmptyListState() {
-        // TODO: show empty view
+    private func handleEmptyListState(hide: Bool) {
+        self.emptyView.isHidden = hide
     }
     
     private func handleAddLoadingCellState() {

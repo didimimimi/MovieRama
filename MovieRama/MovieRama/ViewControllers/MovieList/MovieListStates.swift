@@ -14,7 +14,7 @@ enum MovieListStates {
     case moveToDetailsScreenState(ofMovie: Movie) // movie pressed
     case endRefreshState // end refresh control animation
     case refreshListState(indexPath: IndexPath) // refresh rows in order to update the images
-    case emptyListState // no lists to load
+    case emptyListState(hide: Bool) // no lists to load
     case addLoadingCellState // adds loading cell at the bottom
     case removeLoadingCellState // removes loading cell at the bottom
 }
