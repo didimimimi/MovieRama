@@ -178,9 +178,3 @@ class MovieListViewModel: MovieListIntents {
         }
     }
 }
-
-extension MovieListViewModel: MovieListPaginationDelegate {
-    func handleError(error: Error) {
-        self.delegate?.update(state: .errorState(error: error))
-    }
-}
