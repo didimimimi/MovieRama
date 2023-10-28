@@ -19,12 +19,16 @@ class MovieListPagination {
     init(movies: [Movie]) {
         var moviesList = movies
         
-        while !moviesList.isEmpty {
+        self.paginate(movies: &moviesList)
+    }
+    
+    private func paginate(movies: inout [Movie]) {
+        while !movies.isEmpty {
             var page = MoviePage()
             
             for _ in 0..<self.moviesPerPage {
-                if !moviesList.isEmpty {
-                    page.append(moviesList.removeFirst())
+                if !movies.isEmpty {
+                    page.append(movies.removeFirst())
                 }
             }
             
@@ -65,5 +69,25 @@ class MovieListPagination {
     
     private func hasNoPages() -> Bool {
         pages.isEmpty
+    }
+    
+    func appendNewMovies(movies: [Movie]) {
+        var moviesList = movies
+        var page = self.pages.last ?? []
+        
+        // fill last page before making new ones
+        self.fit(movies: &moviesList, inPage: &page)
+        
+        self.paginate(movies: &moviesList)
+    }
+    
+    private func fit(movies: inout [Movie], inPage page: inout MoviePage) {
+        let pageCapacity = MovieRamaConstants().PAGINATION_NUMBER_OF_ITEMS_PER_PAGE - page.count
+        
+        for _ in 0..<pageCapacity {
+            if !movies.isEmpty {
+                page.append(movies.removeFirst())
+            }
+        }
     }
 }

@@ -172,7 +172,7 @@ extension MovieListViewController: UISearchBarDelegate {
 
 extension MovieListViewController: MovieListViewModelDelegate {
     func update(state: MovieListStates) {
-        print(state)
+//        print(state)
         
         switch state {
         case .moveToDetailsScreenState(let movie):

@@ -25,6 +25,9 @@ class MovieListViewModel: MovieListIntents {
     private var isLoadingMoreMovies = false
     private var hasAlradyRemovedLoadingCell = false
     
+    private var currentApiPageForMovies = 1
+    private var currentApiPageForSearchResults = 1
+
     init(delegate: MovieListViewModelDelegate) {
         self.delegate = delegate
         
@@ -65,24 +68,36 @@ class MovieListViewModel: MovieListIntents {
     }
     
     func scrolledToBottom() {
-        var canLoadMorePages: Bool
+        var canLoadMoreLocalPages: Bool
+        var canLoadMoreApiPages: Bool
         
         switch self.mode {
         case .showAllMovies:
-            canLoadMorePages = (self.pagination?.canLoadMorePages() == true)
+            canLoadMoreLocalPages = (self.pagination?.canLoadMorePages() == true)
+            canLoadMoreApiPages = self.currentApiPageForMovies < MovieRamaConstants().MAX_API_PAGES
         case .showSearchResults:
-            canLoadMorePages = (self.searchMoviesPagination?.canLoadMorePages() == true)
+            canLoadMoreLocalPages = (self.searchMoviesPagination?.canLoadMorePages() == true)
+            canLoadMoreApiPages = self.currentApiPageForSearchResults < MovieRamaConstants().MAX_API_PAGES
         }
         
-        if canLoadMorePages {
+        if canLoadMoreLocalPages {
             if !self.isLoadingMoreMovies {
                 self.delegate?.update(state: .addLoadingCellState)
                 self.loadMoreMovies()
             }
         } else {
-            if !self.hasAlradyRemovedLoadingCell {
-                self.hasAlradyRemovedLoadingCell = true
-                self.delegate?.update(state: .removeLoadingCellState)
+            if canLoadMoreApiPages {
+                if !self.isLoadingMoreMovies {
+                    self.delegate?.update(state: .addLoadingCellState)
+                    self.currentApiPageForMovies += 1
+                    self.getApiPages(specifiedPage: self.currentApiPageForMovies)
+                    self.loadMoreMovies()
+                }
+            } else {
+                if !self.hasAlradyRemovedLoadingCell {
+                    self.hasAlradyRemovedLoadingCell = true
+                    self.delegate?.update(state: .removeLoadingCellState)
+                }
             }
         }
     }
@@ -154,18 +169,27 @@ class MovieListViewModel: MovieListIntents {
     
     func refresh() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-            MovieRamaRest().getPopularMovies(forPage: 1, completionBlock: { response in
-                self.movies = response.movies
-            }, errorBlock: { error in
-                self.delegate?.update(state: .errorState(error: error))
-            })
+            self.getApiPages(specifiedPage: 1)
             
-            MovieRamaHelper().loadImagesFor(movies: &self.movies) { indexPathToRefresh in
-                self.delegate?.update(state: .refreshListState(indexPath: indexPathToRefresh))
-            }
+//            MovieRamaHelper().loadImagesFor(movies: &self.movies) { indexPathToRefresh in
+//                self.delegate?.update(state: .refreshListState(indexPath: indexPathToRefresh))
+//            }
             self.delegate?.update(state: .endRefreshState)
             
             self.mode == .showAllMovies ? self.switchModeToAllMoviesMode() : self.switchModeToSearchResultsMode()
         }
+    }
+    
+    private func getApiPages(specifiedPage: Int) {
+        MovieRamaRest().getPopularMovies(forPage: specifiedPage, completionBlock: { response in
+            if specifiedPage == 1 {
+                self.movies = response.movies
+            } else {
+                self.movies.append(contentsOf: response.movies)
+                self.pagination?.appendNewMovies(movies: response.movies)
+            }
+        }, errorBlock: { error in
+            self.delegate?.update(state: .errorState(error: error))
+        })
     }
 }
