@@ -33,3 +33,14 @@ extension UIView {
         onCompletion?()
     }
 }
+
+extension UIViewController {
+    func presentAlertFor(error: Error) {
+        let alertController = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+        
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alertController.addAction(okAction)
+
+        self.present(alertController, animated: true)
+    }
+}

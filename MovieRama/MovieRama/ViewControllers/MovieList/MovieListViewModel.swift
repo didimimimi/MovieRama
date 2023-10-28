@@ -22,10 +22,8 @@ class MovieListViewModel: MovieListIntents {
     private weak var delegate: MovieListViewModelDelegate?
 
     private var mode = MainScreenListMode.showAllMovies
-    
     private var isLoadingMoreMovies = false
-    
-    private var hasLoadedPaginationFromSplashScreen = false
+    private var hasAlradyRemovedLoadingCell = false
     
     init(delegate: MovieListViewModelDelegate) {
         self.delegate = delegate
@@ -36,7 +34,7 @@ class MovieListViewModel: MovieListIntents {
     init() {}
     
     private func loadMoviesFromSplashScreen() {
-        self.pagination = MovieRamaSingleton.sharedInstance.pagination
+        self.movies = MovieRamaSingleton.sharedInstance.moviesFromSplashScreen
         self.switchModeToAllMoviesMode()
     }
     
@@ -67,12 +65,26 @@ class MovieListViewModel: MovieListIntents {
     }
     
     func scrolledToBottom() {
-        if self.isLoadingMoreMovies {
-            return
+        var canLoadMorePages: Bool
+        
+        switch self.mode {
+        case .showAllMovies:
+            canLoadMorePages = (self.pagination?.canLoadMorePages() == true)
+        case .showSearchResults:
+            canLoadMorePages = (self.searchMoviesPagination?.canLoadMorePages() == true)
         }
         
-        self.delegate?.update(state: .addLoadingCellState)
-        self.loadMoreMovies()
+        if canLoadMorePages {
+            if !self.isLoadingMoreMovies {
+                self.delegate?.update(state: .addLoadingCellState)
+                self.loadMoreMovies()
+            }
+        } else {
+            if !self.hasAlradyRemovedLoadingCell {
+                self.hasAlradyRemovedLoadingCell = true
+                self.delegate?.update(state: .removeLoadingCellState)
+            }
+        }
     }
     
     private func loadMoreMovies() {
@@ -81,42 +93,30 @@ class MovieListViewModel: MovieListIntents {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             self.isLoadingMoreMovies = false
             
-            DispatchQueue.global().async {
-                var paginationResult: PaginationResult?
-                
-                self.getPaginationNextPage() { result in
-                    paginationResult = result
-                    
-                    guard let paginationResult = paginationResult else {
-                        return
-                    }
-                    
-                    DispatchQueue.main.async {
-                        let moviesForScreen = paginationResult.page
-                        let newIndexPaths = paginationResult.indexPathsToAppend
-                        
-                        self.delegate?.update(state: .appendToListState(movies: moviesForScreen, indexPaths: newIndexPaths))
-                    }
-                }
+            let paginationResult = self.getPaginationNextPage()
+            
+            guard let paginationResult = paginationResult else {
+                return
             }
+            
+            let moviesForScreen = paginationResult.page
+            let newIndexPaths = paginationResult.indexPathsToAppend
+            
+            self.delegate?.update(state: .appendToListState(movies: moviesForScreen, indexPaths: newIndexPaths))
         }
     }
     
-    private func getPaginationNextPage(completion: @escaping (PaginationResult?) -> Void) {
-        var paginationResult: PaginationResult?
+    private func getPaginationNextPage() -> PaginationResult? {
+        let paginationResult: PaginationResult?
 
         switch self.mode {
         case .showAllMovies:
-            self.pagination?.getNextPageData() { result in
-                paginationResult = result
-                completion(paginationResult)
-            }
+            paginationResult = self.pagination?.getNextPageData()
         case.showSearchResults:
-            self.searchMoviesPagination?.getNextPageData() { result in
-                paginationResult = result
-                completion(paginationResult)
-            }
+            paginationResult = self.searchMoviesPagination?.getNextPageData()
         }
+        
+        return paginationResult
     }
     
     private func switchModeToAllMoviesMode() {
@@ -131,13 +131,7 @@ class MovieListViewModel: MovieListIntents {
         self.mode = mode
         let selectedPagination = self.makePagination()
         
-        var moviesForScreen = [Movie]()
-        
-        selectedPagination?.getNextPageData() { result in
-            if let page = result?.page {
-                moviesForScreen = page
-            }
-        }
+        let moviesForScreen = selectedPagination?.getNextPageData()?.page ?? []
         
         self.delegate?.update(state: .emptyListState(hide: !moviesForScreen.isEmpty))
         self.delegate?.update(state: .createListState(movies: moviesForScreen))
@@ -148,14 +142,10 @@ class MovieListViewModel: MovieListIntents {
 
         switch self.mode {
         case .showAllMovies:
-            if self.hasLoadedPaginationFromSplashScreen {
-                self.pagination = MovieListPagination(delegate: self)
-            } else {
-                self.hasLoadedPaginationFromSplashScreen = true
-            }
+            self.pagination = MovieListPagination(movies: self.movies)
             selectedPagination = self.pagination
         case .showSearchResults:
-            self.searchMoviesPagination = MovieListPagination(delegate: self)
+            self.searchMoviesPagination = MovieListPagination(movies: self.searchResults)
             selectedPagination = self.searchMoviesPagination
         }
         
@@ -163,15 +153,16 @@ class MovieListViewModel: MovieListIntents {
     }
     
     func refresh() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
-            // TODO: API Call for movies and setting them to movies, self.movies = response
-//            self.movies = MovieRamaHelper().setUpMockMovies()
-//
-//            MovieRamaHelper().loadImagesFor(movies: &self.movies) { indexPathToRefresh in
-//                self.delegate?.update(state: .refreshListState(indexPath: indexPathToRefresh))
-//            }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            MovieRamaRest().getPopularMovies(forPage: 1, completionBlock: { response in
+                self.movies = response.movies
+            }, errorBlock: { error in
+                self.delegate?.update(state: .errorState(error: error))
+            })
             
-//            self.pagination = se
+            MovieRamaHelper().loadImagesFor(movies: &self.movies) { indexPathToRefresh in
+                self.delegate?.update(state: .refreshListState(indexPath: indexPathToRefresh))
+            }
             self.delegate?.update(state: .endRefreshState)
             
             self.mode == .showAllMovies ? self.switchModeToAllMoviesMode() : self.switchModeToSearchResultsMode()

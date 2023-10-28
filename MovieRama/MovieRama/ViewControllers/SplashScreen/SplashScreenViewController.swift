@@ -44,7 +44,11 @@ class SplashScreenViewController: UIViewController {
     }
     
     private func getMovies() {
-        MovieRamaSingleton.sharedInstance.pagination = MovieListPagination()
+        MovieRamaRest().getPopularMovies(forPage: 1, completionBlock: { response in
+            MovieRamaSingleton.sharedInstance.moviesFromSplashScreen = response.movies
+        }, errorBlock: { error in
+            self.presentAlertFor(error: error)
+        })
     }
     
     private func addSubviewsToView() {

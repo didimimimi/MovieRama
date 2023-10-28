@@ -8,7 +8,7 @@
 import Foundation
 
 class MovieRamaSingleton {
-    var pagination: MovieListPagination?
+    var moviesFromSplashScreen = [Movie]()
     
     private init() {}
     
