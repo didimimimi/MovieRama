@@ -171,9 +171,6 @@ class MovieListViewModel: MovieListIntents {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             self.getApiPages(specifiedPage: 1)
             
-//            MovieRamaHelper().loadImagesFor(movies: &self.movies) { indexPathToRefresh in
-//                self.delegate?.update(state: .refreshListState(indexPath: indexPathToRefresh))
-//            }
             self.delegate?.update(state: .endRefreshState)
             
             self.mode == .showAllMovies ? self.switchModeToAllMoviesMode() : self.switchModeToSearchResultsMode()

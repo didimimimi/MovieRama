@@ -143,9 +143,8 @@
 		3433087B2AED0A28006FEEBA /* APIModels */ = {
 			isa = PBXGroup;
 			children = (
-				3433087D2AED0A52006FEEBA /* ResponseModels */,
 				3433087C2AED0A47006FEEBA /* RequestModels */,
-				3433088B2AED43DF006FEEBA /* PaginationResult.swift */,
+				3433087D2AED0A52006FEEBA /* ResponseModels */,
 			);
 			path = APIModels;
 			sourceTree = "<group>";
@@ -173,6 +172,38 @@
 				343308832AED0B65006FEEBA /* PopularMoviesTransformer.swift */,
 			);
 			path = Popular;
+			sourceTree = "<group>";
+		};
+		3433088D2AED62AC006FEEBA /* DomainModels */ = {
+			isa = PBXGroup;
+			children = (
+				343308902AED6314006FEEBA /* RequestModels */,
+				3433088E2AED62F0006FEEBA /* ResponseModels */,
+			);
+			path = DomainModels;
+			sourceTree = "<group>";
+		};
+		3433088E2AED62F0006FEEBA /* ResponseModels */ = {
+			isa = PBXGroup;
+			children = (
+				3433088F2AED62F9006FEEBA /* Popular */,
+			);
+			path = ResponseModels;
+			sourceTree = "<group>";
+		};
+		3433088F2AED62F9006FEEBA /* Popular */ = {
+			isa = PBXGroup;
+			children = (
+				343308852AED0F7A006FEEBA /* PopularMoviesResponse.swift */,
+			);
+			path = Popular;
+			sourceTree = "<group>";
+		};
+		343308902AED6314006FEEBA /* RequestModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = RequestModels;
 			sourceTree = "<group>";
 		};
 		343B8ECD2AE8242600DA63D4 /* SplashScreen */ = {
@@ -268,11 +299,12 @@
 		3441C5542AE593A50025DDE0 /* MovieRamaModels */ = {
 			isa = PBXGroup;
 			children = (
+				3433088D2AED62AC006FEEBA /* DomainModels */,
 				3433087B2AED0A28006FEEBA /* APIModels */,
 				3441C5552AE593D60025DDE0 /* MovieRamaEnums.swift */,
 				3441C5572AE594520025DDE0 /* MovieRamaConstants.swift */,
 				3441C5592AE5A97D0025DDE0 /* Movie.swift */,
-				343308852AED0F7A006FEEBA /* PopularMoviesResponse.swift */,
+				3433088B2AED43DF006FEEBA /* PaginationResult.swift */,
 			);
 			path = MovieRamaModels;
 			sourceTree = "<group>";
