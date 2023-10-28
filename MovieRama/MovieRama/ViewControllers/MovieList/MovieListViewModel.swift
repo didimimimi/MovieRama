@@ -132,6 +132,8 @@ class MovieListViewModel: MovieListIntents {
         let selectedPagination = self.makePagination()
         
         let moviesForScreen = selectedPagination?.getNextPageData()?.page ?? []
+        
+        self.delegate?.update(state: .emptyListState(hide: !moviesForScreen.isEmpty))
         self.delegate?.update(state: .createListState(movies: moviesForScreen))
     }
     
