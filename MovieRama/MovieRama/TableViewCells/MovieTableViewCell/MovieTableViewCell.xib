@@ -30,8 +30,8 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qxs-v2-5eV" userLabel="Left Size View">
                                         <rect key="frame" x="0.0" y="0.0" width="312" height="48.333333333333336"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JCX-jF-h5X" userLabel="Title Label">
-                                                <rect key="frame" x="0.0" y="0.0" width="41.333333333333336" height="20.333333333333332"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="JCX-jF-h5X" userLabel="Title Label">
+                                                <rect key="frame" x="0.0" y="0.0" width="304" height="20.333333333333332"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -57,7 +57,7 @@
                                             <constraint firstItem="JCX-jF-h5X" firstAttribute="top" secondItem="Qxs-v2-5eV" secondAttribute="top" id="Rcn-f7-IVF"/>
                                             <constraint firstItem="Z7I-to-hqv" firstAttribute="leading" secondItem="1x5-PU-QUM" secondAttribute="trailing" constant="8" id="cST-i6-J5I"/>
                                             <constraint firstItem="1x5-PU-QUM" firstAttribute="top" relation="greaterThanOrEqual" secondItem="JCX-jF-h5X" secondAttribute="bottom" constant="8" id="pst-dl-cnJ"/>
-                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="JCX-jF-h5X" secondAttribute="trailing" id="x8E-7E-1cW"/>
+                                            <constraint firstAttribute="trailing" secondItem="JCX-jF-h5X" secondAttribute="trailing" constant="8" id="x8E-7E-1cW"/>
                                             <constraint firstAttribute="bottom" secondItem="Z7I-to-hqv" secondAttribute="bottom" id="zhN-Ga-Ta4"/>
                                         </constraints>
                                     </view>

@@ -127,7 +127,7 @@ extension MovieListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     private func addLoadingCell() {
-        if !loadingCellExists() {
+        if !loadingCellExists() && !self.currentCellTypes.isEmpty {
             self.currentCellTypes.append(.loadMoreCell)
             
             let indexPath = IndexPath(row: currentCellTypes.count - 1, section: 0)
@@ -138,8 +138,10 @@ extension MovieListViewController: UITableViewDelegate, UITableViewDataSource {
     
     private func removeLoadingCell() {
         if loadingCellExists() {
-            self.tableView.deleteRows(at: [IndexPath(row: self.currentCellTypes.count - 1, section: 0)], with: .none)
-            self.currentCellTypes.removeLast()
+            self.tableView.performBatchUpdates({
+                self.tableView.deleteRows(at: [IndexPath(row: self.currentCellTypes.count - 1, section: 0)], with: .none)
+                self.currentCellTypes.removeLast()
+            })
         }
     }
     
@@ -191,6 +193,8 @@ extension MovieListViewController: MovieListViewModelDelegate {
             self.handleAddLoadingCellState()
         case .removeLoadingCellState:
             self.handleRemoveLoadingCellState()
+        case .errorState(let error):
+            self.handleErrorState(error: error)
         }
     }
     
@@ -243,6 +247,15 @@ extension MovieListViewController: MovieListViewModelDelegate {
     }
     
     private func handleRemoveLoadingCellState() {
-        self.removeLoadingCell()
+//        self.removeLoadingCell()
+    }
+    
+    private func handleErrorState(error: Error) {
+        let alertController = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+        
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alertController.addAction(okAction)
+
+        self.present(alertController, animated: true)
     }
 }

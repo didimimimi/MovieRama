@@ -44,11 +44,7 @@ class SplashScreenViewController: UIViewController {
     }
     
     private func getMovies() {
-        MovieRamaSingleton.sharedInstance.moviesFromSplashScreen =  MovieRamaHelper().setUpMockMovies()
-        
-        MovieRamaHelper().loadImagesFor(movies: &MovieRamaSingleton.sharedInstance.moviesFromSplashScreen) { _ in
-            print("Images loaded")
-        }
+        MovieRamaSingleton.sharedInstance.pagination = MovieListPagination()
     }
     
     private func addSubviewsToView() {
