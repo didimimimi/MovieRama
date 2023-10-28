@@ -27,6 +27,8 @@ class MovieListViewModel: MovieListIntents {
     
     private var currentApiPageForMovies = 1
     private var currentApiPageForSearchResults = 1
+    
+    private var searchText = ""
 
     init(delegate: MovieListViewModelDelegate) {
         self.delegate = delegate
@@ -42,20 +44,19 @@ class MovieListViewModel: MovieListIntents {
     }
     
     func searchMovie(text: String) {
-        if text.isEmpty {
+        self.searchText = text
+        
+        if self.searchText.isEmpty {
             self.switchModeToAllMoviesMode()
         } else {
-            self.performSearch(text: text)
+            self.performSearch(text: self.searchText)
         }
     }
     
     private func performSearch(text: String) {
-        // TODO: API Call for searching movies and setting them to searchResults, self.searchResults = response
-        
-        // TODO: remove custom search
-        self.searchResults = self.movies.filter( { $0.title?.contains(text) == true })
-        
-        self.switchModeToSearchResultsMode()
+        self.getApiPagesForSearch(searchTerm: text, specifiedPage: 1) {
+            self.switchModeToSearchResultsMode()
+        }
     }
     
     func movieTapped(movie: Movie) {
@@ -81,24 +82,47 @@ class MovieListViewModel: MovieListIntents {
         }
         
         if canLoadMoreLocalPages {
-            if !self.isLoadingMoreMovies {
-                self.delegate?.update(state: .addLoadingCellState)
-                self.loadMoreMovies()
-            }
+            loadMoreLocalPages()
         } else {
             if canLoadMoreApiPages {
-                if !self.isLoadingMoreMovies {
-                    self.delegate?.update(state: .addLoadingCellState)
-                    self.currentApiPageForMovies += 1
-                    self.getApiPages(specifiedPage: self.currentApiPageForMovies)
+                loadMoreApiPages()
+            } else {
+                removeLoadingIfReachedAbsoluteBottom()
+            }
+        }
+    }
+    
+    private func loadMoreLocalPages() {
+        if !self.isLoadingMoreMovies {
+            self.delegate?.update(state: .addLoadingCellState)
+            self.loadMoreMovies()
+        }
+    }
+    
+    private func loadMoreApiPages() {
+        if !self.isLoadingMoreMovies {
+            self.delegate?.update(state: .addLoadingCellState)
+            switch self.mode {
+            case .showAllMovies:
+                self.currentApiPageForMovies += 1
+                
+                self.getApiPages(specifiedPage: self.currentApiPageForMovies) {
                     self.loadMoreMovies()
                 }
-            } else {
-                if !self.hasAlradyRemovedLoadingCell {
-                    self.hasAlradyRemovedLoadingCell = true
-                    self.delegate?.update(state: .removeLoadingCellState)
+            case .showSearchResults:
+                self.currentApiPageForSearchResults += 1
+                
+                self.getApiPagesForSearch(searchTerm: self.searchText, specifiedPage: self.currentApiPageForSearchResults) {
+                    self.loadMoreMovies()
                 }
             }
+        }
+    }
+    
+    private func removeLoadingIfReachedAbsoluteBottom() {
+        if !self.hasAlradyRemovedLoadingCell {
+            self.hasAlradyRemovedLoadingCell = true
+            self.delegate?.update(state: .removeLoadingCellState)
         }
     }
     
@@ -169,24 +193,59 @@ class MovieListViewModel: MovieListIntents {
     
     func refresh() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-            self.getApiPages(specifiedPage: 1)
-            
-            self.delegate?.update(state: .endRefreshState)
-            
-            self.mode == .showAllMovies ? self.switchModeToAllMoviesMode() : self.switchModeToSearchResultsMode()
+            switch self.mode {
+            case .showAllMovies:
+                self.getApiPages(specifiedPage: 1) {
+                    self.delegate?.update(state: .endRefreshState)
+                    self.switchModeToAllMoviesMode()
+                }
+            case .showSearchResults:
+                self.getApiPagesForSearch(searchTerm: self.searchText, specifiedPage: 1) {
+                    self.delegate?.update(state: .endRefreshState)
+                    self.switchModeToSearchResultsMode()
+                }
+            }
         }
     }
     
-    private func getApiPages(specifiedPage: Int) {
-        MovieRamaRest().getPopularMovies(forPage: specifiedPage, completionBlock: { response in
-            if specifiedPage == 1 {
-                self.movies = response.movies
-            } else {
-                self.movies.append(contentsOf: response.movies)
-                self.pagination?.appendNewMovies(movies: response.movies)
-            }
-        }, errorBlock: { error in
-            self.delegate?.update(state: .errorState(error: error))
-        })
+    private func getApiPages(specifiedPage: Int,
+                             completion: @escaping () -> Void) {
+        DispatchQueue.global().async {
+            MovieRamaRest().getPopularMovies(forPage: specifiedPage, completionBlock: { response in
+                if specifiedPage == 1 {
+                    self.movies = response.movies
+                } else {
+                    self.movies.append(contentsOf: response.movies)
+                    self.pagination?.appendNewMovies(movies: response.movies)
+                }
+                
+                DispatchQueue.main.async {
+                    completion()
+                }
+            }, errorBlock: { error in
+                self.delegate?.update(state: .errorState(error: error))
+            })
+        }
+    }
+    
+    private func getApiPagesForSearch(searchTerm: String,
+                                      specifiedPage: Int,
+                                      completion: @escaping () -> Void) {
+        DispatchQueue.global().async {
+            MovieRamaRest().searchMovies(searchTerm: searchTerm, forPage: specifiedPage, completionBlock: { response in
+                if specifiedPage == 1 {
+                    self.searchResults = response.movies
+                } else {
+                    self.searchResults.append(contentsOf: response.movies)
+                    self.searchMoviesPagination?.appendNewMovies(movies: response.movies)
+                }
+                
+                DispatchQueue.main.async {
+                    completion()
+                }
+            }, errorBlock: { error in
+                self.delegate?.update(state: .errorState(error: error))
+            })
+        }
     }
 }

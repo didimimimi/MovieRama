@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 class ApiPopularMoviesTransfromer {
     func transform(apiModel: ApiPopularMoviesResponse) -> PopularMoviesResponse {

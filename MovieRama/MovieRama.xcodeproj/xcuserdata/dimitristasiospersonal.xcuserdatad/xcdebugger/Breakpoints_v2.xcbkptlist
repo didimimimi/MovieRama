@@ -110,8 +110,8 @@
             filePath = "MovieRama/ViewControllers/MovieList/MovieListViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "219"
-            endingLineNumber = "219"
+            startingLineNumber = "222"
+            endingLineNumber = "222"
             landmarkName = "handleAppendToListState(movies:indexPaths:)"
             landmarkType = "7">
          </BreakpointContent>

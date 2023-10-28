@@ -22,7 +22,7 @@ class Movie: Equatable {
     var reviews: [Review] = []
     
     var imageUrl: String?
-    var image: UIImage?
+    var image = UIImage(named: "placeholder")
     
     init() {}
     

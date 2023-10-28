@@ -199,7 +199,7 @@ extension MovieListViewController: MovieListViewModelDelegate {
     }
     
     private func handleMoveToDetailsScreenState(ofMovie movie: Movie) {
-        print("open details of movie \"\(movie.title ?? "")\"")
+        print("open details of movie \"\(movie.title ?? "")\"\nurl: \(movie.imageUrl)\nid: \(movie.id)\n")
     }
     
     private func handleEndRefreshState() {
@@ -213,6 +213,9 @@ extension MovieListViewController: MovieListViewModelDelegate {
             self.currentCellTypes.append(.movieCell(movie: movie))
         })
         
+        if !self.currentCellTypes.isEmpty {
+            self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)            
+        }
         self.tableView.reloadData()
     }
     
