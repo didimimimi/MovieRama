@@ -36,7 +36,9 @@ class ApiPopularMoviesTransfromer {
         movie.imageUrl = MovieRamaRest().imagePath + (apiModel.backdrop_path ?? "")
         
         MovieRamaHelper().loadImageFrom(urlString: movie.imageUrl) { image in
-            movie.image = image
+            if let image = image {
+                movie.image = image                
+            }
         }
         
         MovieRamaHelper().loadFavoriteInfoFromDevice(forMovie: &movie)
