@@ -11,9 +11,9 @@
 		3429C6E92AE6E99300EF71C9 /* MovieListPagination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3429C6E82AE6E99300EF71C9 /* MovieListPagination.swift */; };
 		3433087A2AED0627006FEEBA /* MovieRamaRest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343308792AED0627006FEEBA /* MovieRamaRest.swift */; };
 		343308812AED0AAB006FEEBA /* ApiMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3433087F2AED0AAB006FEEBA /* ApiMovie.swift */; };
-		343308822AED0AAB006FEEBA /* ApiPopularMoviesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343308802AED0AAB006FEEBA /* ApiPopularMoviesResponse.swift */; };
+		343308822AED0AAB006FEEBA /* ApiGetMoviesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343308802AED0AAB006FEEBA /* ApiGetMoviesResponse.swift */; };
 		343308842AED0B65006FEEBA /* PopularMoviesTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343308832AED0B65006FEEBA /* PopularMoviesTransformer.swift */; };
-		343308862AED0F7A006FEEBA /* PopularMoviesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343308852AED0F7A006FEEBA /* PopularMoviesResponse.swift */; };
+		343308862AED0F7A006FEEBA /* GetMoviesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343308852AED0F7A006FEEBA /* GetMoviesResponse.swift */; };
 		343308882AED143D006FEEBA /* DateUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343308872AED143D006FEEBA /* DateUtilities.swift */; };
 		3433088C2AED43DF006FEEBA /* PaginationResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3433088B2AED43DF006FEEBA /* PaginationResult.swift */; };
 		343B8ED02AE8244100DA63D4 /* SplashScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343B8ECE2AE8244100DA63D4 /* SplashScreenViewController.swift */; };
@@ -65,9 +65,9 @@
 		3429C6E82AE6E99300EF71C9 /* MovieListPagination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListPagination.swift; sourceTree = "<group>"; };
 		343308792AED0627006FEEBA /* MovieRamaRest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieRamaRest.swift; sourceTree = "<group>"; };
 		3433087F2AED0AAB006FEEBA /* ApiMovie.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiMovie.swift; sourceTree = "<group>"; };
-		343308802AED0AAB006FEEBA /* ApiPopularMoviesResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiPopularMoviesResponse.swift; sourceTree = "<group>"; };
+		343308802AED0AAB006FEEBA /* ApiGetMoviesResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiGetMoviesResponse.swift; sourceTree = "<group>"; };
 		343308832AED0B65006FEEBA /* PopularMoviesTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularMoviesTransformer.swift; sourceTree = "<group>"; };
-		343308852AED0F7A006FEEBA /* PopularMoviesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularMoviesResponse.swift; sourceTree = "<group>"; };
+		343308852AED0F7A006FEEBA /* GetMoviesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetMoviesResponse.swift; sourceTree = "<group>"; };
 		343308872AED143D006FEEBA /* DateUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateUtilities.swift; sourceTree = "<group>"; };
 		3433088B2AED43DF006FEEBA /* PaginationResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginationResult.swift; sourceTree = "<group>"; };
 		343B8ECE2AE8244100DA63D4 /* SplashScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenViewController.swift; sourceTree = "<group>"; };
@@ -167,7 +167,7 @@
 		3433087E2AED0A95006FEEBA /* Popular */ = {
 			isa = PBXGroup;
 			children = (
-				343308802AED0AAB006FEEBA /* ApiPopularMoviesResponse.swift */,
+				343308802AED0AAB006FEEBA /* ApiGetMoviesResponse.swift */,
 				3433087F2AED0AAB006FEEBA /* ApiMovie.swift */,
 				343308832AED0B65006FEEBA /* PopularMoviesTransformer.swift */,
 			);
@@ -194,7 +194,7 @@
 		3433088F2AED62F9006FEEBA /* Popular */ = {
 			isa = PBXGroup;
 			children = (
-				343308852AED0F7A006FEEBA /* PopularMoviesResponse.swift */,
+				343308852AED0F7A006FEEBA /* GetMoviesResponse.swift */,
 			);
 			path = Popular;
 			sourceTree = "<group>";
@@ -497,9 +497,9 @@
 				3441C5652AE5CF910025DDE0 /* StarView.swift in Sources */,
 				3441C55F2AE5C5D40025DDE0 /* MovieListIntents.swift in Sources */,
 				3433088C2AED43DF006FEEBA /* PaginationResult.swift in Sources */,
-				343308822AED0AAB006FEEBA /* ApiPopularMoviesResponse.swift in Sources */,
+				343308822AED0AAB006FEEBA /* ApiGetMoviesResponse.swift in Sources */,
 				3441C5152AE562890025DDE0 /* AppDelegate.swift in Sources */,
-				343308862AED0F7A006FEEBA /* PopularMoviesResponse.swift in Sources */,
+				343308862AED0F7A006FEEBA /* GetMoviesResponse.swift in Sources */,
 				3441C5582AE594520025DDE0 /* MovieRamaConstants.swift in Sources */,
 				3441C5612AE5C5E10025DDE0 /* MovieListStates.swift in Sources */,
 				3433087A2AED0627006FEEBA /* MovieRamaRest.swift in Sources */,

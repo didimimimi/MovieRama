@@ -1,5 +1,5 @@
 //
-//  PopularMoviesTransformer.swift
+//  ApiGetMoviesTransfromer.swift
 //  MovieRama
 //
 //  Created by  Dimitris Tasios Personal on 28/10/23.
@@ -8,9 +8,9 @@
 import Foundation
 import UIKit
 
-class ApiPopularMoviesTransfromer {
-    func transform(apiModel: ApiPopularMoviesResponse) -> PopularMoviesResponse {
-        let domainModel = PopularMoviesResponse()
+class ApiGetMoviesTransfromer {
+    func transform(apiModel: ApiGetMoviesResponse) -> GetMoviesResponse {
+        let domainModel = GetMoviesResponse()
         domainModel.currentPage = apiModel.page ?? 0
         
         if let apiMovies = apiModel.apiMovies {

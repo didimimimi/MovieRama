@@ -7,7 +7,7 @@ The above copyright notice and this permission notice shall be included in all c
 */
 
 import Foundation
-struct ApiPopularMoviesResponse: Codable {
+struct ApiGetMoviesResponse: Codable {
 	let page: Int?
 	let apiMovies: [ApiMovie]?
 	let total_pages: Int?
