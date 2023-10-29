@@ -12,7 +12,7 @@ protocol MovieDetailsViewControllerDelegate: AnyObject {
 }
 
 class MovieDetailsViewController: UIViewController {
-
+    
     @IBOutlet weak var movieImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var genresLabel: UILabel!
@@ -43,7 +43,7 @@ class MovieDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.setUpElements()
         self.setMovieDataToScreen()
         self.getRestOfDetails()
@@ -61,7 +61,7 @@ class MovieDetailsViewController: UIViewController {
         
         self.genresLabel.font = UIFont.systemFont(ofSize: 10, weight: .light)
         self.genresLabel.textColor = MovieRamaConstants().CYAN_COLOR.withAlphaComponent(0.8)
-
+        
         self.dateLabel.font = UIFont.systemFont(ofSize: 12, weight: .light)
         self.dateLabel.textColor = MovieRamaConstants().CYAN_COLOR.withAlphaComponent(0.85)
     }
@@ -102,6 +102,60 @@ class MovieDetailsViewController: UIViewController {
             
             self.movieInfoStackView.addArrangedSubview(detailCustomView)
         }
+        
+        self.getSimiliarMovies()
+    }
+    
+    private func getSimiliarMovies() {
+        DispatchQueue.global().async {
+            MovieRamaRest(apiServices: MovieRamaSingleton.sharedInstance.restClient)
+                .getSimilarMovies(movie: self.movie,
+                                  completionBlock: { field in
+                    DispatchQueue.main.async {
+                        self.handleGetSimilarMoviesResponse(field: field)
+                    }
+                }, errorBlock: { error in
+                    DispatchQueue.main.async {
+                        self.presentAlertFor(error: error)
+                    }
+                })
+        }
+    }
+    
+    private func handleGetSimilarMoviesResponse(field: DetailFieldValue) {
+        if !field.urls.isEmpty {
+            let detailCustomView = DetailCustomView()
+            detailCustomView.configure(value: field)
+            
+            self.movieInfoStackView.addArrangedSubview(detailCustomView)
+        }
+        
+        self.getReviews()
+    }
+    
+    private func getReviews() {
+        DispatchQueue.global().async {
+            MovieRamaRest(apiServices: MovieRamaSingleton.sharedInstance.restClient)
+                .getMovieReviews(for: self.movie,
+                                 completionBlock: { fields in
+                    DispatchQueue.main.async {
+                        self.handleGetReviewsResponse(fields: fields)
+                    }
+                }, errorBlock: { error in
+                    DispatchQueue.main.async {
+                        self.presentAlertFor(error: error)
+                    }
+                })
+        }
+    }
+    
+    private func handleGetReviewsResponse(fields: [DetailFieldValue]) {
+        fields.forEach({
+            let detailCustomView = DetailCustomView()
+            detailCustomView.configure(value: $0)
+            
+            self.movieInfoStackView.addArrangedSubview(detailCustomView)
+        })
     }
 }
 

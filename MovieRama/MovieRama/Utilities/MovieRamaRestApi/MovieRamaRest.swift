@@ -58,7 +58,7 @@ class MovieRamaRest {
     }
     
     func getSimilarMovies(movie: Movie,
-                          completionBlock: @escaping (GetMoviesResponse) -> Void,
+                          completionBlock: @escaping (DetailFieldValue) -> Void,
                           errorBlock: @escaping (Error) -> Void) {
         self.apiServices?.getSimilarMovies(movie: movie,
                                            completionBlock: completionBlock,

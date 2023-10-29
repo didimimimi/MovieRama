@@ -31,6 +31,6 @@ protocol MovieRamaRestProtocol: AnyObject {
                          errorBlock: @escaping (Error) -> Void)
     
     func getSimilarMovies(movie: Movie,
-                          completionBlock: @escaping (GetMoviesResponse) -> Void,
+                          completionBlock: @escaping (DetailFieldValue) -> Void,
                           errorBlock: @escaping (Error) -> Void)
 }

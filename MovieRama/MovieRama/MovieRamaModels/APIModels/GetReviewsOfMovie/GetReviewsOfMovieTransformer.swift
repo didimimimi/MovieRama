@@ -12,11 +12,15 @@ class GetReviewsOfMovieTransformer {
         var domainReviews = [DetailFieldValue]()
         
         if var apiReviews = apiModel.results, !apiReviews.isEmpty {
-            while domainReviews.count != 2 {
+            while domainReviews.count != 2 { // only do this max twice
                 if !apiReviews.isEmpty {
-                    let apiReview = apiReviews.removeFirst()
+                    let apiReview = apiReviews.removeFirst() // get next review and add it to our model
                     
-                    let domainReview = self.transform(apiModel: apiReview)
+                    var domainReview = self.transform(apiModel: apiReview)
+                    
+                    if !domainReviews.isEmpty { // remove the title from the second view so that it doesn't say "REVIEWS" again
+                        domainReview.title = nil
+                    }
                     
                     domainReviews.append(domainReview)
                 } else {

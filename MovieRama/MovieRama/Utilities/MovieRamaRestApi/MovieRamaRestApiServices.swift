@@ -25,14 +25,6 @@ class MovieRamaRestApiServices: MovieRamaRestProtocol {
                                  errorBlock: errorBlock)
     }
     
-    func getSimilarMovies(movie: Movie,
-                          completionBlock: @escaping (GetMoviesResponse) -> Void,
-                          errorBlock: @escaping (Error) -> Void) {
-        self.handleGetMoviesCall(endpoint: .similarMovies(movie: movie),
-                                 completionBlock: completionBlock,
-                                 errorBlock: errorBlock)
-    }
-    
     private func handleGetMoviesCall(endpoint: ApiCallEndpointWithSameResponseModel,
                                      completionBlock: @escaping (GetMoviesResponse) -> Void,
                                      errorBlock: @escaping (Error) -> Void) {
@@ -98,6 +90,32 @@ class MovieRamaRestApiServices: MovieRamaRestProtocol {
         self.makeApiCall(urlString: urlString,
                          completionBlock: { data in
             let domainModel = GetReviewsOfMovieTransformer().transform(apiModel: data)
+            completionBlock(domainModel)
+        }, errorBlock: { error in
+            if let error = error {
+                errorBlock(error)
+            }
+        })
+    }
+    
+    func getSimilarMovies(movie: Movie,
+                          completionBlock: @escaping (DetailFieldValue) -> Void,
+                          errorBlock: @escaping (Error) -> Void) {
+        let urlString = "https://api.themoviedb.org/3/movie/\(movie.id ?? "")/similar"
+        
+        self.makeApiCall(urlString: urlString,
+                         completionBlock: { data in
+            let responseData = GetMoviesTransfromer().transform(apiModel: data)
+            
+            let urls = responseData.movies.map({
+                if let imageUrl = $0.imageUrl {
+                    return imageUrl
+                } else {
+                    return ""
+                }
+            })
+            
+            let domainModel = DetailFieldValue(title: .similarMovies, urls: urls)
             completionBlock(domainModel)
         }, errorBlock: { error in
             if let error = error {

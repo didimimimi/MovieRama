@@ -47,8 +47,8 @@ class DetailCustomView: UIView {
         self.titleLabel.textColor = MovieRamaConstants().CYAN_COLOR
         self.titleLabel.isHidden = false
         
-        self.informationLabel.font = UIFont.systemFont(ofSize: 14, weight: .light)
-        self.informationLabel.textColor = MovieRamaConstants().CYAN_COLOR.withAlphaComponent(0.85)
+        self.informationLabel.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        self.informationLabel.textColor = MovieRamaConstants().CYAN_COLOR.withAlphaComponent(0.5)
         self.informationLabel.isHidden = false
         
         self.descriptionLabel.font = UIFont.systemFont(ofSize: 16, weight: .regular)
@@ -78,6 +78,7 @@ class DetailCustomView: UIView {
         if let textValues = textValues {
             self.collectionView.isHidden = false
             self.urls = textValues
+            self.collectionView.reloadData()
         } else {
             self.collectionView.isHidden = true
         }
