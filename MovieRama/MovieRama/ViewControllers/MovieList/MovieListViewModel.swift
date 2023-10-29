@@ -63,15 +63,12 @@ class MovieListViewModel: MovieListIntents {
         self.delegate?.update(state: .moveToDetailsScreenState(ofMovie: movie, indexPath: indexPath))
     }
     
-    func favoriteTapped(movie: Movie, indexPath: IndexPath, favorite: Bool) {
-        MovieRamaRest().saveFavorite(for: movie, at: indexPath, completionBlock: {
-            movie.favorite = favorite
-            MovieRamaHelper().saveFavoriteInfoToDevice(ofMovie: movie)
-            
-            self.delegate?.update(state: .reloadCell(indexPath: indexPath))
-        }, errorBlock: { error in
-            self.delegate?.update(state: .errorState(error: error))
-        })
+    func favoriteTapped(indexPath: IndexPath) {
+        self.delegate?.update(state: .reloadCell(indexPath: indexPath))
+    }
+    
+    func favoriteNotSet(error: Error) {
+        self.delegate?.update(state: .errorState(error: error))
     }
     
     func scrolledToBottom() {

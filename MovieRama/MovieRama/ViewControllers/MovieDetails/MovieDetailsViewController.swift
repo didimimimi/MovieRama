@@ -21,8 +21,7 @@ class MovieDetailsViewController: UIViewController {
     @IBOutlet weak var movieInfoStackView: UIStackView!
     
     private var movie = Movie()
-    private var indexPath = IndexPath()
-    private var isFavorite = false
+    private var indexPath = IndexPath() // for dismiss
     
     init(movie: Movie, indexPath: IndexPath) {
         self.movie = movie
@@ -63,8 +62,9 @@ class MovieDetailsViewController: UIViewController {
 }
 
 extension MovieDetailsViewController: FavoriteViewDelegate {
-    func favoriteTapped(movie: Movie, indexPath: IndexPath, favorite: Bool) {
-        self.isFavorite.toggle()
-        // INTENT
+    func onfavoriteTappedSucceeded(indexPath: IndexPath) {}
+    
+    func onfavoriteTappedError(error: Error) {
+        self.presentAlertFor(error: error)
     }
 }

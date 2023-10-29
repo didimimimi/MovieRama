@@ -9,7 +9,8 @@ import UIKit
 
 protocol MovieTableViewCellDelegate: AnyObject {
     func movieTapped(movie: Movie, indexPath: IndexPath)
-    func favoriteTapped(movie: Movie, indexPath: IndexPath, favorite: Bool)
+    func favoriteTapped(indexPath: IndexPath)
+    func favoriteTappedError(error: Error)
 }
 
 class MovieTableViewCell: UITableViewCell {
@@ -99,8 +100,11 @@ class MovieTableViewCell: UITableViewCell {
 }
 
 extension MovieTableViewCell: FavoriteViewDelegate {
-    func favoriteTapped(movie: Movie, indexPath: IndexPath, favorite: Bool) {
-        print("Current favorite: \(self.isFavorite), movie favorite: \(movie.favorite), favorite Value: \(favorite)\n")
-        self.delegate?.favoriteTapped(movie: self.movie, indexPath: self.indexPath, favorite: self.isFavorite)
+    func onfavoriteTappedSucceeded(indexPath: IndexPath) {
+        self.delegate?.favoriteTapped(indexPath: self.indexPath)
+    }
+    
+    func onfavoriteTappedError(error: Error) {
+        self.delegate?.favoriteTappedError(error: error)
     }
 }

@@ -184,10 +184,15 @@ extension MovieListViewController: MovieTableViewCellDelegate {
     func movieTapped(movie: Movie, indexPath: IndexPath) {
         self.viewModel.movieTapped(movie: movie, indexPath: indexPath)
     }
-    
-    func favoriteTapped(movie: Movie, indexPath: IndexPath, favorite: Bool) {
-        self.viewModel.favoriteTapped(movie: movie, indexPath: indexPath, favorite: favorite)
+
+    func favoriteTapped(indexPath: IndexPath) {
+        self.viewModel.favoriteTapped(indexPath: indexPath)
     }
+    
+    func favoriteTappedError(error: Error) {
+        self.viewModel.favoriteNotSet(error: error)
+    }
+    
 }
 
 extension MovieListViewController: UISearchBarDelegate {

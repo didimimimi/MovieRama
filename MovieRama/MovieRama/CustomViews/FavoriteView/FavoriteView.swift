@@ -9,7 +9,8 @@ import Foundation
 import UIKit
 
 protocol FavoriteViewDelegate: AnyObject {
-    func favoriteTapped(movie: Movie, indexPath: IndexPath, favorite: Bool)
+    func onfavoriteTappedSucceeded(indexPath: IndexPath)
+    func onfavoriteTappedError(error: Error)
 }
 
 @IBDesignable
@@ -57,20 +58,36 @@ class FavoriteView: UIView {
         self.isFavorite = movie.favorite ?? false
         self.delegate = delegate
         
+        self.setHeartImage()
+    }
+    
+    private func setHeartImage() {
         self.heartImageView.image = UIImage(systemName: HeartEnum(isFavorite: self.isFavorite).rawValue)
     }
     
     @IBAction func favoriteTapped(_ sender: Any) {
-        print("Current favorite: \(self.isFavorite), movie favorite: \(movie.favorite)\n")
+        print("FavoriteView: Current favorite: \(self.isFavorite), movie favorite: \(movie.favorite)")
         self.setFavoriteActivityIndicator.isHidden = false
         self.setFavoriteActivityIndicator.startAnimating()
         
         self.isFavorite.toggle()
-        self.delegate?.favoriteTapped(movie: self.movie, indexPath: self.indexPath, favorite: self.isFavorite)
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) {
+        self.callSaveFavorite()
+    }
+    
+    private func callSaveFavorite() {
+        MovieRamaRest().saveFavorite(for: movie, at: indexPath, completionBlock: {
             self.setFavoriteActivityIndicator.stopAnimating()
-        }
-
+            
+            self.movie.favorite = self.isFavorite
+            MovieRamaHelper().saveFavoriteInfoToDevice(ofMovie: self.movie)
+            self.setHeartImage()
+            
+            self.delegate?.onfavoriteTappedSucceeded(indexPath: self.indexPath)
+        }, errorBlock: { error in
+            self.setFavoriteActivityIndicator.stopAnimating()
+            
+            self.delegate?.onfavoriteTappedError(error: error)
+        })
     }
 }
