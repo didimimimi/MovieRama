@@ -24,6 +24,13 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Lmu-Yt-mzh" userLabel="Movie Image View">
                                 <rect key="frame" x="0.0" y="0.0" width="384" height="241"/>
                             </imageView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="vf5-Au-uOv">
+                                <rect key="frame" x="182" y="110.66666666666667" width="20" height="20.000000000000014"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="20" id="YO2-v6-geg"/>
+                                    <constraint firstAttribute="height" constant="20" id="zx1-xk-14o"/>
+                                </constraints>
+                            </activityIndicatorView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f3W-mk-2as" userLabel="Bottom View">
                                 <rect key="frame" x="16" y="257" width="352" height="48.333333333333314"/>
                                 <subviews>
@@ -105,9 +112,11 @@
                             <constraint firstItem="4mA-oR-g77" firstAttribute="leading" secondItem="Sza-tv-ZgT" secondAttribute="leading" id="KDo-Js-xnB"/>
                             <constraint firstItem="TV6-uY-RE9" firstAttribute="top" secondItem="Juw-0U-zCq" secondAttribute="top" id="KKS-ha-Oeo"/>
                             <constraint firstItem="TV6-uY-RE9" firstAttribute="bottom" secondItem="Juw-0U-zCq" secondAttribute="bottom" id="U3F-GZ-fOr"/>
+                            <constraint firstItem="vf5-Au-uOv" firstAttribute="centerX" secondItem="Lmu-Yt-mzh" secondAttribute="centerX" id="bOd-ti-Ybz"/>
                             <constraint firstItem="Lmu-Yt-mzh" firstAttribute="leading" secondItem="Sza-tv-ZgT" secondAttribute="leading" id="dKb-Oi-eGm"/>
                             <constraint firstItem="TV6-uY-RE9" firstAttribute="leading" secondItem="Juw-0U-zCq" secondAttribute="leading" id="eT6-Ur-Tbh"/>
                             <constraint firstItem="4mA-oR-g77" firstAttribute="top" secondItem="Sza-tv-ZgT" secondAttribute="top" id="i9m-5K-r6r"/>
+                            <constraint firstItem="vf5-Au-uOv" firstAttribute="centerY" secondItem="Lmu-Yt-mzh" secondAttribute="centerY" id="il9-bE-WxZ"/>
                             <constraint firstAttribute="trailing" secondItem="4mA-oR-g77" secondAttribute="trailing" id="kFD-7f-0N0"/>
                             <constraint firstItem="Lmu-Yt-mzh" firstAttribute="height" secondItem="Sza-tv-ZgT" secondAttribute="height" multiplier="0.75" id="lgI-5q-8vE"/>
                             <constraint firstItem="f3W-mk-2as" firstAttribute="top" secondItem="Lmu-Yt-mzh" secondAttribute="bottom" constant="16" id="oq4-5R-kVN"/>
@@ -130,6 +139,7 @@
                 <outlet property="containerView" destination="Sza-tv-ZgT" id="ZKf-8p-8vI"/>
                 <outlet property="dateLabel" destination="Z7I-to-hqv" id="HvM-9o-msH"/>
                 <outlet property="favoriteImageView" destination="Juw-0U-zCq" id="KAI-gP-pBq"/>
+                <outlet property="loadingImageIndicatorView" destination="vf5-Au-uOv" id="RtZ-Sc-IMm"/>
                 <outlet property="movieImageView" destination="Lmu-Yt-mzh" id="Cfv-Ue-ktT"/>
                 <outlet property="ratingView" destination="1x5-PU-QUM" id="pw5-oh-EVN"/>
                 <outlet property="titleLabel" destination="JCX-jF-h5X" id="QgY-mQ-8gy"/>

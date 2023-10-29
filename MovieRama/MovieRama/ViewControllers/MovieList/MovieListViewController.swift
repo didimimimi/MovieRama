@@ -24,7 +24,9 @@ class MovieListViewController: UIViewController {
     
     private var currentCellTypes = [CellType]()
     private var viewModel = MovieListViewModel()
-        
+    
+    private var pendingDispatchWorkItem: DispatchWorkItem?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -68,6 +70,7 @@ class MovieListViewController: UIViewController {
         searchBar.isTranslucent = true
         searchBar.frame.size.height = 40
         searchBar.searchTextField.keyboardType = .asciiCapable
+        searchBar.searchTextField.addDoneButtonOnKeyboard()
         searchBar.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
         searchBar.delegate = self
     }
@@ -115,6 +118,28 @@ extension MovieListViewController: UITableViewDelegate, UITableViewDataSource {
             loadingCell.beginLoading()
             
             return loadingCell
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let cellType = self.currentCellTypes[indexPath.row]
+        
+        switch cellType {
+        case .movieCell(movie: let movie):
+            if movie.image == nil {
+                MovieRamaHelper().loadImageFrom(urlString: movie.imageUrl) { image in
+                    if let image = image {
+                        movie.image = image
+                    } else {
+                        movie.image = UIImage(named: "placeholder")
+                    }
+                    
+                    tableView.reloadRows(at: [indexPath], with: .none)
+                }
+            }
+            
+        case .loadMoreCell:
+            break
         }
     }
     
@@ -167,7 +192,15 @@ extension MovieListViewController: MovieTableViewCellDelegate {
 
 extension MovieListViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        self.viewModel.searchMovie(text: searchText)
+        pendingDispatchWorkItem?.cancel()
+        
+        let requestWorkItem = DispatchWorkItem { [weak self] in
+            self?.viewModel.searchMovie(text: searchText)
+        }
+        
+        pendingDispatchWorkItem = requestWorkItem
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(250),
+                                      execute: requestWorkItem)
     }
 }
 
@@ -181,6 +214,7 @@ extension MovieListViewController: MovieListViewModelDelegate {
         case .endRefreshState:
             self.handleEndRefreshState()
         case .createListState(let movies):
+            print(state)
             self.handleCreateListState(movies: movies)
         case .appendToListState(let movies, let indexPaths):
             self.handleAppendToListState(movies: movies, indexPaths: indexPaths)
@@ -211,7 +245,8 @@ extension MovieListViewController: MovieListViewModelDelegate {
         movies.forEach({ movie in
             self.currentCellTypes.append(.movieCell(movie: movie))
         })
-        
+        self.tableView.setContentOffset(.zero, animated: false)
+
         self.tableView.reloadData()
     }
     

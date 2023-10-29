@@ -79,7 +79,7 @@ class SplashScreenViewController: UIViewController {
             UIView.animate(withDuration: 0, delay: 1, animations: {
                 self.backgroundView.backgroundColor = .white
             }) { _ in
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
                     self.presentMainScreen()                    
                 }
             }

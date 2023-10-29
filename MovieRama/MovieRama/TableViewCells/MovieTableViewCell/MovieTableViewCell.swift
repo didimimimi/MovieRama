@@ -20,6 +20,7 @@ class MovieTableViewCell: UITableViewCell {
     @IBOutlet weak var ratingView: RatingView!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var favoriteImageView: UIImageView!
+    @IBOutlet weak var loadingImageIndicatorView: UIActivityIndicatorView!
     
     static let cellId = "MovieTableViewCell"
     
@@ -64,6 +65,7 @@ class MovieTableViewCell: UITableViewCell {
         self.favoriteImageView.image = UIImage(systemName: "heart")
         self.favoriteImageView.tintColor = .red.withAlphaComponent(0.8)
         
+        self.loadingImageIndicatorView.isHidden = true
     }
     
     func configure(withMovie movie: Movie, delegate: MovieTableViewCellDelegate) {
@@ -79,6 +81,8 @@ class MovieTableViewCell: UITableViewCell {
         self.dateLabel.text = self.movie.date
         self.ratingView.setRating(stars: MovieRating(value: self.movie.rating) ?? .zero)
         
+        self.handleLoading(hide: self.movie.image != nil)
+
         self.setUpFavorite()
     }
     
@@ -94,6 +98,11 @@ class MovieTableViewCell: UITableViewCell {
     
     private func updateFavoriteIcon() {
         self.favoriteImageView.image = UIImage(systemName: HeartEnum(isFavorite: self.isFavorited).rawValue)
+    }
+    
+    private func handleLoading(hide: Bool) {
+        self.loadingImageIndicatorView.isHidden = hide
+        hide ? self.loadingImageIndicatorView.stopAnimating() : self.loadingImageIndicatorView.startAnimating()
     }
     
     @IBAction func mainButtonTapped(_ sender: UIButton) {

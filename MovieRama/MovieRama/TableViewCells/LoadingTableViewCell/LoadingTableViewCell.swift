@@ -34,11 +34,4 @@ class LoadingTableViewCell: UITableViewCell {
         
         self.loadingLabel.text = "Loading more..."
     }
-    
-    func stopLoading() {
-        self.loadingActivityIndicator.stopAnimating()
-        self.loadingActivityIndicator.isHidden = true
-        
-        self.loadingLabel.text = "All movies loaded."
-    }
 }

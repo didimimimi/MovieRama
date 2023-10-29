@@ -129,7 +129,7 @@ class MovieListViewModel: MovieListIntents {
     private func loadMoreMovies() {
         self.isLoadingMoreMovies = true
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
             self.isLoadingMoreMovies = false
             
             let paginationResult = self.getPaginationNextPage()
@@ -192,7 +192,7 @@ class MovieListViewModel: MovieListIntents {
     }
     
     func refresh() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2)) {
             switch self.mode {
             case .showAllMovies:
                 self.getApiPages(specifiedPage: 1) {
