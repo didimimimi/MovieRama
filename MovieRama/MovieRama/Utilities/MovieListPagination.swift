@@ -89,5 +89,8 @@ class MovieListPagination {
                 page.append(movies.removeFirst())
             }
         }
+        
+        self.pages.removeLast()
+        self.pages.append(page)
     }
 }
