@@ -7,7 +7,7 @@
 
 import Foundation
 
-class MovieRamaRest {
+class MovieRamaRest: MovieRamaRestProtocol {
     let imagePath = "https://image.tmdb.org/t/p/original/"
     
     private let apiKey = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5ZGM0MGEyYmRkNzFhYWRjN2I4NzUzN2Y1MzQ2MGU3OSIsInN1YiI6IjY1MzkyMzlkOWMyNGZjMDE0MmIzMWU5NCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.6XA7eyJSx_2kLNB_GAEnXPrweeyUBupLktnZWH6DLEI"
@@ -36,8 +36,8 @@ class MovieRamaRest {
         
         self.makeApiCall(urlString: urlString,
                          completionBlock: { data in
-            let paginationModel = ApiGetMoviesTransfromer().transform(apiModel: data)
-            completionBlock(paginationModel)
+            let domainModel = GetMoviesTransfromer().transform(apiModel: data)
+            completionBlock(domainModel)
         }, errorBlock: { error in
             if let error = error {
                 errorBlock(error)
@@ -59,6 +59,22 @@ class MovieRamaRest {
                 errorBlock(MovieError.favoriteFailed(message: "Could not (un)favorite movie named:\n\(movie.title ?? "")"))
             }            
         }
+    }
+    
+    func getMovieDetails(for movie: Movie,
+                         completionBlock: @escaping (Movie) -> Void,
+                         errorBlock: @escaping (Error) -> Void) {
+        let urlString = "https://api.themoviedb.org/3/movie/\(movie.id ?? "")"
+        
+        self.makeApiCall(urlString: urlString,
+                         completionBlock: { data in
+            let domainModel = GetMovieDetailsTransfromer().transform(apiModel: data, onto: movie)
+            completionBlock(domainModel)
+        }, errorBlock: { error in
+            if let error = error {
+                errorBlock(error)
+            }
+        })
     }
     
     private func makeApiCall<T: Decodable>(urlString: String,

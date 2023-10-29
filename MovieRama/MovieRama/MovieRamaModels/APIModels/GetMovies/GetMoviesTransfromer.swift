@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class ApiGetMoviesTransfromer {
+class GetMoviesTransfromer {
     func transform(apiModel: ApiGetMoviesResponse) -> GetMoviesResponse {
         let domainModel = GetMoviesResponse()
         domainModel.currentPage = apiModel.page ?? 0
@@ -42,15 +42,7 @@ class ApiGetMoviesTransfromer {
         }
         
         MovieRamaHelper().loadFavoriteInfoFromDevice(forMovie: &movie)
-
-        if let genreIds = apiModel.genre_ids {
-            movie.genres = genreIds.map({ String($0) })
-        }
-        
-        movie.description = apiModel.overview
-        
+                
         return movie
-    }
-    
-    
+    }    
 }

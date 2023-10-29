@@ -65,8 +65,8 @@ enum MovieError: LocalizedError {
 
 enum DetailFieldTitle: String {
     case description = "DESCRIPTION"
-    case director = "DIRECTOR"
-    case cast = "CAST"
+    case runtime = "RUNTIME"
+    case tagline = "TAGLINE"
     case reviews = "REVIEWS"
     case similarMovies = "SIMILAR MOVIES"
 }

@@ -7,6 +7,7 @@ The above copyright notice and this permission notice shall be included in all c
 */
 
 import Foundation
+
 struct ApiMovie: Codable {
 	let adult: Bool?
 	let backdrop_path: String?

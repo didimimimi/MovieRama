@@ -14,10 +14,10 @@ class Movie: Equatable {
     var rating: Double?
     var date: String?
     var favorite: Bool?
-    var genres: [String] = []
-    var description: String?
-    var director: String?
-    var cast: String?
+    var genres: String?
+    var overview: String?
+    var runtime: String?
+    var tagline: String?
     var similarMovies: [Movie] = []
     var reviews: [Review] = []
     

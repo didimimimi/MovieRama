@@ -55,7 +55,7 @@ class MovieDetailsViewController: UIViewController {
     private func setMovieDataToScreen() {
         self.movieImageView.image = self.movie.image
         self.titleLabel.text = self.movie.title
-        self.genresLabel.text = self.movie.genres.joined(separator: ", ")
+        self.genresLabel.text = self.movie.genres
         self.dateLabel.text = self.movie.date
         self.ratingView.setRating(stars: MovieRating(value: self.movie.rating) ?? .zero)
         self.favoriteView.updateFavoriteView(movie: self.movie, indexPath: self.indexPath, delegate: self)
