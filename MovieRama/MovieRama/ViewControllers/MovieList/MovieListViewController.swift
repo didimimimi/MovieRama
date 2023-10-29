@@ -67,6 +67,7 @@ class MovieListViewController: UIViewController {
         searchBar.backgroundColor = UIColor.clear
         searchBar.isTranslucent = true
         searchBar.frame.size.height = 40
+        searchBar.searchTextField.keyboardType = .asciiCapable
         searchBar.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
         searchBar.delegate = self
     }
@@ -191,8 +192,6 @@ extension MovieListViewController: MovieListViewModelDelegate {
             self.handleEmptyListState(hide: hide)
         case .addLoadingCellState:
             self.handleAddLoadingCellState()
-        case .removeLoadingCellState:
-            self.handleRemoveLoadingCellState()
         case .errorState(let error):
             self.handleErrorState(error: error)
         }
@@ -213,9 +212,6 @@ extension MovieListViewController: MovieListViewModelDelegate {
             self.currentCellTypes.append(.movieCell(movie: movie))
         })
         
-        if !self.currentCellTypes.isEmpty {
-            self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: false)            
-        }
         self.tableView.reloadData()
     }
     
@@ -247,10 +243,6 @@ extension MovieListViewController: MovieListViewModelDelegate {
     
     private func handleAddLoadingCellState() {
         self.addLoadingCell()
-    }
-    
-    private func handleRemoveLoadingCellState() {
-//        self.removeLoadingCell()
     }
     
     private func handleErrorState(error: Error) {

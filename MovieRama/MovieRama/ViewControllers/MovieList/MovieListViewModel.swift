@@ -122,7 +122,7 @@ class MovieListViewModel: MovieListIntents {
     private func removeLoadingIfReachedAbsoluteBottom() {
         if !self.hasAlradyRemovedLoadingCell {
             self.hasAlradyRemovedLoadingCell = true
-            self.delegate?.update(state: .removeLoadingCellState)
+            self.delegate?.update(state: .noMoreMoviesState)
         }
     }
     

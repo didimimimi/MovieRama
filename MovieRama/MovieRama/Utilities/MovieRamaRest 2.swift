@@ -15,24 +15,7 @@ class MovieRamaRest {
     func getPopularMovies(forPage page: Int,
                           completionBlock: @escaping (PopularMoviesResponse) -> Void,
                           errorBlock: @escaping (Error) -> Void) {
-        self.handleCall(isSearchCall: false, searchTerm: "", forPage: page, completionBlock: completionBlock, errorBlock: errorBlock)
-    }
-    
-    func searchMovies(searchTerm: String,
-                      forPage page: Int,
-                      completionBlock: @escaping (PopularMoviesResponse) -> Void,
-                      errorBlock: @escaping (Error) -> Void) {
-        self.handleCall(isSearchCall: true, searchTerm: searchTerm, forPage: page, completionBlock: completionBlock, errorBlock: errorBlock)
-    }
-    
-    private func handleCall(isSearchCall: Bool,
-                            searchTerm: String,
-                            forPage page: Int,
-                            completionBlock: @escaping (PopularMoviesResponse) -> Void,
-                            errorBlock: @escaping (Error) -> Void) {
-        let urlString = isSearchCall
-        ? "https://api.themoviedb.org/3/search/movie?page=\(String(page))&query=\(searchTerm)&include_adult=false"
-        : "https://api.themoviedb.org/3/movie/popular?page=\(String(page))&include_adult=false"
+        let urlString = "https://api.themoviedb.org/3/movie/popular?page=\(String(page))"
         
         self.makeApiCall(urlString: urlString,
                          completionBlock: { data in
