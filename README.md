@@ -67,6 +67,10 @@ Before that, a few words about the search function. This basically calls another
 
 As you can imagine, the app has to hit that endpoint for every character (and mistyped character) the user inputs, which might lead to a big overload to both the server but also the app (lag). Another trick is used here in order to smooth things up. The search function (and thus the API call) will only trigger `250ms` after the user has stopped typing. This is a good amount of time to wait that's neither too long nor too short. This way, the search will only trigger when really needed. Other than that, the user still sees a list which still uses a (different) pagination system, where the only difference is the available movies.
 
+Lastly, swiping from the top will refresh the list, by calling the corresponding endpoint, `movie/popular` or `search/movie` depending on whether there is text on the search-field. In any case, the pagination is reset.
+
+<img width="200" alt="Screenshot 2023-10-30 at 01 32 37" src="https://github.com/didimimimi/MovieRama/assets/44156940/a71b4c18-c2d7-433d-8245-66656325985e">
+
 ### Movie Details Screen
 This screen is rather static and simple. It contains a few extra details about the movie. Three images are worth 3000 words.
 
@@ -79,6 +83,13 @@ This screen is rather static and simple. It contains a few extra details about t
 As you may have noticed, the favorite button is also present here. Well, it's also tappable here and it also syncs with the tile on the list. Actually, the list also syncs with the details. It's a two-way sync.
 
 On the other hand, the similar movies, despite being a scrollable list of movies, are not tappable (for now at least). The rest of the screen is pretty straightforward.
+
+The details are gathered by 3 API calls:
+1. `movie/{movie_id}`: gets the info above the "Similar movies" section.
+2. `movie/{movie_id}/similar`: gets the similar movies in the corresponding section of the screen.
+3. movie/{movie_id}/reviews: gets the reviews at the last section of the screen, limited to maximum 2 reviews.
+
+The calls are made in the aforementioned order.
 
 ## Deeper Dive
 It's time to speak a bit about code in a more descriptive level at least.
@@ -101,6 +112,29 @@ Simply put, the `MovieListIntents` is a protocol that the `MovieListViewModel` i
 
 The `ChessboardMainViewModelDelegate` is implemented by the `MovieListViewController`, which the latter defines a specific action by switching on the provided state (enum). Internally the view model will call update(state: ChessboardMainStates) in order to notify the view controller about the change and let it handle it however it wants (for example present an alert).
 
+#### The `MovieListIntents` and `MovieListStates`
 
+Briefly, the `MovieListIntents` are the following:
+- func searchMovie(text: String): the intent of tapping a character on the search-field.
+- func movieTapped(movie: Movie, indexPath: IndexPath): the intent of tapping a tile in order to see the movie's details. The indexPath is the position of the movie in the list.
+- func favoriteTapped(indexPath: IndexPath): the intent of marking a movie as favorite/unfavorite.
+- func favoriteNotSet(error: Error): the intent of not succeeding to mark a movie as favorite/unfavorite (which will lead to an alert, explain pretty soon).
+- func receivedFavoriteFromDetails(indexPath: IndexPath): the intent of succeeding to mark a movie as favorite/unfavorite at the position of indexPath.
+- func scrolledToBottom(): the intent of scrolling to bottom of the list.
+- func refresh(): the intent of swiping to refresh.
 
+And the `MovieListStates`:
+- case createListState(movies: [Movie]): updates the list, so the view controller will reload its tableview.
+- case appendToListState(movies: [Movie], indexPaths: [IndexPath]): appends movies at the end of the list. This occurs when we scroll to the bottom (see intent above). The indexPaths help the view controller to insert new rows at those positions.
+- case noMoreMoviesState: reached the bottom and all movies have been loaded, so scroll to bottom won't do anything anymore.
+- case moveToDetailsScreenState(ofMovie: Movie, indexPath: IndexPath): the actual action of going to the movie's details
+- case endRefreshState: removes the laoding indicator
+- case refreshListState(indexPath: IndexPath): refresh rows in order to update the images. The images were a huge problem (and still are) because we have to hit the url in order to retrieve them. This, of course, has to happen asynchronously, so many photos in the list might have a loading indicator for a bit of time until they get refreshed by this state.
+- case emptyListState(hide: Bool): no lists to load. The `hide` flag hides or reveals an empty view above the list.
+- case addLoadingCellState: adds loading cell at the bottom (it's another cell, not a footer because footers are sticky apparently).
+- case errorState(error: Error): error from an api call
+- case reloadCell(indexPath: IndexPath): again reloads a cell but this time for the favorite button.
+- case dummyState: starter state for unit tests.
 
+## Conclusion
+That is a big part of it all. The Unit Tests are not to be explained here since not many were done due to time limitations and complexity (due to asynchronous calls throughout the app). If there are any questions or suggestions, feel free to contact me through my email.
