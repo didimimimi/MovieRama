@@ -44,9 +44,11 @@ class SimilarMovieCollectionViewCell: UICollectionViewCell {
         self.delegate = delegate
         self.index = index
         
-        MovieRamaHelper().loadImageFrom(urlString: url) { image in
-            self.posterImageView.image = image
-            self.delegate?.reloadCell(index: index)
+        if posterImageView.image == nil {
+            MovieRamaHelper().loadImageFrom(urlString: url) { image in
+                self.posterImageView.image = image
+                self.delegate?.reloadCell(index: index)
+            }            
         }
     }
 
