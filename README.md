@@ -36,7 +36,7 @@ From left to right:
 2. Scrolling to the bottom.
 3. More movies are loaded.
 
-The pagination has a limit on the movies it holds per batch. This batch is called a _page_. In other words, the app has a defined number of movies per page (set arbitrarily by me), so if a page holds X movies, after scrolling X movies, a new page with X movies will appear. The data source of those movies is the _movie/popular_ endpoint, which returns a list of 20 movies for a specified page.
+The pagination has a limit on the movies it holds per batch. This batch is called a _page_. In other words, the app has a defined number of movies per page (set arbitrarily by me), so if a page holds X movies, after scrolling X movies, a new page with X movies will appear. The data source of those movies is the `movie/popular` endpoint, which returns a list of 20 movies for a specified page.
 
 The complication with this is that there are actually two types of adding another page; a local and an API addition.
 1. The local addition of a page means that if a small number of movies per page is set, we might have to fetch from those pages first in order to fill up the list.
@@ -60,4 +60,12 @@ From left to right:
 1. Tapping on an unfavorited movie.
 2. Small loading indicator on the icon while the pseudo-API call decides the fate of the movie.
 3. A fail message.
+
+The tapping of the tile will be explained in the next section.
+
+Before that, a few words about the search function. This basically calls another endpoint, `search/movie`, which is identical to `movie/popular` plus the text that the user typed.
+
+As you can imagine, the app has to hit that endpoint for every character (and mistyped character) the user inputs, which might lead to a big overload to both the server but also the app (lag). Another trick is used here in order to smooth things up. The search function (and thus the API call) will only trigger `250ms` after the user has stopped typing. This is a good amount of time to wait that's neither too long nor too short. This way, the search will only trigger when really needed. Other than that, the user still sees a list which still uses a (different) pagination system, where the only difference is the available movies.
+
+### Movie Details Screen
 
