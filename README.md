@@ -68,4 +68,39 @@ Before that, a few words about the search function. This basically calls another
 As you can imagine, the app has to hit that endpoint for every character (and mistyped character) the user inputs, which might lead to a big overload to both the server but also the app (lag). Another trick is used here in order to smooth things up. The search function (and thus the API call) will only trigger `250ms` after the user has stopped typing. This is a good amount of time to wait that's neither too long nor too short. This way, the search will only trigger when really needed. Other than that, the user still sees a list which still uses a (different) pagination system, where the only difference is the available movies.
 
 ### Movie Details Screen
+This screen is rather static and simple. It contains a few extra details about the movie. Three images are worth 3000 words.
+
+<p float="left">
+    <img width="200" alt="Screenshot 2023-10-30 at 01 02 33" src="https://github.com/didimimimi/MovieRama/assets/44156940/a14c41e0-d211-4f66-9ab4-cea5d1ae10ce">
+    <img width="200" alt="Screenshot 2023-10-30 at 01 02 41" src="https://github.com/didimimimi/MovieRama/assets/44156940/bb9c5aa8-2f2b-465c-95ee-bf4e504490fd">
+    <img width="200" alt="Screenshot 2023-10-30 at 01 02 48" src="https://github.com/didimimimi/MovieRama/assets/44156940/8bc0c573-37ba-4c3f-8957-0602a3b61805">
+</p>
+
+As you may have noticed, the favorite button is also present here. Well, it's also tappable here and it also syncs with the tile on the list. Actually, the list also syncs with the details. It's a two-way sync.
+
+On the other hand, the similar movies, despite being a scrollable list of movies, are not tappable (for now at least). The rest of the screen is pretty straightforward.
+
+## Deeper Dive
+It's time to speak a bit about code in a more descriptive level at least.
+
+### Models
+There are a ton of models that are used throughout the app. The most important one is `Movie` that represnts a movie. Then some API models, some transformers of those models into either a `Movie` or some other domain model, some enums for clarity and constants for consistency.
+
+### MVI
+The screen of the movies' list is constructed in an MVI architecture, while the details screen (being much simpler without many user interactions) is a plain old `UIViewController` with a few custom/reusable views.
+The main screen is divided as follows:
+
+1. `MovieListViewController`: The actual screen.
+2. `MovieListIntents`: The screens intents. One intent is an interaction of the user with a screen. When they tap a square, for instance, the corresponding intent should be called.
+3. `MovieListStates`: The states of the screen. For example, when an alert is shown, the screen is on an "show alert" state.
+4. `MovieListViewModel`: The view model of the screen. It includes all the functionality as far as computations are concerned (for example making the API calls), so that the `MovieListViewController` is left with only the necessary functionality about the UI.
+
+Simply put, the `MovieListIntents` is a protocol that the `MovieListViewModel` implements. The `MovieListStates` is an enum. The view model defines a protocol (delegate) of its own, the `MovieListViewModelDelegate`, with the following function:
+
+`func update(state: MovieListStates)` : updates the state of the screen
+
+The `ChessboardMainViewModelDelegate` is implemented by the `MovieListViewController`, which the latter defines a specific action by switching on the provided state (enum). Internally the view model will call update(state: ChessboardMainStates) in order to notify the view controller about the change and let it handle it however it wants (for example present an alert).
+
+
+
 
