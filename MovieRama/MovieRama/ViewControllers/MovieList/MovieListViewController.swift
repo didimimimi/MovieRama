@@ -181,8 +181,8 @@ extension MovieListViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension MovieListViewController: MovieTableViewCellDelegate {
-    func movieTapped(movie: Movie) {
-        self.viewModel.movieTapped(movie: movie)
+    func movieTapped(movie: Movie, indexPath: IndexPath) {
+        self.viewModel.movieTapped(movie: movie, indexPath: indexPath)
     }
     
     func favoriteTapped(movie: Movie, indexPath: IndexPath, favorite: Bool) {
@@ -209,8 +209,8 @@ extension MovieListViewController: MovieListViewModelDelegate {
 //        print(state)
         
         switch state {
-        case .moveToDetailsScreenState(let movie):
-            self.handleMoveToDetailsScreenState(ofMovie: movie)
+        case .moveToDetailsScreenState(let movie, let indexPath):
+            self.handleMoveToDetailsScreenState(ofMovie: movie, at: indexPath)
         case .endRefreshState:
             self.handleEndRefreshState()
         case .createListState(let movies):
@@ -232,8 +232,14 @@ extension MovieListViewController: MovieListViewModelDelegate {
         }
     }
     
-    private func handleMoveToDetailsScreenState(ofMovie movie: Movie) {
-        print("open details of movie \"\(movie.title ?? "")\"\nurl: \(movie.imageUrl)\nid: \(movie.id)\n")
+    private func handleMoveToDetailsScreenState(ofMovie movie: Movie, at indexPath: IndexPath) {
+        print("open details of movie \"\(movie.title ?? "")\"\nurl: \(movie.imageUrl)\nid: \(movie.id)\nfavorite:\(movie.favorite)\n")
+        
+        let movieDetailsVc = MovieDetailsViewController(movie: movie, indexPath: indexPath)
+        let navigationVc = UINavigationController(rootViewController: movieDetailsVc)
+        navigationVc.modalPresentationStyle = .fullScreen
+        
+//        self.present(navigationVc, animated: true)
     }
     
     private func handleEndRefreshState() {

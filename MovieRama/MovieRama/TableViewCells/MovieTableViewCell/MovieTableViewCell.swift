@@ -8,7 +8,7 @@
 import UIKit
 
 protocol MovieTableViewCellDelegate: AnyObject {
-    func movieTapped(movie: Movie)
+    func movieTapped(movie: Movie, indexPath: IndexPath)
     func favoriteTapped(movie: Movie, indexPath: IndexPath, favorite: Bool)
 }
 
@@ -19,13 +19,13 @@ class MovieTableViewCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var ratingView: RatingView!
     @IBOutlet weak var dateLabel: UILabel!
-    @IBOutlet weak var favoriteImageView: UIImageView!
     @IBOutlet weak var loadingImageIndicatorView: UIActivityIndicatorView!
     
-    @IBOutlet weak var setFavoriteIndicatorView: UIActivityIndicatorView!
+    @IBOutlet weak var favoriteView: FavoriteView!
+    
     static let cellId = "MovieTableViewCell"
     
-    private var isFavorited = false
+    private var isFavorite = false
     private var movie = Movie()
     private var indexPath = IndexPath()
     
@@ -63,17 +63,10 @@ class MovieTableViewCell: UITableViewCell {
         
         self.dateLabel.font = UIFont.systemFont(ofSize: 12, weight: .light)
         self.dateLabel.textColor = MovieRamaConstants().CYAN_COLOR.withAlphaComponent(0.85)
-        
-        self.favoriteImageView.image = UIImage(systemName: "heart")
-        self.favoriteImageView.tintColor = .red.withAlphaComponent(0.8)
-        
+                
         self.loadingImageIndicatorView.isHidden = true
         self.loadingImageIndicatorView.hidesWhenStopped = true
         self.loadingImageIndicatorView.color = MovieRamaConstants().INDICATOR_COLOR
-        
-        self.setFavoriteIndicatorView.isHidden = true
-        self.setFavoriteIndicatorView.hidesWhenStopped = true
-        self.setFavoriteIndicatorView.color = MovieRamaConstants().INDICATOR_COLOR
     }
     
     func configure(withMovie movie: Movie,
@@ -91,24 +84,8 @@ class MovieTableViewCell: UITableViewCell {
         self.movieImageView.image = self.movie.image
         self.dateLabel.text = self.movie.date
         self.ratingView.setRating(stars: MovieRating(value: self.movie.rating) ?? .zero)
-        
+        self.favoriteView.updateFavoriteView(movie: self.movie, indexPath: self.indexPath, delegate: self)
         self.handleLoading(hide: self.movie.image != nil)
-
-        self.setUpFavorite()
-    }
-    
-    private func setUpFavorite() {
-        if let movieIsFavorite = self.movie.favorite {
-            self.isFavorited = movieIsFavorite
-        } else {
-            self.isFavorited = false
-        }
-        
-        self.updateFavoriteIcon()
-    }
-    
-    private func updateFavoriteIcon() {
-        self.favoriteImageView.image = UIImage(systemName: HeartEnum(isFavorite: self.isFavorited).rawValue)
     }
     
     private func handleLoading(hide: Bool) {
@@ -117,18 +94,13 @@ class MovieTableViewCell: UITableViewCell {
     }
     
     @IBAction func mainButtonTapped(_ sender: UIButton) {
-        self.delegate?.movieTapped(movie: self.movie)
+        self.delegate?.movieTapped(movie: self.movie, indexPath: self.indexPath)
     }
-    
-    @IBAction func favoriteButtonTapped(_ sender: UIButton) {
-        self.setFavoriteIndicatorView.isHidden = false
-        self.setFavoriteIndicatorView.startAnimating()
-        
-        self.isFavorited.toggle()
-        self.delegate?.favoriteTapped(movie: self.movie, indexPath: self.indexPath, favorite: self.isFavorited)
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) {
-            self.setFavoriteIndicatorView.stopAnimating()
-        }
+}
+
+extension MovieTableViewCell: FavoriteViewDelegate {
+    func favoriteTapped(movie: Movie, indexPath: IndexPath, favorite: Bool) {
+        print("Current favorite: \(self.isFavorite), movie favorite: \(movie.favorite), favorite Value: \(favorite)\n")
+        self.delegate?.favoriteTapped(movie: self.movie, indexPath: self.indexPath, favorite: self.isFavorite)
     }
 }

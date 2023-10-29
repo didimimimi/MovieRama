@@ -59,8 +59,8 @@ class MovieListViewModel: MovieListIntents {
         }
     }
     
-    func movieTapped(movie: Movie) {
-        self.delegate?.update(state: .moveToDetailsScreenState(ofMovie: movie))
+    func movieTapped(movie: Movie, indexPath: IndexPath) {
+        self.delegate?.update(state: .moveToDetailsScreenState(ofMovie: movie, indexPath: indexPath))
     }
     
     func favoriteTapped(movie: Movie, indexPath: IndexPath, favorite: Bool) {
