@@ -78,7 +78,6 @@ class DetailCustomView: UIView {
         if let textValues = textValues {
             self.collectionView.isHidden = false
             self.urls = textValues
-            self.collectionView.reloadData()
         } else {
             self.collectionView.isHidden = true
         }
@@ -96,7 +95,7 @@ class DetailCustomView: UIView {
             forCellWithReuseIdentifier: SimilarMovieCollectionViewCell.cellId
         )
         
-        self.collectionView.isHidden = false
+        self.collectionView.isHidden = true
     }
     
     private func setupCollectionViewFlowLayout() {
@@ -111,7 +110,7 @@ class DetailCustomView: UIView {
 
 extension DetailCustomView: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        self.urls.count
+        return self.urls.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -124,6 +123,15 @@ extension DetailCustomView: UICollectionViewDelegate, UICollectionViewDataSource
         movieCell.update(withUrl: url, atIndex: index, delegate: self)
         
         return movieCell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let deviceWidth = UIScreen.main.bounds.size.width
+        
+        let width = floor( 2 * deviceWidth / 5)
+        let height = width * 1.25
+        
+        return CGSize(width: width, height: height)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

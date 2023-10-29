@@ -25,13 +25,17 @@ class GetMovieDetailsTransfromer {
             domainModel.runtime = "\(inHours) (\(apiModel.runtime ?? 0) minutes)"
         }
         
-        domainModel.tagline = apiModel.tagline
+        if let tagline = apiModel.tagline, !tagline.isEmpty {
+            domainModel.tagline = tagline
+        } else {
+            domainModel.tagline = "-"
+        }
         
-        let descriptionField = DetailFieldValue(title: .description, description: movie.overview)
-        let runtimeField = DetailFieldValue(title: .runtime, description: movie.runtime)
-        let tagline = DetailFieldValue(title: .tagline, description: movie.tagline)
+        let descriptionField = DetailFieldValue(title: .description, description: domainModel.overview)
+        let runtimeField = DetailFieldValue(title: .runtime, description: domainModel.runtime)
+        let taglineField = DetailFieldValue(title: .tagline, description: domainModel.tagline)
         
-        let fields = [descriptionField, runtimeField, tagline]
+        let fields = [descriptionField, runtimeField, taglineField]
 
         return (domainModel, fields)
     }    

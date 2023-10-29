@@ -132,5 +132,53 @@
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E3DFE70E-C36B-48DF-8F07-C8904D408E27"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MovieRama/CustomViews/DetailCustomView/DetailCustomView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "69"
+            endingLineNumber = "69"
+            landmarkName = "set(text:to:)"
+            landmarkType = "9">
+            <Locations>
+               <Location
+                  uuid = "E3DFE70E-C36B-48DF-8F07-C8904D408E27 - d510ae6e23d58743"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MovieRama.DetailCustomView.set(text: Swift.Optional&lt;Swift.String&gt;, to: __C.UILabel) -&gt; ()"
+                  moduleName = "MovieRama"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dimitristasiospersonal/Documents/GitHub/MovieRama/MovieRama/MovieRama/CustomViews/DetailCustomView/DetailCustomView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "69"
+                  endingLineNumber = "69"
+                  offsetFromSymbolStart = "130">
+               </Location>
+               <Location
+                  uuid = "E3DFE70E-C36B-48DF-8F07-C8904D408E27 - d510ae6e23d58743"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "MovieRama.DetailCustomView.set(text: Swift.Optional&lt;Swift.String&gt;, to: __C.UILabel) -&gt; ()"
+                  moduleName = "MovieRama"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/dimitristasiospersonal/Documents/GitHub/MovieRama/MovieRama/MovieRama/CustomViews/DetailCustomView/DetailCustomView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "69"
+                  endingLineNumber = "69"
+                  offsetFromSymbolStart = "193">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>
