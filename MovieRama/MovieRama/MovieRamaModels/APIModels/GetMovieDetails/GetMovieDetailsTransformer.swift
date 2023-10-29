@@ -9,7 +9,7 @@ import Foundation
 
 class GetMovieDetailsTransfromer {
     func transform(apiModel: ApiGetMovieDetailsResponse, onto movie: Movie) -> Movie {
-        var domainModel = movie
+        let domainModel = movie
         
         if let genres = apiModel.genres {
             domainModel.genres = genres.map({ $0.name ?? "" }).joined(separator: ", ")

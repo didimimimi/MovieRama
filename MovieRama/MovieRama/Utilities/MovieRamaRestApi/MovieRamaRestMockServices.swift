@@ -23,4 +23,8 @@ class MovieRamaRestMockServices: MovieRamaRestProtocol {
     func getMovieDetails(for movie: Movie, completionBlock: @escaping (Movie) -> Void, errorBlock: @escaping (Error) -> Void) {
         
     }
+    
+    func getMovieReviews(for movie: Movie, completionBlock: @escaping ([DetailFieldValue]) -> Void, errorBlock: @escaping (Error) -> Void) {
+        
+    }
 }

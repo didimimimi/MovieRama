@@ -11,24 +11,41 @@ class MovieRamaRestApiServices: MovieRamaRestProtocol {
     func getPopularMovies(forPage page: Int,
                           completionBlock: @escaping (GetMoviesResponse) -> Void,
                           errorBlock: @escaping (Error) -> Void) {
-        self.handleGetMoviesCall(isSearchCall: false, searchTerm: "", forPage: page, completionBlock: completionBlock, errorBlock: errorBlock)
+        self.handleGetMoviesCall(endpoint: .allMovies(page: page),
+                                 completionBlock: completionBlock,
+                                 errorBlock: errorBlock)
     }
     
     func searchMovies(searchTerm: String,
                       forPage page: Int,
                       completionBlock: @escaping (GetMoviesResponse) -> Void,
                       errorBlock: @escaping (Error) -> Void) {
-        self.handleGetMoviesCall(isSearchCall: true, searchTerm: searchTerm, forPage: page, completionBlock: completionBlock, errorBlock: errorBlock)
+        self.handleGetMoviesCall(endpoint: .searchMovies(page: page, searchTerm: searchTerm),
+                                 completionBlock: completionBlock,
+                                 errorBlock: errorBlock)
     }
     
-    private func handleGetMoviesCall(isSearchCall: Bool,
-                                     searchTerm: String,
-                                     forPage page: Int,
+    func similarMovies(movie: Movie,
+                       completionBlock: @escaping (GetMoviesResponse) -> Void,
+                       errorBlock: @escaping (Error) -> Void) {
+        self.handleGetMoviesCall(endpoint: .similarMovies(movie: movie),
+                                 completionBlock: completionBlock,
+                                 errorBlock: errorBlock)
+    }
+    
+    private func handleGetMoviesCall(endpoint: ApiCallEndpointWithSameResponseModel,
                                      completionBlock: @escaping (GetMoviesResponse) -> Void,
                                      errorBlock: @escaping (Error) -> Void) {
-        let urlString = isSearchCall
-        ? "https://api.themoviedb.org/3/search/movie?page=\(String(page))&query=\(searchTerm)&include_adult=false"
-        : "https://api.themoviedb.org/3/movie/popular?page=\(String(page))&include_adult=false"
+        let urlString: String
+        
+        switch endpoint {
+        case .allMovies(let page):
+            urlString = "https://api.themoviedb.org/3/movie/popular?page=\(String(page))&include_adult=false"
+        case .searchMovies(let page, let searchTerm):
+            urlString = "https://api.themoviedb.org/3/search/movie?page=\(String(page))&query=\(searchTerm)&include_adult=false"
+        case .similarMovies(let movie):
+            urlString = "https://api.themoviedb.org/3/movie/\(movie.id ?? "")/similar"
+        }
         
         self.makeApiCall(urlString: urlString,
                          completionBlock: { data in
@@ -65,6 +82,22 @@ class MovieRamaRestApiServices: MovieRamaRestProtocol {
         self.makeApiCall(urlString: urlString,
                          completionBlock: { data in
             let domainModel = GetMovieDetailsTransfromer().transform(apiModel: data, onto: movie)
+            completionBlock(domainModel)
+        }, errorBlock: { error in
+            if let error = error {
+                errorBlock(error)
+            }
+        })
+    }
+    
+    func getMovieReviews(for movie: Movie,
+                         completionBlock: @escaping ([DetailFieldValue]) -> Void,
+                         errorBlock: @escaping (Error) -> Void) {
+        let urlString = "https://api.themoviedb.org/3/movie/\(movie.id ?? "")/reviews"
+        
+        self.makeApiCall(urlString: urlString,
+                         completionBlock: { data in
+            let domainModel = GetReviewsOfMovieTransformer().transform(apiModel: data)
             completionBlock(domainModel)
         }, errorBlock: { error in
             if let error = error {

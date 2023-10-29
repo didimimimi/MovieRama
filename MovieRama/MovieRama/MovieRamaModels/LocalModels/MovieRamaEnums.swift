@@ -70,3 +70,9 @@ enum DetailFieldTitle: String {
     case reviews = "REVIEWS"
     case similarMovies = "SIMILAR MOVIES"
 }
+
+enum ApiCallEndpointWithSameResponseModel {
+    case allMovies(page: Int)
+    case searchMovies(page: Int, searchTerm: String)
+    case similarMovies(movie: Movie)
+}

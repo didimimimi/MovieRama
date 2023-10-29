@@ -37,6 +37,10 @@
 		343308BF2AEE958B006FEEBA /* MovieRamaRestProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343308BE2AEE958B006FEEBA /* MovieRamaRestProtocol.swift */; };
 		343308C22AEE9D37006FEEBA /* MovieRamaRestMockServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343308C12AEE9D37006FEEBA /* MovieRamaRestMockServices.swift */; };
 		343308C42AEE9D64006FEEBA /* MovieRamaRest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343308C32AEE9D64006FEEBA /* MovieRamaRest.swift */; };
+		343308C92AEEA3BB006FEEBA /* ApiReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343308C62AEEA3BB006FEEBA /* ApiReview.swift */; };
+		343308CA2AEEA3BB006FEEBA /* ApiAuthorDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343308C72AEEA3BB006FEEBA /* ApiAuthorDetails.swift */; };
+		343308CB2AEEA3BB006FEEBA /* ApiGetReviewsOfMovieResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343308C82AEEA3BB006FEEBA /* ApiGetReviewsOfMovieResponse.swift */; };
+		343308CD2AEEA48A006FEEBA /* GetReviewsOfMovieTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343308CC2AEEA48A006FEEBA /* GetReviewsOfMovieTransformer.swift */; };
 		343B8ED02AE8244100DA63D4 /* SplashScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343B8ECE2AE8244100DA63D4 /* SplashScreenViewController.swift */; };
 		3441C5152AE562890025DDE0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3441C5142AE562890025DDE0 /* AppDelegate.swift */; };
 		3441C5172AE562890025DDE0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3441C5162AE562890025DDE0 /* SceneDelegate.swift */; };
@@ -112,6 +116,10 @@
 		343308BE2AEE958B006FEEBA /* MovieRamaRestProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieRamaRestProtocol.swift; sourceTree = "<group>"; };
 		343308C12AEE9D37006FEEBA /* MovieRamaRestMockServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieRamaRestMockServices.swift; sourceTree = "<group>"; };
 		343308C32AEE9D64006FEEBA /* MovieRamaRest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieRamaRest.swift; sourceTree = "<group>"; };
+		343308C62AEEA3BB006FEEBA /* ApiReview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiReview.swift; sourceTree = "<group>"; };
+		343308C72AEEA3BB006FEEBA /* ApiAuthorDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiAuthorDetails.swift; sourceTree = "<group>"; };
+		343308C82AEEA3BB006FEEBA /* ApiGetReviewsOfMovieResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiGetReviewsOfMovieResponse.swift; sourceTree = "<group>"; };
+		343308CC2AEEA48A006FEEBA /* GetReviewsOfMovieTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetReviewsOfMovieTransformer.swift; sourceTree = "<group>"; };
 		343B8ECE2AE8244100DA63D4 /* SplashScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenViewController.swift; sourceTree = "<group>"; };
 		3441C5112AE562890025DDE0 /* MovieRama.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieRama.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3441C5142AE562890025DDE0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -185,6 +193,7 @@
 		3433087B2AED0A28006FEEBA /* APIModels */ = {
 			isa = PBXGroup;
 			children = (
+				343308C52AEEA3A6006FEEBA /* GetReviewsOfMovie */,
 				343308B02AEE8EDB006FEEBA /* GetMovieDetails */,
 				3433087E2AED0A95006FEEBA /* GetMovies */,
 			);
@@ -290,6 +299,17 @@
 				343308C32AEE9D64006FEEBA /* MovieRamaRest.swift */,
 			);
 			path = MovieRamaRestApi;
+			sourceTree = "<group>";
+		};
+		343308C52AEEA3A6006FEEBA /* GetReviewsOfMovie */ = {
+			isa = PBXGroup;
+			children = (
+				343308C72AEEA3BB006FEEBA /* ApiAuthorDetails.swift */,
+				343308C82AEEA3BB006FEEBA /* ApiGetReviewsOfMovieResponse.swift */,
+				343308C62AEEA3BB006FEEBA /* ApiReview.swift */,
+				343308CC2AEEA48A006FEEBA /* GetReviewsOfMovieTransformer.swift */,
+			);
+			path = GetReviewsOfMovie;
 			sourceTree = "<group>";
 		};
 		343B8ECD2AE8242600DA63D4 /* SplashScreen */ = {
@@ -583,6 +603,7 @@
 			files = (
 				343308882AED143D006FEEBA /* DateUtilities.swift in Sources */,
 				343308A32AEE532C006FEEBA /* DetailFieldValues.swift in Sources */,
+				343308CD2AEEA48A006FEEBA /* GetReviewsOfMovieTransformer.swift in Sources */,
 				34659E052AE9CD1E002E92B3 /* LoadingTableViewCell.swift in Sources */,
 				343308B72AEE902F006FEEBA /* ApiProductionCompanies.swift in Sources */,
 				343308942AEE4B0E006FEEBA /* MovieDetailsViewController.swift in Sources */,
@@ -597,8 +618,10 @@
 				3441C55F2AE5C5D40025DDE0 /* MovieListIntents.swift in Sources */,
 				3433088C2AED43DF006FEEBA /* PaginationResult.swift in Sources */,
 				343308822AED0AAB006FEEBA /* ApiGetMoviesResponse.swift in Sources */,
+				343308C92AEEA3BB006FEEBA /* ApiReview.swift in Sources */,
 				343308BF2AEE958B006FEEBA /* MovieRamaRestProtocol.swift in Sources */,
 				3433089D2AEE4F2F006FEEBA /* DetailCustomView.swift in Sources */,
+				343308CA2AEEA3BB006FEEBA /* ApiAuthorDetails.swift in Sources */,
 				343308C22AEE9D37006FEEBA /* MovieRamaRestMockServices.swift in Sources */,
 				3441C5152AE562890025DDE0 /* AppDelegate.swift in Sources */,
 				343308862AED0F7A006FEEBA /* GetMoviesResponse.swift in Sources */,
@@ -617,6 +640,7 @@
 				343308812AED0AAB006FEEBA /* ApiMovie.swift in Sources */,
 				343308992AEE4BDC006FEEBA /* MovieDetailsStates.swift in Sources */,
 				3441C5512AE590CD0025DDE0 /* RatingView.swift in Sources */,
+				343308CB2AEEA3BB006FEEBA /* ApiGetReviewsOfMovieResponse.swift in Sources */,
 				3441C55A2AE5A97D0025DDE0 /* Movie.swift in Sources */,
 				343308842AED0B65006FEEBA /* GetMoviesTransfromer.swift in Sources */,
 				343308BC2AEE90A1006FEEBA /* GetMovieDetailsTransformer.swift in Sources */,
