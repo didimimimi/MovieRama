@@ -48,7 +48,7 @@
 		3441C5172AE562890025DDE0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3441C5162AE562890025DDE0 /* SceneDelegate.swift */; };
 		3441C51E2AE5628B0025DDE0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3441C51D2AE5628B0025DDE0 /* Assets.xcassets */; };
 		3441C5212AE5628B0025DDE0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3441C51F2AE5628B0025DDE0 /* LaunchScreen.storyboard */; };
-		3441C52C2AE5628C0025DDE0 /* MovieRamaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3441C52B2AE5628C0025DDE0 /* MovieRamaTests.swift */; };
+		3441C52C2AE5628C0025DDE0 /* MovieRamaMovieListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3441C52B2AE5628C0025DDE0 /* MovieRamaMovieListViewModelTests.swift */; };
 		3441C5362AE5628C0025DDE0 /* MovieRamaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3441C5352AE5628C0025DDE0 /* MovieRamaUITests.swift */; };
 		3441C5382AE5628C0025DDE0 /* MovieRamaUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3441C5372AE5628C0025DDE0 /* MovieRamaUITestsLaunchTests.swift */; };
 		3441C5482AE563620025DDE0 /* MovieListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3441C5462AE563620025DDE0 /* MovieListViewController.swift */; };
@@ -133,7 +133,7 @@
 		3441C5202AE5628B0025DDE0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3441C5222AE5628B0025DDE0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3441C5272AE5628C0025DDE0 /* MovieRamaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MovieRamaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		3441C52B2AE5628C0025DDE0 /* MovieRamaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieRamaTests.swift; sourceTree = "<group>"; };
+		3441C52B2AE5628C0025DDE0 /* MovieRamaMovieListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieRamaMovieListViewModelTests.swift; sourceTree = "<group>"; };
 		3441C5312AE5628C0025DDE0 /* MovieRamaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MovieRamaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3441C5352AE5628C0025DDE0 /* MovieRamaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieRamaUITests.swift; sourceTree = "<group>"; };
 		3441C5372AE5628C0025DDE0 /* MovieRamaUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieRamaUITestsLaunchTests.swift; sourceTree = "<group>"; };
@@ -384,7 +384,7 @@
 		3441C52A2AE5628C0025DDE0 /* MovieRamaTests */ = {
 			isa = PBXGroup;
 			children = (
-				3441C52B2AE5628C0025DDE0 /* MovieRamaTests.swift */,
+				3441C52B2AE5628C0025DDE0 /* MovieRamaMovieListViewModelTests.swift */,
 				349979872AEEE7F1009CD187 /* MovieRamaPaginationTests.swift */,
 			);
 			path = MovieRamaTests;
@@ -681,7 +681,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3441C52C2AE5628C0025DDE0 /* MovieRamaTests.swift in Sources */,
+				3441C52C2AE5628C0025DDE0 /* MovieRamaMovieListViewModelTests.swift in Sources */,
 				349979882AEEE7F1009CD187 /* MovieRamaPaginationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -37,10 +37,20 @@ class SplashScreenViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.getMovies()
         addSubviewsToView()
         addConstraintsToSubviews()
         animateSplashScreen()
     }
+    
+    private func getMovies() {
+        MovieRamaRest(apiServices: MovieRamaSingleton.sharedInstance.restClient).getPopularMovies(forPage: 1, completionBlock: { response in
+            MovieRamaSingleton.sharedInstance.moviesFromSplashScreen = response.movies
+        }, errorBlock: { error in
+            self.presentAlertFor(error: error)
+        })
+    }
+
     
     private func addSubviewsToView() {
         view.addSubview(backgroundView)

@@ -24,10 +24,10 @@ final class MovieRamaPaginationTests: XCTestCase {
         let pagination = MovieListPagination(movies: movies)
         let paginationResult = try XCTUnwrap(pagination.getNextPageData())
         
-        XCTAssertEqual(paginationResult.page.count, MovieRamaConstants().PAGINATION_NUMBER_OF_ITEMS_PER_PAGE)
+        XCTAssertEqual(paginationResult.page.count, MovieRamaConstants().PAGINATION_NUMBER_OF_ITEMS_PER_PAGE, "Incorrect amount of movies in page")
         
         let expectedPage = Array(movies[0..<MovieRamaConstants().PAGINATION_NUMBER_OF_ITEMS_PER_PAGE])
-        XCTAssertEqual(paginationResult.page, expectedPage)
+        XCTAssertEqual(paginationResult.page, expectedPage, "Incorrect page")
         
         var indexPaths: [IndexPath] = []
         
@@ -36,7 +36,7 @@ final class MovieRamaPaginationTests: XCTestCase {
             indexPaths.append(indexPath)
         }
         
-        XCTAssertEqual(paginationResult.indexPathsToAppend, indexPaths)
+        XCTAssertEqual(paginationResult.indexPathsToAppend, indexPaths, "Incorrect index paths of movies in page")
     }
     
     func generateMovies(amount: Int) -> [Movie] {
@@ -65,7 +65,7 @@ final class MovieRamaPaginationTests: XCTestCase {
         
         let paginationResult = pagination.getNextPageData()
         
-        XCTAssertNil(paginationResult)
+        XCTAssertNil(paginationResult, "Pagination is not full")
     }
     
     // Adding more movies should increse the capacity
@@ -78,8 +78,11 @@ final class MovieRamaPaginationTests: XCTestCase {
             pagination.appendNewMovies(movies: response.movies)
             
             if let paginationResult1 =  pagination.getNextPageData(), let paginationResult2 =  pagination.getNextPageData() {
-                XCTAssertEqual(paginationResult1.page.count, 10)
-                XCTAssertEqual(paginationResult2.page.count, 5)
+                XCTAssertEqual(paginationResult1.page.count, 10,
+                               "Pagination first page should have 10 elements in a 15 pagination of 10 movies per page")
+                
+                XCTAssertEqual(paginationResult2.page.count, 5,
+                               "Pagination second page should have 5 elements in a 15 pagination of 10 movies per page")
             }
             
         }, errorBlock: { _ in })
