@@ -18,8 +18,8 @@ class MovieRamaRest {
                           completionBlock: @escaping (GetMoviesResponse) -> Void,
                           errorBlock: @escaping (Error) -> Void) {
         self.apiServices?.getPopularMovies(forPage: page,
-                                           completionBlock:
-                                            completionBlock, errorBlock: errorBlock)
+                                           completionBlock: completionBlock,
+                                           errorBlock: errorBlock)
     }
     
     func searchMovies(searchTerm: String,

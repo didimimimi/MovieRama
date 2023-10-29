@@ -33,14 +33,15 @@ class MovieListViewModel: MovieListIntents {
     init(delegate: MovieListViewModelDelegate) {
         self.delegate = delegate
         
-        self.loadMoviesFromSplashScreen()
+        self.loadMoviesInitially()
     }
     
     init() {}
     
-    private func loadMoviesFromSplashScreen() {
-        self.movies = MovieRamaSingleton.sharedInstance.moviesFromSplashScreen
-        self.switchModeToAllMoviesMode()
+    private func loadMoviesInitially() {
+        self.getApiPages(specifiedPage: self.currentApiPageForMovies) {
+            self.switchModeToAllMoviesMode()            
+        }
     }
     
     func searchMovie(text: String) {

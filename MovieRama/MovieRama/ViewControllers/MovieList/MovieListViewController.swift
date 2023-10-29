@@ -243,6 +243,8 @@ extension MovieListViewController: MovieListViewModelDelegate {
             self.handleErrorState(error: error)
         case .reloadCell(let indexPath):
             self.handleReloadCell(indexPath: indexPath)
+        case .dummyState:
+            break
         }
     }
     
