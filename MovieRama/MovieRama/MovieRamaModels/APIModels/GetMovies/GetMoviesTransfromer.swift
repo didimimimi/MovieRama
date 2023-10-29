@@ -33,7 +33,7 @@ class GetMoviesTransfromer {
         
         movie.rating = round((apiModel.vote_average ?? 0) / 2)
         movie.date = DateUtilities().formatDate(date: apiModel.release_date)
-        movie.imageUrl = MovieRamaRest().imagePath + (apiModel.backdrop_path ?? "")
+        movie.imageUrl = MovieRamaConstants().IMAGE_PATH_PREFIX + (apiModel.backdrop_path ?? "")
         
         MovieRamaHelper().loadImageFrom(urlString: movie.imageUrl) { image in
             if let image = image {

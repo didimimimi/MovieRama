@@ -7,11 +7,7 @@
 
 import Foundation
 
-class MovieRamaRest: MovieRamaRestProtocol {
-    let imagePath = "https://image.tmdb.org/t/p/original/"
-    
-    private let apiKey = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI5ZGM0MGEyYmRkNzFhYWRjN2I4NzUzN2Y1MzQ2MGU3OSIsInN1YiI6IjY1MzkyMzlkOWMyNGZjMDE0MmIzMWU5NCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.6XA7eyJSx_2kLNB_GAEnXPrweeyUBupLktnZWH6DLEI"
-    
+class MovieRamaRestApiServices: MovieRamaRestProtocol {
     func getPopularMovies(forPage page: Int,
                           completionBlock: @escaping (GetMoviesResponse) -> Void,
                           errorBlock: @escaping (Error) -> Void) {
@@ -84,7 +80,7 @@ class MovieRamaRest: MovieRamaRestProtocol {
             
             var request = URLRequest(url: url)
             request.httpMethod = "GET"
-            request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
+            request.setValue("Bearer \(MovieRamaConstants().API_KEY)", forHTTPHeaderField: "Authorization")
             
             let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
                 if let error = error {

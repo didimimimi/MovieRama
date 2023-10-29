@@ -214,7 +214,7 @@ class MovieListViewModel: MovieListIntents {
     private func getApiPages(specifiedPage: Int,
                              completion: @escaping () -> Void) {
         DispatchQueue.global().async {
-            MovieRamaRest().getPopularMovies(forPage: specifiedPage, completionBlock: { response in
+            MovieRamaRest(apiServices: MovieRamaSingleton.sharedInstance.restClient).getPopularMovies(forPage: specifiedPage, completionBlock: { response in
                 if specifiedPage == 1 {
                     self.movies = response.movies
                 } else {
@@ -235,7 +235,7 @@ class MovieListViewModel: MovieListIntents {
                                       specifiedPage: Int,
                                       completion: @escaping () -> Void) {
         DispatchQueue.global().async {
-            MovieRamaRest().searchMovies(searchTerm: searchTerm, forPage: specifiedPage, completionBlock: { response in
+            MovieRamaRest(apiServices: MovieRamaSingleton.sharedInstance.restClient).searchMovies(searchTerm: searchTerm, forPage: specifiedPage, completionBlock: { response in
                 if specifiedPage == 1 {
                     self.searchResults = response.movies
                 } else {

@@ -44,7 +44,7 @@ class SplashScreenViewController: UIViewController {
     }
     
     private func getMovies() {
-        MovieRamaRest().getPopularMovies(forPage: 1, completionBlock: { response in
+        MovieRamaRest(apiServices: MovieRamaSingleton.sharedInstance.restClient).getPopularMovies(forPage: 1, completionBlock: { response in
             MovieRamaSingleton.sharedInstance.moviesFromSplashScreen = response.movies
         }, errorBlock: { error in
             self.presentAlertFor(error: error)

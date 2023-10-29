@@ -76,7 +76,7 @@ class FavoriteView: UIView {
     }
     
     private func callSaveFavorite() {
-        MovieRamaRest().saveFavorite(for: movie, at: indexPath, completionBlock: {
+        MovieRamaRest(apiServices: MovieRamaSingleton.sharedInstance.restClient).saveFavorite(for: movie, at: indexPath, completionBlock: {
             self.setFavoriteActivityIndicator.stopAnimating()
             
             self.movie.favorite = self.isFavorite

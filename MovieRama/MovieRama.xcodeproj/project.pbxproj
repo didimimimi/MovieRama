@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		3429C6E72AE6D7BC00EF71C9 /* MovieRamaExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3429C6E62AE6D7BC00EF71C9 /* MovieRamaExtensions.swift */; };
 		3429C6E92AE6E99300EF71C9 /* MovieListPagination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3429C6E82AE6E99300EF71C9 /* MovieListPagination.swift */; };
-		3433087A2AED0627006FEEBA /* MovieRamaRest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343308792AED0627006FEEBA /* MovieRamaRest.swift */; };
+		3433087A2AED0627006FEEBA /* MovieRamaRestApiServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343308792AED0627006FEEBA /* MovieRamaRestApiServices.swift */; };
 		343308812AED0AAB006FEEBA /* ApiMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3433087F2AED0AAB006FEEBA /* ApiMovie.swift */; };
 		343308822AED0AAB006FEEBA /* ApiGetMoviesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343308802AED0AAB006FEEBA /* ApiGetMoviesResponse.swift */; };
 		343308842AED0B65006FEEBA /* GetMoviesTransfromer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343308832AED0B65006FEEBA /* GetMoviesTransfromer.swift */; };
@@ -35,6 +35,8 @@
 		343308BA2AEE902F006FEEBA /* ApiProductionCountries.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343308B62AEE902F006FEEBA /* ApiProductionCountries.swift */; };
 		343308BC2AEE90A1006FEEBA /* GetMovieDetailsTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343308BB2AEE90A1006FEEBA /* GetMovieDetailsTransformer.swift */; };
 		343308BF2AEE958B006FEEBA /* MovieRamaRestProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343308BE2AEE958B006FEEBA /* MovieRamaRestProtocol.swift */; };
+		343308C22AEE9D37006FEEBA /* MovieRamaRestMockServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343308C12AEE9D37006FEEBA /* MovieRamaRestMockServices.swift */; };
+		343308C42AEE9D64006FEEBA /* MovieRamaRest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343308C32AEE9D64006FEEBA /* MovieRamaRest.swift */; };
 		343B8ED02AE8244100DA63D4 /* SplashScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 343B8ECE2AE8244100DA63D4 /* SplashScreenViewController.swift */; };
 		3441C5152AE562890025DDE0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3441C5142AE562890025DDE0 /* AppDelegate.swift */; };
 		3441C5172AE562890025DDE0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3441C5162AE562890025DDE0 /* SceneDelegate.swift */; };
@@ -82,7 +84,7 @@
 /* Begin PBXFileReference section */
 		3429C6E62AE6D7BC00EF71C9 /* MovieRamaExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieRamaExtensions.swift; sourceTree = "<group>"; };
 		3429C6E82AE6E99300EF71C9 /* MovieListPagination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListPagination.swift; sourceTree = "<group>"; };
-		343308792AED0627006FEEBA /* MovieRamaRest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieRamaRest.swift; sourceTree = "<group>"; };
+		343308792AED0627006FEEBA /* MovieRamaRestApiServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieRamaRestApiServices.swift; sourceTree = "<group>"; };
 		3433087F2AED0AAB006FEEBA /* ApiMovie.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiMovie.swift; sourceTree = "<group>"; };
 		343308802AED0AAB006FEEBA /* ApiGetMoviesResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiGetMoviesResponse.swift; sourceTree = "<group>"; };
 		343308832AED0B65006FEEBA /* GetMoviesTransfromer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetMoviesTransfromer.swift; sourceTree = "<group>"; };
@@ -108,6 +110,8 @@
 		343308B62AEE902F006FEEBA /* ApiProductionCountries.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiProductionCountries.swift; sourceTree = "<group>"; };
 		343308BB2AEE90A1006FEEBA /* GetMovieDetailsTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetMovieDetailsTransformer.swift; sourceTree = "<group>"; };
 		343308BE2AEE958B006FEEBA /* MovieRamaRestProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieRamaRestProtocol.swift; sourceTree = "<group>"; };
+		343308C12AEE9D37006FEEBA /* MovieRamaRestMockServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieRamaRestMockServices.swift; sourceTree = "<group>"; };
+		343308C32AEE9D64006FEEBA /* MovieRamaRest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieRamaRest.swift; sourceTree = "<group>"; };
 		343B8ECE2AE8244100DA63D4 /* SplashScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenViewController.swift; sourceTree = "<group>"; };
 		3441C5112AE562890025DDE0 /* MovieRama.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieRama.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3441C5142AE562890025DDE0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -168,11 +172,11 @@
 		3429C6E52AE6D79200EF71C9 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				343308C02AEE9C90006FEEBA /* MovieRamaRestApi */,
 				3441C55B2AE5BB5A0025DDE0 /* MovieRamaHelper.swift */,
 				3429C6E62AE6D7BC00EF71C9 /* MovieRamaExtensions.swift */,
 				34659DF82AE98A99002E92B3 /* MovieRamaSingleton.swift */,
 				3429C6E82AE6E99300EF71C9 /* MovieListPagination.swift */,
-				343308792AED0627006FEEBA /* MovieRamaRest.swift */,
 				343308872AED143D006FEEBA /* DateUtilities.swift */,
 			);
 			path = Utilities;
@@ -273,9 +277,19 @@
 				3441C5592AE5A97D0025DDE0 /* Movie.swift */,
 				3433088B2AED43DF006FEEBA /* PaginationResult.swift */,
 				343308A22AEE532C006FEEBA /* DetailFieldValues.swift */,
-				343308BE2AEE958B006FEEBA /* MovieRamaRestProtocol.swift */,
 			);
 			path = LocalModels;
+			sourceTree = "<group>";
+		};
+		343308C02AEE9C90006FEEBA /* MovieRamaRestApi */ = {
+			isa = PBXGroup;
+			children = (
+				343308BE2AEE958B006FEEBA /* MovieRamaRestProtocol.swift */,
+				343308792AED0627006FEEBA /* MovieRamaRestApiServices.swift */,
+				343308C12AEE9D37006FEEBA /* MovieRamaRestMockServices.swift */,
+				343308C32AEE9D64006FEEBA /* MovieRamaRest.swift */,
+			);
+			path = MovieRamaRestApi;
 			sourceTree = "<group>";
 		};
 		343B8ECD2AE8242600DA63D4 /* SplashScreen */ = {
@@ -572,6 +586,7 @@
 				34659E052AE9CD1E002E92B3 /* LoadingTableViewCell.swift in Sources */,
 				343308B72AEE902F006FEEBA /* ApiProductionCompanies.swift in Sources */,
 				343308942AEE4B0E006FEEBA /* MovieDetailsViewController.swift in Sources */,
+				343308C42AEE9D64006FEEBA /* MovieRamaRest.swift in Sources */,
 				343308BA2AEE902F006FEEBA /* ApiProductionCountries.swift in Sources */,
 				3441C5562AE593D60025DDE0 /* MovieRamaEnums.swift in Sources */,
 				343308B92AEE902F006FEEBA /* ApiSpokenLanguages.swift in Sources */,
@@ -584,12 +599,13 @@
 				343308822AED0AAB006FEEBA /* ApiGetMoviesResponse.swift in Sources */,
 				343308BF2AEE958B006FEEBA /* MovieRamaRestProtocol.swift in Sources */,
 				3433089D2AEE4F2F006FEEBA /* DetailCustomView.swift in Sources */,
+				343308C22AEE9D37006FEEBA /* MovieRamaRestMockServices.swift in Sources */,
 				3441C5152AE562890025DDE0 /* AppDelegate.swift in Sources */,
 				343308862AED0F7A006FEEBA /* GetMoviesResponse.swift in Sources */,
 				3441C5582AE594520025DDE0 /* MovieRamaConstants.swift in Sources */,
 				343308AA2AEE690A006FEEBA /* FavoriteView.swift in Sources */,
 				3441C5612AE5C5E10025DDE0 /* MovieListStates.swift in Sources */,
-				3433087A2AED0627006FEEBA /* MovieRamaRest.swift in Sources */,
+				3433087A2AED0627006FEEBA /* MovieRamaRestApiServices.swift in Sources */,
 				3433089B2AEE4BE9006FEEBA /* MovieDetailsViewModel.swift in Sources */,
 				3441C55C2AE5BB5A0025DDE0 /* MovieRamaHelper.swift in Sources */,
 				34659DF92AE98A99002E92B3 /* MovieRamaSingleton.swift in Sources */,

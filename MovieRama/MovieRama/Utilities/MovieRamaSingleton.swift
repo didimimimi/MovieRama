@@ -9,6 +9,7 @@ import Foundation
 
 class MovieRamaSingleton {
     var moviesFromSplashScreen = [Movie]()
+    var restClient: MovieRamaRestProtocol?
     
     private init() {}
     

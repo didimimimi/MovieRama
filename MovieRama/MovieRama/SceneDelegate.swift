@@ -18,6 +18,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         
         let initialViewController = SplashScreenViewController()
+        MovieRamaSingleton.sharedInstance.restClient = MovieRamaRestApiServices()
+        
         let window = UIWindow(windowScene: windowScene)
         window.rootViewController = initialViewController
         self.window = window
