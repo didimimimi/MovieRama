@@ -75,16 +75,25 @@
                                             <constraint firstAttribute="width" constant="24" id="uyQ-cX-nBJ"/>
                                         </constraints>
                                     </imageView>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="uWb-0C-DUS" userLabel="Set Favorite Activity Indicator">
+                                        <rect key="frame" x="332" y="16" width="16" height="16"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="16" id="Bya-is-blP"/>
+                                            <constraint firstAttribute="height" constant="16" id="ORA-Zt-aTO"/>
+                                        </constraints>
+                                    </activityIndicatorView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="Juw-0U-zCq" secondAttribute="bottom" constant="12" id="7Lj-uT-Zhi"/>
+                                    <constraint firstItem="uWb-0C-DUS" firstAttribute="centerX" secondItem="Juw-0U-zCq" secondAttribute="centerX" id="7fc-FX-HLO"/>
                                     <constraint firstAttribute="bottom" secondItem="Qxs-v2-5eV" secondAttribute="bottom" id="9f0-KT-dd8"/>
                                     <constraint firstItem="Qxs-v2-5eV" firstAttribute="leading" secondItem="f3W-mk-2as" secondAttribute="leading" id="VPQ-0c-W3i"/>
                                     <constraint firstItem="Juw-0U-zCq" firstAttribute="top" secondItem="f3W-mk-2as" secondAttribute="top" constant="12" id="Yeu-m7-CIb"/>
                                     <constraint firstItem="Qxs-v2-5eV" firstAttribute="top" secondItem="f3W-mk-2as" secondAttribute="top" id="jjW-tJ-cun"/>
                                     <constraint firstAttribute="trailing" secondItem="Juw-0U-zCq" secondAttribute="trailing" id="leD-jl-SR3"/>
                                     <constraint firstItem="Juw-0U-zCq" firstAttribute="leading" secondItem="Qxs-v2-5eV" secondAttribute="trailing" constant="16" id="mh1-Iy-uuH"/>
+                                    <constraint firstItem="uWb-0C-DUS" firstAttribute="centerY" secondItem="Juw-0U-zCq" secondAttribute="centerY" id="tVa-Nk-yW1"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4mA-oR-g77" userLabel="Main Button">
@@ -142,6 +151,7 @@
                 <outlet property="loadingImageIndicatorView" destination="vf5-Au-uOv" id="RtZ-Sc-IMm"/>
                 <outlet property="movieImageView" destination="Lmu-Yt-mzh" id="Cfv-Ue-ktT"/>
                 <outlet property="ratingView" destination="1x5-PU-QUM" id="pw5-oh-EVN"/>
+                <outlet property="setFavoriteIndicatorView" destination="uWb-0C-DUS" id="lGg-ve-LA8"/>
                 <outlet property="titleLabel" destination="JCX-jF-h5X" id="QgY-mQ-8gy"/>
             </connections>
             <point key="canvasLocation" x="131" y="-11"/>

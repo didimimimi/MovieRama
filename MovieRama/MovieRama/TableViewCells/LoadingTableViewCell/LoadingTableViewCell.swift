@@ -22,10 +22,11 @@ class LoadingTableViewCell: UITableViewCell {
     private func setUpCell() {
         self.selectionStyle = .none
 
-        self.loadingActivityIndicator.color = MovieRamaConstants().CYAN_COLOR.withAlphaComponent(0.6)
+        self.loadingActivityIndicator.color = MovieRamaConstants().INDICATOR_COLOR
+        self.loadingActivityIndicator.hidesWhenStopped = true
         
         self.loadingLabel.font = UIFont.systemFont(ofSize: 12)
-        self.loadingLabel.textColor = MovieRamaConstants().CYAN_COLOR.withAlphaComponent(0.6)
+        self.loadingLabel.textColor = MovieRamaConstants().INDICATOR_COLOR
     }
     
     func beginLoading() {

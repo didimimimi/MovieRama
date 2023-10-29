@@ -15,21 +15,21 @@ class MovieRamaRest {
     func getPopularMovies(forPage page: Int,
                           completionBlock: @escaping (GetMoviesResponse) -> Void,
                           errorBlock: @escaping (Error) -> Void) {
-        self.handleCall(isSearchCall: false, searchTerm: "", forPage: page, completionBlock: completionBlock, errorBlock: errorBlock)
+        self.handleGetMoviesCall(isSearchCall: false, searchTerm: "", forPage: page, completionBlock: completionBlock, errorBlock: errorBlock)
     }
     
     func searchMovies(searchTerm: String,
                       forPage page: Int,
                       completionBlock: @escaping (GetMoviesResponse) -> Void,
                       errorBlock: @escaping (Error) -> Void) {
-        self.handleCall(isSearchCall: true, searchTerm: searchTerm, forPage: page, completionBlock: completionBlock, errorBlock: errorBlock)
+        self.handleGetMoviesCall(isSearchCall: true, searchTerm: searchTerm, forPage: page, completionBlock: completionBlock, errorBlock: errorBlock)
     }
     
-    private func handleCall(isSearchCall: Bool,
-                            searchTerm: String,
-                            forPage page: Int,
-                            completionBlock: @escaping (GetMoviesResponse) -> Void,
-                            errorBlock: @escaping (Error) -> Void) {
+    private func handleGetMoviesCall(isSearchCall: Bool,
+                                     searchTerm: String,
+                                     forPage page: Int,
+                                     completionBlock: @escaping (GetMoviesResponse) -> Void,
+                                     errorBlock: @escaping (Error) -> Void) {
         let urlString = isSearchCall
         ? "https://api.themoviedb.org/3/search/movie?page=\(String(page))&query=\(searchTerm)&include_adult=false"
         : "https://api.themoviedb.org/3/movie/popular?page=\(String(page))&include_adult=false"
@@ -43,6 +43,22 @@ class MovieRamaRest {
                 errorBlock(error)
             }
         })
+    }
+    
+    func saveFavorite(for movie: Movie,
+                      at indexPath: IndexPath,
+                      completionBlock: @escaping () -> Void,
+                      errorBlock: @escaping (Error) -> Void) {
+        let percentageOfSuccess = 0.8
+        let effortPercentage = Double.random(in: 0...1)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) {
+            if effortPercentage < percentageOfSuccess {
+                completionBlock()
+            } else {
+                errorBlock(MovieError.favoriteFailed(message: "Could not (un)favorite movie named:\n\(movie.title ?? "")"))
+            }            
+        }
     }
     
     private func makeApiCall<T: Decodable>(urlString: String,
@@ -77,6 +93,5 @@ class MovieRamaRest {
         } else {
             print("Invalid URL")
         }
-        
     }
 }

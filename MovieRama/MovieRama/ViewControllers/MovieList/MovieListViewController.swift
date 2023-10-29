@@ -107,7 +107,7 @@ extension MovieListViewController: UITableViewDelegate, UITableViewDataSource {
                 return UITableViewCell()
             }
             
-            movieCell.configure(withMovie: movie, delegate: self)
+            movieCell.configure(withMovie: movie, indexPath: indexPath, delegate: self)
             
             return movieCell
         case .loadMoreCell:
@@ -185,8 +185,8 @@ extension MovieListViewController: MovieTableViewCellDelegate {
         self.viewModel.movieTapped(movie: movie)
     }
     
-    func favoriteTapped(movie: Movie, favorite: Bool) {
-        self.viewModel.favoriteTapped(movie: movie, favorite: favorite)
+    func favoriteTapped(movie: Movie, indexPath: IndexPath, favorite: Bool) {
+        self.viewModel.favoriteTapped(movie: movie, indexPath: indexPath, favorite: favorite)
     }
 }
 
@@ -214,7 +214,6 @@ extension MovieListViewController: MovieListViewModelDelegate {
         case .endRefreshState:
             self.handleEndRefreshState()
         case .createListState(let movies):
-            print(state)
             self.handleCreateListState(movies: movies)
         case .appendToListState(let movies, let indexPaths):
             self.handleAppendToListState(movies: movies, indexPaths: indexPaths)
@@ -228,6 +227,8 @@ extension MovieListViewController: MovieListViewModelDelegate {
             self.handleAddLoadingCellState()
         case .errorState(let error):
             self.handleErrorState(error: error)
+        case .reloadCell(let indexPath):
+            self.handleReloadCell(indexPath: indexPath)
         }
     }
     
@@ -282,5 +283,9 @@ extension MovieListViewController: MovieListViewModelDelegate {
     
     private func handleErrorState(error: Error) {
         self.presentAlertFor(error: error)
+    }
+    
+    private func handleReloadCell(indexPath: IndexPath) {
+        self.tableView.reloadRows(at: [indexPath], with: .none)
     }
 }

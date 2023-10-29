@@ -9,7 +9,7 @@ import UIKit
 
 protocol MovieTableViewCellDelegate: AnyObject {
     func movieTapped(movie: Movie)
-    func favoriteTapped(movie: Movie, favorite: Bool)
+    func favoriteTapped(movie: Movie, indexPath: IndexPath, favorite: Bool)
 }
 
 class MovieTableViewCell: UITableViewCell {
@@ -22,10 +22,12 @@ class MovieTableViewCell: UITableViewCell {
     @IBOutlet weak var favoriteImageView: UIImageView!
     @IBOutlet weak var loadingImageIndicatorView: UIActivityIndicatorView!
     
+    @IBOutlet weak var setFavoriteIndicatorView: UIActivityIndicatorView!
     static let cellId = "MovieTableViewCell"
     
     private var isFavorited = false
     private var movie = Movie()
+    private var indexPath = IndexPath()
     
     private weak var delegate: MovieTableViewCellDelegate?
     
@@ -66,10 +68,19 @@ class MovieTableViewCell: UITableViewCell {
         self.favoriteImageView.tintColor = .red.withAlphaComponent(0.8)
         
         self.loadingImageIndicatorView.isHidden = true
+        self.loadingImageIndicatorView.hidesWhenStopped = true
+        self.loadingImageIndicatorView.color = MovieRamaConstants().INDICATOR_COLOR
+        
+        self.setFavoriteIndicatorView.isHidden = true
+        self.setFavoriteIndicatorView.hidesWhenStopped = true
+        self.setFavoriteIndicatorView.color = MovieRamaConstants().INDICATOR_COLOR
     }
     
-    func configure(withMovie movie: Movie, delegate: MovieTableViewCellDelegate) {
+    func configure(withMovie movie: Movie,
+                   indexPath: IndexPath,
+                   delegate: MovieTableViewCellDelegate) {
         self.movie = movie
+        self.indexPath = indexPath
         self.delegate = delegate
         
         self.update()
@@ -110,9 +121,14 @@ class MovieTableViewCell: UITableViewCell {
     }
     
     @IBAction func favoriteButtonTapped(_ sender: UIButton) {
-        self.isFavorited.toggle()
-        self.updateFavoriteIcon()
+        self.setFavoriteIndicatorView.isHidden = false
+        self.setFavoriteIndicatorView.startAnimating()
         
-        self.delegate?.favoriteTapped(movie: self.movie, favorite: self.isFavorited)
+        self.isFavorited.toggle()
+        self.delegate?.favoriteTapped(movie: self.movie, indexPath: self.indexPath, favorite: self.isFavorited)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(500)) {
+            self.setFavoriteIndicatorView.stopAnimating()
+        }
     }
 }

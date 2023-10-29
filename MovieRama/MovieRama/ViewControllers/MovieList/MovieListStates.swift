@@ -17,4 +17,5 @@ enum MovieListStates {
     case emptyListState(hide: Bool) // no lists to load
     case addLoadingCellState // adds loading cell at the bottom
     case errorState(error: Error) // error from an api call
+    case reloadCell(indexPath: IndexPath) // reload a cell at an index path
 }

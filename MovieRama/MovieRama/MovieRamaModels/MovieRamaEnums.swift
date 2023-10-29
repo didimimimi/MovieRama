@@ -51,3 +51,14 @@ enum MainScreenListMode {
     case showAllMovies
     case showSearchResults
 }
+
+enum MovieError: LocalizedError {
+    case favoriteFailed(message: String)
+    
+    public var errorDescription: String? {
+        switch self {
+        case .favoriteFailed(let message):
+            return NSLocalizedString(message, comment: "")
+        }
+    }
+}
