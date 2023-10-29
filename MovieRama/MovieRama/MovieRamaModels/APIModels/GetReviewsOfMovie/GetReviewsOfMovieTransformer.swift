@@ -33,8 +33,16 @@ class GetReviewsOfMovieTransformer {
     }
     
     private func transform(apiModel: ApiReview) -> DetailFieldValue {
+        var information = ""
+        
+        if apiModel.author == apiModel.author_details?.username {
+            information = apiModel.author ?? ""
+        } else {
+            information = "\(apiModel.author ?? "") (\(apiModel.author_details?.username ?? ""))"
+        }
+        
         return DetailFieldValue(title: .reviews,
-                                information: "\(apiModel.author ?? "") (\(apiModel.author_details?.username ?? ""))",
+                                information: information,
                                 description: apiModel.content)
     }
 }
