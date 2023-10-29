@@ -88,10 +88,7 @@ class SplashScreenViewController: UIViewController {
     
     private func presentMainScreen() {
         let mainViewController = MovieListViewController()
-        
-        let navigationVc = UINavigationController(rootViewController: mainViewController)
-        navigationVc.modalPresentationStyle = .fullScreen
-        
-        self.present(navigationVc, animated: false, completion: nil)
+        mainViewController.modalPresentationStyle = .fullScreen
+        self.present(mainViewController, animated: false, completion: nil)
     }
 }

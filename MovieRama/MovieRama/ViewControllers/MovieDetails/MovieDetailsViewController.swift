@@ -38,13 +38,14 @@ class MovieDetailsViewController: UIViewController {
         super.viewDidLoad()
 
         self.setUpElements()
+        self.setMovieDataToScreen()
     }
     
     private func setUpElements() {
         self.titleLabel.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         self.titleLabel.textColor = MovieRamaConstants().CYAN_COLOR.withAlphaComponent(0.8)
         
-        self.genresLabel.font = UIFont.systemFont(ofSize: 12, weight: .light)
+        self.genresLabel.font = UIFont.systemFont(ofSize: 10, weight: .light)
         self.genresLabel.textColor = MovieRamaConstants().CYAN_COLOR.withAlphaComponent(0.8)
 
         self.dateLabel.font = UIFont.systemFont(ofSize: 12, weight: .light)

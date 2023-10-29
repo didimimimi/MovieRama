@@ -37,6 +37,16 @@ class MovieListViewController: UIViewController {
         self.setUpEmptyLabel()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+    
     private func setupTableView() {
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -211,7 +221,6 @@ extension MovieListViewController: UISearchBarDelegate {
 
 extension MovieListViewController: MovieListViewModelDelegate {
     func update(state: MovieListStates) {
-//        print(state)
         
         switch state {
         case .moveToDetailsScreenState(let movie, let indexPath):
@@ -237,14 +246,9 @@ extension MovieListViewController: MovieListViewModelDelegate {
         }
     }
     
-    private func handleMoveToDetailsScreenState(ofMovie movie: Movie, at indexPath: IndexPath) {
-        print("open details of movie \"\(movie.title ?? "")\"\nurl: \(movie.imageUrl)\nid: \(movie.id)\nfavorite:\(movie.favorite)\n")
-        
+    private func handleMoveToDetailsScreenState(ofMovie movie: Movie, at indexPath: IndexPath) {        
         let movieDetailsVc = MovieDetailsViewController(movie: movie, indexPath: indexPath)
-        let navigationVc = UINavigationController(rootViewController: movieDetailsVc)
-        navigationVc.modalPresentationStyle = .fullScreen
-        
-//        self.present(navigationVc, animated: true)
+        self.navigationController?.pushViewController(movieDetailsVc, animated: true)
     }
     
     private func handleEndRefreshState() {
