@@ -24,6 +24,9 @@ class Movie: Equatable {
     var imageUrl: String?
     var image: UIImage?
     
+    var posterImageUrl: String?
+    var posterImage: UIImage?
+    
     init() {}
     
     static func == (lhs: Movie, rhs: Movie) -> Bool {

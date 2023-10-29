@@ -15,11 +15,7 @@ class DetailCustomView: UIView {
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var informationLabel: UILabel!
     @IBOutlet var descriptionLabel: UILabel!
-    
-    @IBOutlet var collectionView: UICollectionView!
-    
-    var urls = [String]()
-    
+        
     static let viewId = "DetailCustomView"
     
     override init(frame: CGRect) {
@@ -38,8 +34,6 @@ class DetailCustomView: UIView {
     
     private func setUpCell() {
         self.setUpLabels()
-        self.setUpCollectionView()
-        self.setupCollectionViewFlowLayout()
     }
     
     private func setUpLabels() {
@@ -60,7 +54,6 @@ class DetailCustomView: UIView {
         self.set(text: value.title?.rawValue, to: titleLabel)
         self.set(text: value.information, to: informationLabel)
         self.set(text: value.description, to: descriptionLabel)
-        self.setValuesForDataSource(texts: value.urls)
         
         self.layoutIfNeeded()
     }
@@ -72,79 +65,5 @@ class DetailCustomView: UIView {
         } else {
             label.isHidden = true
         }
-    }
-    
-    private func setValuesForDataSource(texts textValues: [String]?) {
-        if let textValues = textValues {
-            self.collectionView.isHidden = false
-            self.urls = textValues
-        } else {
-            self.collectionView.isHidden = true
-        }
-    }
-    
-    private func setUpCollectionView() {
-        self.collectionView.delegate = self
-        self.collectionView.dataSource = self
-        
-        self.collectionView.register(
-            UINib.init(
-                nibName: SimilarMovieCollectionViewCell.cellId,
-                bundle: .main
-            ),
-            forCellWithReuseIdentifier: SimilarMovieCollectionViewCell.cellId
-        )
-        
-        self.collectionView.isHidden = true
-    }
-    
-    private func setupCollectionViewFlowLayout() {
-        let layout = UICollectionViewFlowLayout()
-        layout.minimumLineSpacing = 0
-        layout.minimumInteritemSpacing = 8
-        layout.scrollDirection = .horizontal
-        
-        self.collectionView.setCollectionViewLayout(layout, animated: true)
-    }
-}
-
-extension DetailCustomView: UICollectionViewDelegate, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.urls.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let movieCell = collectionView.dequeueReusableCell(withReuseIdentifier: SimilarMovieCollectionViewCell.cellId, for: indexPath) as? SimilarMovieCollectionViewCell else {
-            return UICollectionViewCell()
-        }
-        
-        let index = indexPath.item
-        let url = self.urls[index]
-        movieCell.update(withUrl: url, atIndex: index, delegate: self)
-        
-        return movieCell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let deviceWidth = UIScreen.main.bounds.size.width
-        
-        let width = floor( 2 * deviceWidth / 5)
-        let height = width * 1.25
-        
-        return CGSize(width: width, height: height)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 8
-    }
-}
-
-extension DetailCustomView: SimilarMovieCollectionViewCellDelegate {
-    func reloadCell(index: Int) {
-        self.collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
     }
 }

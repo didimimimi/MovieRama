@@ -11,5 +11,5 @@ struct DetailFieldValue {
     var title: DetailFieldTitle?
     var information: String?
     var description: String?
-    var urls = [String]()
+    var similarMovies = [Movie]()
 }

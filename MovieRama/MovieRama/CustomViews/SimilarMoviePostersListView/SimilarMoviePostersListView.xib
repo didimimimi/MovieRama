@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SimilarMoviePostersListView" customModule="MovieRama" customModuleProvider="target">
+            <connections>
+                <outlet property="contentView" destination="iN0-l3-epB" id="cHi-O3-gmg"/>
+                <outlet property="postersStackView" destination="2iy-4q-w2d" id="HvZ-Pl-LIX"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="150"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bsi-2H-0id" userLabel="Posters Container View">
+                    <rect key="frame" x="0.0" y="0.0" width="393" height="150"/>
+                    <subviews>
+                        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lTf-2l-kGm">
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="150"/>
+                            <subviews>
+                                <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="2iy-4q-w2d" userLabel="Posters Stack View">
+                                    <rect key="frame" x="0.0" y="0.0" width="0.0" height="150"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VTf-0Y-W5g">
+                                            <rect key="frame" x="0.0" y="0.0" width="0.0" height="150"/>
+                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" id="x8b-Ke-KEJ"/>
+                                            </constraints>
+                                        </view>
+                                    </subviews>
+                                </stackView>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="2iy-4q-w2d" firstAttribute="top" secondItem="lTf-2l-kGm" secondAttribute="top" id="AJa-o3-K91"/>
+                                <constraint firstItem="2iy-4q-w2d" firstAttribute="leading" secondItem="lTf-2l-kGm" secondAttribute="leading" id="Gpb-FB-kid"/>
+                                <constraint firstAttribute="bottom" secondItem="2iy-4q-w2d" secondAttribute="bottom" id="j3a-qf-Ys4"/>
+                                <constraint firstAttribute="trailing" secondItem="2iy-4q-w2d" secondAttribute="trailing" id="nON-iy-nle"/>
+                                <constraint firstItem="2iy-4q-w2d" firstAttribute="height" secondItem="lTf-2l-kGm" secondAttribute="height" id="qdL-aM-y5F"/>
+                            </constraints>
+                        </scrollView>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="lTf-2l-kGm" firstAttribute="top" secondItem="bsi-2H-0id" secondAttribute="top" id="ARC-cw-loe"/>
+                        <constraint firstItem="lTf-2l-kGm" firstAttribute="leading" secondItem="bsi-2H-0id" secondAttribute="leading" id="Xfu-YS-2sq"/>
+                        <constraint firstAttribute="bottom" secondItem="lTf-2l-kGm" secondAttribute="bottom" id="acc-S9-46x"/>
+                        <constraint firstAttribute="trailing" secondItem="lTf-2l-kGm" secondAttribute="trailing" id="qW4-Ce-osE"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="bsi-2H-0id" secondAttribute="bottom" id="1wX-yq-Heo"/>
+                <constraint firstAttribute="trailing" secondItem="bsi-2H-0id" secondAttribute="trailing" id="ODY-GK-crc"/>
+                <constraint firstItem="bsi-2H-0id" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Qsv-5F-eeL"/>
+                <constraint firstItem="bsi-2H-0id" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="UYD-uo-GMO"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="132" y="-12"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

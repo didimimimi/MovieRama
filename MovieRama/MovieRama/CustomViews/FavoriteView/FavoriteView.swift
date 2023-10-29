@@ -32,18 +32,18 @@ class FavoriteView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.setUp(forNib: FavoriteView.viewId) {
-            self.setUpCell()
+            self.setUpView()
         }
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.setUp(forNib: FavoriteView.viewId) {
-            self.setUpCell()
+            self.setUpView()
         }
     }
     
-    private func setUpCell() {
+    private func setUpView() {
         self.heartImageView.image = UIImage(systemName: "heart")
         self.heartImageView.tintColor = .red.withAlphaComponent(0.8)
             
@@ -66,7 +66,6 @@ class FavoriteView: UIView {
     }
     
     @IBAction func favoriteTapped(_ sender: Any) {
-        print("FavoriteView: Current favorite: \(self.isFavorite), movie favorite: \(movie.favorite)")
         self.setFavoriteActivityIndicator.isHidden = false
         self.setFavoriteActivityIndicator.startAnimating()
         
@@ -86,7 +85,8 @@ class FavoriteView: UIView {
             self.delegate?.onfavoriteTappedSucceeded(indexPath: self.indexPath)
         }, errorBlock: { error in
             self.setFavoriteActivityIndicator.stopAnimating()
-            
+            self.isFavorite.toggle() // undo toggle to maintain the internal state consistent since api call failed to change it
+
             self.delegate?.onfavoriteTappedError(error: error)
         })
     }

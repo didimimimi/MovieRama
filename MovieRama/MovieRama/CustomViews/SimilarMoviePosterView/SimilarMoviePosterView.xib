@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SimilarMoviePosterView" customModule="MovieRama" customModuleProvider="target">
+            <connections>
+                <outlet property="activityIndicator" destination="uh8-R7-ZlG" id="H2t-bb-YQ6"/>
+                <outlet property="containerView" destination="Lv7-xi-rld" id="qG2-Fy-OFA"/>
+                <outlet property="contentView" destination="iN0-l3-epB" id="vZ9-cR-czz"/>
+                <outlet property="posterImageView" destination="g1j-ds-tXa" id="Tt6-dG-A2n"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="150" height="200"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lv7-xi-rld" userLabel="Container View">
+                    <rect key="frame" x="4" y="0.0" width="142" height="196"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="g1j-ds-tXa">
+                            <rect key="frame" x="0.0" y="0.0" width="142" height="196"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="196" id="7BT-OB-BQs"/>
+                                <constraint firstAttribute="width" secondItem="g1j-ds-tXa" secondAttribute="height" multiplier="71:98" id="vi3-CW-ix6"/>
+                            </constraints>
+                        </imageView>
+                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="uh8-R7-ZlG">
+                            <rect key="frame" x="61" y="88" width="20" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="20" id="CRe-s7-hLD"/>
+                                <constraint firstAttribute="height" constant="20" id="zPz-fI-uzD"/>
+                            </constraints>
+                        </activityIndicatorView>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="g1j-ds-tXa" secondAttribute="trailing" id="2wA-5k-yMS"/>
+                        <constraint firstItem="uh8-R7-ZlG" firstAttribute="centerY" secondItem="g1j-ds-tXa" secondAttribute="centerY" id="71E-Nf-Joi"/>
+                        <constraint firstItem="g1j-ds-tXa" firstAttribute="top" secondItem="Lv7-xi-rld" secondAttribute="top" id="8a9-BM-EK9"/>
+                        <constraint firstItem="uh8-R7-ZlG" firstAttribute="centerX" secondItem="g1j-ds-tXa" secondAttribute="centerX" id="AH5-KW-2fo"/>
+                        <constraint firstItem="g1j-ds-tXa" firstAttribute="leading" secondItem="Lv7-xi-rld" secondAttribute="leading" id="AHL-iS-khH"/>
+                        <constraint firstAttribute="bottom" secondItem="g1j-ds-tXa" secondAttribute="bottom" id="kel-1b-Lpe"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="Lv7-xi-rld" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Ph0-Fe-ERu"/>
+                <constraint firstItem="Lv7-xi-rld" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="4" id="Rgu-PE-xpF"/>
+                <constraint firstAttribute="bottom" secondItem="Lv7-xi-rld" secondAttribute="bottom" constant="4" id="SUb-HB-eKM"/>
+                <constraint firstAttribute="trailing" secondItem="Lv7-xi-rld" secondAttribute="trailing" constant="4" id="VX7-h7-xhV"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="117" y="-12"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

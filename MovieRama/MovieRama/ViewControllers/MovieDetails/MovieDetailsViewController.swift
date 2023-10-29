@@ -123,11 +123,16 @@ class MovieDetailsViewController: UIViewController {
     }
     
     private func handleGetSimilarMoviesResponse(field: DetailFieldValue) {
-        if !field.urls.isEmpty {
+        if !field.similarMovies.isEmpty {
             let detailCustomView = DetailCustomView()
             detailCustomView.configure(value: field)
             
             self.movieInfoStackView.addArrangedSubview(detailCustomView)
+            
+            let similarMoviePostersListView = SimilarMoviePostersListView()
+            similarMoviePostersListView.configure(value: field)
+            
+            self.movieInfoStackView.addArrangedSubview(similarMoviePostersListView)
         }
         
         self.getReviews()

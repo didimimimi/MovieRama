@@ -107,15 +107,7 @@ class MovieRamaRestApiServices: MovieRamaRestProtocol {
                          completionBlock: { data in
             let responseData = GetMoviesTransfromer().transform(apiModel: data)
             
-            let urls = responseData.movies.map({
-                if let imageUrl = $0.imageUrl {
-                    return imageUrl
-                } else {
-                    return ""
-                }
-            })
-            
-            let domainModel = DetailFieldValue(title: .similarMovies, urls: urls)
+            let domainModel = DetailFieldValue(title: .similarMovies, similarMovies: responseData.movies)
             completionBlock(domainModel)
         }, errorBlock: { error in
             if let error = error {
