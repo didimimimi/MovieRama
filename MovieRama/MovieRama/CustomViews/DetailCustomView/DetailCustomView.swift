@@ -45,18 +45,22 @@ class DetailCustomView: UIView {
     private func setUpLabels() {
         self.titleLabel.font = UIFont.systemFont(ofSize: 14, weight: .medium)
         self.titleLabel.textColor = MovieRamaConstants().CYAN_COLOR
+        self.titleLabel.isHidden = false
         
         self.informationLabel.font = UIFont.systemFont(ofSize: 14, weight: .light)
         self.informationLabel.textColor = MovieRamaConstants().CYAN_COLOR.withAlphaComponent(0.85)
+        self.informationLabel.isHidden = false
         
         self.descriptionLabel.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         self.descriptionLabel.textColor = .black
+        self.descriptionLabel.isHidden = false
     }
     
     func configure(value: DetailFieldValue) {
         self.set(text: value.title?.rawValue, to: titleLabel)
         self.set(text: value.information, to: informationLabel)
         self.set(text: value.description, to: descriptionLabel)
+        self.setValuesForDataSource(texts: value.urls)
         
         self.layoutIfNeeded()
     }
@@ -91,6 +95,7 @@ class DetailCustomView: UIView {
             forCellWithReuseIdentifier: SimilarMovieCollectionViewCell.cellId
         )
         
+        self.collectionView.isHidden = false
     }
     
     private func setupCollectionViewFlowLayout() {

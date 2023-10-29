@@ -16,7 +16,7 @@ import Foundation
 struct ApiGetMovieDetailsResponse: Codable {
     let adult : Bool?
     let backdrop_path : String?
-    let belongs_to_collection : String?
+    let belongs_to_collection : ApiBelongsToCollection?
     let budget : Int?
     let genres : [ApiGenres]?
     let homepage : String?
@@ -73,7 +73,7 @@ struct ApiGetMovieDetailsResponse: Codable {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         adult = try values.decodeIfPresent(Bool.self, forKey: .adult)
         backdrop_path = try values.decodeIfPresent(String.self, forKey: .backdrop_path)
-        belongs_to_collection = try values.decodeIfPresent(String.self, forKey: .belongs_to_collection)
+        belongs_to_collection = try values.decodeIfPresent(ApiBelongsToCollection.self, forKey: .belongs_to_collection)
         budget = try values.decodeIfPresent(Int.self, forKey: .budget)
         genres = try values.decodeIfPresent([ApiGenres].self, forKey: .genres)
         homepage = try values.decodeIfPresent(String.self, forKey: .homepage)

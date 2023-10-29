@@ -247,7 +247,7 @@ extension MovieListViewController: MovieListViewModelDelegate {
     }
     
     private func handleMoveToDetailsScreenState(ofMovie movie: Movie, at indexPath: IndexPath) {        
-        let movieDetailsVc = MovieDetailsViewController(movie: movie, indexPath: indexPath)
+        let movieDetailsVc = MovieDetailsViewController(movie: movie, indexPath: indexPath, delegate: self)
         self.navigationController?.pushViewController(movieDetailsVc, animated: true)
     }
     
@@ -302,5 +302,11 @@ extension MovieListViewController: MovieListViewModelDelegate {
     
     private func handleReloadCell(indexPath: IndexPath) {
         self.tableView.reloadRows(at: [indexPath], with: .none)
+    }
+}
+
+extension MovieListViewController: MovieDetailsViewControllerDelegate {
+    func favoriteUpdatedFromDetails(indexPath: IndexPath) {
+        self.viewModel.receivedFavoriteFromDetails(indexPath: indexPath)
     }
 }

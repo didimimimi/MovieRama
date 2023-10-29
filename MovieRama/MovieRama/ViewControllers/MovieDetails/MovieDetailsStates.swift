@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+enum MovieDetailsStates {
+    case setFavoriteState(favorite: Bool)
+}

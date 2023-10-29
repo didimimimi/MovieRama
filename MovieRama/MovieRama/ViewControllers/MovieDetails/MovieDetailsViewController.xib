@@ -101,7 +101,7 @@
                                         <constraint firstItem="YAg-k3-B8b" firstAttribute="leading" secondItem="rFy-qO-WV0" secondAttribute="trailing" constant="8" id="gvj-bz-TVd"/>
                                     </constraints>
                                 </view>
-                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="fBS-0j-BGf" userLabel="Movie Info Stack View">
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="fBS-0j-BGf" userLabel="Movie Info Stack View">
                                     <rect key="frame" x="16" y="425.33333333333331" width="343" height="0.0"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sux-Fn-0s5" userLabel="Description View">

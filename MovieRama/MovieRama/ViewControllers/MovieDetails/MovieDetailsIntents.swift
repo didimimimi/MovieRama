@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+protocol MovieDetailsIntents: AnyObject {
+    func willLeaveScreen()
+}

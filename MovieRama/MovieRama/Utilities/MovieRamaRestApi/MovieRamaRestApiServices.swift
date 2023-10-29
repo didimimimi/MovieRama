@@ -25,9 +25,9 @@ class MovieRamaRestApiServices: MovieRamaRestProtocol {
                                  errorBlock: errorBlock)
     }
     
-    func similarMovies(movie: Movie,
-                       completionBlock: @escaping (GetMoviesResponse) -> Void,
-                       errorBlock: @escaping (Error) -> Void) {
+    func getSimilarMovies(movie: Movie,
+                          completionBlock: @escaping (GetMoviesResponse) -> Void,
+                          errorBlock: @escaping (Error) -> Void) {
         self.handleGetMoviesCall(endpoint: .similarMovies(movie: movie),
                                  completionBlock: completionBlock,
                                  errorBlock: errorBlock)
@@ -75,14 +75,14 @@ class MovieRamaRestApiServices: MovieRamaRestProtocol {
     }
     
     func getMovieDetails(for movie: Movie,
-                         completionBlock: @escaping (Movie) -> Void,
+                         completionBlock: @escaping (Movie, [DetailFieldValue]) -> Void,
                          errorBlock: @escaping (Error) -> Void) {
         let urlString = "https://api.themoviedb.org/3/movie/\(movie.id ?? "")"
         
         self.makeApiCall(urlString: urlString,
                          completionBlock: { data in
             let domainModel = GetMovieDetailsTransfromer().transform(apiModel: data, onto: movie)
-            completionBlock(domainModel)
+            completionBlock(domainModel.movie, domainModel.fields)
         }, errorBlock: { error in
             if let error = error {
                 errorBlock(error)
@@ -107,16 +107,18 @@ class MovieRamaRestApiServices: MovieRamaRestProtocol {
     }
     
     private func makeApiCall<T: Decodable>(urlString: String,
-                                           completionBlock: @escaping (T) -> Void,
-                                           errorBlock: @escaping (Error?) -> Void) {
+                                          completionBlock: @escaping (T) -> Void,
+                                          errorBlock: @escaping (Error?) -> Void) {
         if let url = URL(string: urlString) {
-            
             var request = URLRequest(url: url)
             request.httpMethod = "GET"
             request.setValue("Bearer \(MovieRamaConstants().API_KEY)", forHTTPHeaderField: "Authorization")
             
+            print("Making API call to URL: \(urlString)")
+            
             let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
                 if let error = error {
+                    print("API request failed with error: \(error)")
                     errorBlock(error)
                     return
                 }
@@ -126,9 +128,16 @@ class MovieRamaRestApiServices: MovieRamaRestProtocol {
                         let decoder = JSONDecoder()
                         let responseData = try decoder.decode(T.self, from: data)
                         
+                        if let jsonString = String(data: data, encoding: .utf8) {
+                            print("API response JSON: \(jsonString)")
+                        } else {
+                            print("Failed to convert data to JSON string")
+                        }
+                        
+                        print("API request successful. Received data: \(data)")
                         completionBlock(responseData)
-                    }
-                    catch {
+                    } catch {
+                        print("Failed to decode API response. Error: \(error)")
                         errorBlock(error)
                     }
                 }
@@ -136,7 +145,7 @@ class MovieRamaRestApiServices: MovieRamaRestProtocol {
             
             task.resume()
         } else {
-            print("Invalid URL")
+            print("Invalid URL: \(urlString)")
         }
     }
 }

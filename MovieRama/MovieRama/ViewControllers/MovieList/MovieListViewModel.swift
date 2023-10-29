@@ -12,7 +12,7 @@ protocol MovieListViewModelDelegate: AnyObject {
 }
 
 class MovieListViewModel: MovieListIntents {
-    
+
     private var movies = [Movie]()
     private var searchResults = [Movie]()
     
@@ -250,5 +250,9 @@ class MovieListViewModel: MovieListIntents {
                 self.delegate?.update(state: .errorState(error: error))
             })
         }
+    }
+    
+    func receivedFavoriteFromDetails(indexPath: IndexPath) {
+        self.delegate?.update(state: .reloadCell(indexPath: indexPath))
     }
 }

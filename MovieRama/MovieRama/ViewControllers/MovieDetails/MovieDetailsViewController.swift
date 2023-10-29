@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol MovieDetailsViewControllerDelegate: AnyObject {
+    func favoriteUpdatedFromDetails(indexPath: IndexPath)
+}
+
 class MovieDetailsViewController: UIViewController {
 
     @IBOutlet weak var movieImageView: UIImageView!
@@ -23,9 +27,12 @@ class MovieDetailsViewController: UIViewController {
     private var movie = Movie()
     private var indexPath = IndexPath() // for dismiss
     
-    init(movie: Movie, indexPath: IndexPath) {
+    private weak var delegate: MovieDetailsViewControllerDelegate?
+    
+    init(movie: Movie, indexPath: IndexPath, delegate: MovieDetailsViewControllerDelegate) {
         self.movie = movie
         self.indexPath = indexPath
+        self.delegate = delegate
         
         super.init(nibName: "MovieDetailsViewController", bundle: .main)
     }
@@ -39,6 +46,13 @@ class MovieDetailsViewController: UIViewController {
 
         self.setUpElements()
         self.setMovieDataToScreen()
+        self.getRestOfDetails()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        self.delegate?.favoriteUpdatedFromDetails(indexPath: self.indexPath)
     }
     
     private func setUpElements() {
@@ -55,10 +69,39 @@ class MovieDetailsViewController: UIViewController {
     private func setMovieDataToScreen() {
         self.movieImageView.image = self.movie.image
         self.titleLabel.text = self.movie.title
-        self.genresLabel.text = self.movie.genres
         self.dateLabel.text = self.movie.date
         self.ratingView.setRating(stars: MovieRating(value: self.movie.rating) ?? .zero)
         self.favoriteView.updateFavoriteView(movie: self.movie, indexPath: self.indexPath, delegate: self)
+    }
+    
+    private func getRestOfDetails() {
+        DispatchQueue.global().async {
+            MovieRamaRest(apiServices: MovieRamaSingleton.sharedInstance.restClient)
+                .getMovieDetails(for: self.movie,
+                                 completionBlock: { movie, fields in
+                    DispatchQueue.main.async {
+                        self.movie = movie
+                        self.handleDetailsCallResponse(fields: fields)
+                    }
+                }, errorBlock: { error in
+                    DispatchQueue.main.async {
+                        self.presentAlertFor(error: error)
+                    }
+                })
+        }
+    }
+    
+    private func handleDetailsCallResponse(fields: [DetailFieldValue]) {
+        self.movieInfoStackView.removeAllArrangedSubviews()
+        
+        self.genresLabel.text = self.movie.genres
+        
+        for i in 0..<fields.count {
+            let detailCustomView = DetailCustomView()
+            detailCustomView.configure(value: fields[i])
+            
+            self.movieInfoStackView.addArrangedSubview(detailCustomView)
+        }
     }
 }
 

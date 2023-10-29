@@ -12,6 +12,7 @@ protocol MovieListIntents: AnyObject {
     func movieTapped(movie: Movie, indexPath: IndexPath)
     func favoriteTapped(indexPath: IndexPath)
     func favoriteNotSet(error: Error)
+    func receivedFavoriteFromDetails(indexPath: IndexPath)
     func scrolledToBottom()
     func refresh()
 }

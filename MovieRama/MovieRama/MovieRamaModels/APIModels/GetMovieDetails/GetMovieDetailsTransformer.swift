@@ -8,7 +8,7 @@
 import Foundation
 
 class GetMovieDetailsTransfromer {
-    func transform(apiModel: ApiGetMovieDetailsResponse, onto movie: Movie) -> Movie {
+    func transform(apiModel: ApiGetMovieDetailsResponse, onto movie: Movie) -> (movie: Movie, fields: [DetailFieldValue]) {
         let domainModel = movie
         
         if let genres = apiModel.genres {
@@ -16,6 +16,7 @@ class GetMovieDetailsTransfromer {
         }
         
         movie.overview = apiModel.overview
+        
         
         if let runtime = apiModel.runtime {
             let hours = runtime / 60
@@ -26,6 +27,12 @@ class GetMovieDetailsTransfromer {
         
         domainModel.tagline = apiModel.tagline
         
-        return domainModel
+        let descriptionField = DetailFieldValue(title: .description, description: movie.overview)
+        let runtimeField = DetailFieldValue(title: .runtime, description: movie.runtime)
+        let tagline = DetailFieldValue(title: .tagline, description: movie.tagline)
+        
+        let fields = [descriptionField, runtimeField, tagline]
+
+        return (domainModel, fields)
     }    
 }

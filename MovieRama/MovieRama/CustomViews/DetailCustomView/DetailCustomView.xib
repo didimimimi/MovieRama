@@ -25,7 +25,7 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ChC-Wl-sIZ" userLabel="Container View">
                     <rect key="frame" x="0.0" y="0.0" width="393" height="200"/>
                     <subviews>
-                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Qxc-4s-b50" userLabel="Fields Stack View">
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Qxc-4s-b50" userLabel="Fields Stack View">
                             <rect key="frame" x="0.0" y="0.0" width="393" height="200"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hhx-bX-iO7" userLabel="Title Label">
@@ -57,9 +57,6 @@
                                     </collectionViewFlowLayout>
                                 </collectionView>
                             </subviews>
-                            <constraints>
-                                <constraint firstItem="vNV-dR-h5i" firstAttribute="height" secondItem="Qxc-4s-b50" secondAttribute="height" multiplier="0.9" id="988-5z-Zlq"/>
-                            </constraints>
                         </stackView>
                     </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
